@@ -17,6 +17,15 @@ $config = [
         'table_header' => ['#', '登录账号', '添加时间', '状态<br>0:禁用,1:正常', '操作'],
         'index_field'  => 'id,login_name,created_at,status',
     ],
+    // 主题管理
+    'theme' => [
+        'name'         => '主题',
+        'index'        => '主题列表',
+        'add'          => '添加主题',
+        'table_header' => ['#', '主题名称', '添加时间'],
+        'index_field'  => 'id,name,created_at',
+    ],
+
     'article' => [
         'name'         => '文章管理',
         'index'        => '文章列表',

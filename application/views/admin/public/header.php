@@ -35,18 +35,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand website-title" href="#">西今网络管理系统</a>
+            <a class="navbar-brand website-title" href="#">AmazingFun 管理系统</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav main-nav-font">
-                <li<?='detection' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/detection')?>">申请检测管理</a></li>
-                <li<?='keywords' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/keywords/advertising')?>">关键字管理</a></li>
-                <li<?='articles' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/articles')?>">最新咨訊</a></li>
-                <li<?='article' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/article/business')?>">内容管理</a></li>
-                <li<?='messages' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/messages')?>">留言管理</a></li>
+                <li<?='detection' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/detection')?>">盒子管理</a></li>
+                <li<?='theme' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/theme')?>">主题管理</a></li>
                 <li<?='user' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/user')?>">用户管理</a></li>
-                <li<?='banner' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/banner')?>">Banner 管理</a></li>
-                <li<?='admin' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/index')?>">管理员管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right main-nav-user-info">
                 <li class="dropdown">
