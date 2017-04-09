@@ -8,9 +8,11 @@
  * @property CI_Input                      $input
  * @property CI_Pagination                 $pagination
  * @property CI_Session                    $session
+ * @property Theme_model                   $theme_model
+ * @property User_model                    $user_model
  *
  * @author wangnan <wangnanphp@163.com>
- * @date   2016-11-11 00:42:03
+ * @date   2017-04-09 15:35:05
  */
 class MY_Controller extends CI_Controller
 {
