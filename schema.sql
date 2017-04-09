@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
   KEY `login_name` (`login_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '管理员表';
 
--- Table: `box_subject`
-CREATE TABLE IF NOT EXISTS `box_subject` (
+-- Table: `theme`
+CREATE TABLE IF NOT EXISTS `theme` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `name` VARCHAR(255) NOT NULL DEFAULT '' '主题名称',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
