@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `theme` (
 -- Table: `box`
 CREATE TABLE IF NOT EXISTS `box` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
-  `subject_id` INT(10) UNSIGNED DEFAULT NULL COMMENT '主题id(FK:box_subject id)',
+  `theme_id` INT(10) UNSIGNED DEFAULT NULL COMMENT '主题id(FK:box_subject id)',
   `year` INT(10) UNSIGNED NOT NULL COMMENT '年',
   `month` INT(10) UNSIGNED NOT NULL COMMENT '月',
   `monthly_price` DECIMAL(10,2) NOT NULL COMMENT '1月价格',
