@@ -83,3 +83,15 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/* COMMENT CONSTANT */
+defined('DS') OR define('DS', '/');  // DIRECTORY_SEPARATOR 目录分隔符简化写法
+/* PATH */
+defined('PATH_ROOT')  OR define('PATH_ROOT', dirname(dirname(__DIR__)) . DS);    // 项目跟路径
+defined('PATH_APP')   OR define('PATH_APP', PATH_ROOT . 'application' . DS);     // APP项目路径
+defined('PATH_CACHE') OR define('PATH_CACHE', PATH_APP . 'cache' . DS);          // Catch目录
+defined('PATH_SESS')  OR define('PATH_SESS', PATH_CACHE . 'session' . DS);       // session保存路径
+defined('PATH_MODEL') OR define('PATH_MODEL', PATH_APP . 'models' . DS);         // model存放路径
+
+/* Admin CONSTANT */
+defined('ADMIN_PAGE_SIZE') OR define('ADMIN_PAGE_SIZE', 20); // 分页大小
