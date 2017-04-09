@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_login_email` (`login_email`),
   KEY `deleted_at` (`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户表';
 
