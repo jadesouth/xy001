@@ -16,14 +16,9 @@ $config = [
         ['field' => 'login_name', 'label' => '用户名', 'rules' => 'trim|required|min_length[4]|max_length[18]'],
         ['field' => 'password', 'label' => '密码', 'rules' => 'trim|required|min_length[6]|max_length[18]'],
     ],
-    'admin/admin/add' => [ // 添加管理员
-        ['field' => 'login_name', 'label' => '登录账号', 'rules' => 'trim|required|min_length[4]|max_length[18]|is_unique[admin.login_name]'],
-        ['field' => 'password', 'label' => '登录密码', 'rules' => 'trim|required|min_length[6]|max_length[18]'],
-    ],
-    'admin/admin/edit' => [ // 编辑管理员
-        ['field' => 'id', 'label' => '登录密码', 'rules' => 'trim|required|integer'],
-        ['field' => 'password', 'label' => '登录密码', 'rules' => 'trim|min_length[6]|max_length[18]'],
-        ['field' => 'lock', 'label' => '是否禁用', 'rules' => 'trim|in_list[0,1]'],
+    // 主题相关
+    'admin/theme/add' => [ // 添加主题
+        ['field' => 'name', 'label' => '主题名称', 'rules' => 'trim|required|min_length[4]|max_length[18]|is_unique[theme.name]'],
     ],
     'admin/keywords/add' => [ // 添加关键字
         ['field' => 'type', 'label' => '关键字类型', 'rules' => 'trim|required|in_list[1,2,3,4]'],
