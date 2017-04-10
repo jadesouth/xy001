@@ -69,21 +69,21 @@
                         <section class="dropdown-section dropdown-collapsed">
                             <h3 class="dropdown-hdr ">
                                 <a href="product.html?product=AmazingFun&price=188">AmazingFun</a><i class="fa fa-caret-down fa-lg"></i><i
-                                    class="fa fa-caret-right fa-lg"></i>
+                                        class="fa fa-caret-right fa-lg"></i>
                             </h3>
 
                         </section>
                         <section class="dropdown-section dropdown-collapsed">
                             <h3 class="dropdown-hdr "><a href="product.html?product=AmazingFunDX&price=499">AmazingFunDX</a><i
-                                    class="fa fa-caret-down fa-lg"></i><i
-                                    class="fa fa-caret-right fa-lg"></i>
+                                        class="fa fa-caret-down fa-lg"></i><i
+                                        class="fa fa-caret-right fa-lg"></i>
                             </h3>
 
                         </section>
                         <section class="dropdown-section dropdown-collapsed">
                             <h3 class="dropdown-hdr "><a href="product.html?product=AmazingFun&price=109">AmazingFunMIN</a><i
-                                    class="fa fa-caret-down fa-lg"></i><i
-                                    class="fa fa-caret-right fa-lg"></i>
+                                        class="fa fa-caret-down fa-lg"></i><i
+                                        class="fa fa-caret-right fa-lg"></i>
                             </h3>
 
                         </section>
@@ -92,13 +92,13 @@
                     </div>
                 </li>
                 <li class="nav-item  ">
-                    <a href="past.html" class="nav-link">往期回顾</a>
+                    <a href="/past" class="nav-link">往期回顾</a>
                 </li>
                 <li class="nav-item ">
-                    <a href="gift.html" id="header-gift-link" class="nav-link">订购礼物</a>
+                    <a href="/gift" id="header-gift-link" class="nav-link">订购礼物</a>
                 </li>
                 <li class="nav-item ">
-                    <a href="Personal.html" id="header-loot-vault-link" class="nav-link" target="_blank">私人定制</a>
+                    <a href="/Personal" id="header-loot-vault-link" class="nav-link" target="_blank">私人定制</a>
                 </li>
                 <li class="nav-item login" id="login">
                     <button type="button" class="loginbtn " data-toggle="modal" data-target="#loginmodal">登录/注册</button>
@@ -115,37 +115,4 @@
         </nav>
     </div>
 
-</div>
-<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title text-center" id="exampleModalLabel">账号登录</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <!--<label for="recipient-name" class="control-label">邮箱:</label>-->
-                        <input type="email" class="form-control" id="recipient-user" placeholder="邮箱：" required>
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="recipient-name" class="control-label">密码:</label>-->
-                        <input type="password" class="form-control" id="recipient-pwd" placeholder="密码：" required>
-                    </div>
-                </form>
-
-            </div>
-            <div class="modal-footer " style="text-align: center;">
-                <button type="button" id="loginuser" class="btn btn-primary" style="width:48%;">登录</button>
-                <button type="button" id="userregister" class="btn btn-primary" style="width:48%;">注册</button>
-                <div class="text-right">
-                    <a href="password.html" style="font-size: 12px;text-align:right ">忘记密码？</a>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
 </div>
