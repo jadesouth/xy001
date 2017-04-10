@@ -10,7 +10,7 @@ class User extends Admin_Controller
      * index 全部用户列表
      * @param int $page
      */
-    public function index(int $page = 0)
+    public function index($page = 0)
     {
         // 分页页码
         $page = 0 >= $page ? 1 : $page;

@@ -80,16 +80,15 @@ class Box extends Admin_Controller
      * add 添加盒子
      */
     public function add(){
+        $this->load->model('box_model');
         if('post' == $this->input->method()){
             $this->load->library('form_validation');
             if(false === $this->form_validation->run()) {
                 http_ajax_response(1, $this->form_validation->error_string());
                 return;
             }
-            // model
-            $this->load->model('box_model');
             $insert_data = $this->_get_format_form_data();
-            $insert_result = $this->box_model->add($insert_data);
+            $insert_result = $this->box_model->setInsertData($insert_data)->create();
             if(!empty($insert_result)){
                 http_ajax_response(0,'添加盒子成功',[]);
                 return;
@@ -118,13 +117,16 @@ class Box extends Admin_Controller
      * edit 编辑盒子
      */
     public function edit($box_id = 0){
+        $this->load->model('box_model');
         if('post' == $this->input->method()){
-            $this->load->helper('http');
-            // model
-            $this->load->model('box_model');
-            $box_info = $this->_get_format_form_data();
-            $this->box_model->setUpdateData($box_info);
-            $insert_result = $this->box_model->modify($box_id,$box_info);
+            $this->load->library('form_validation');
+            if(false === $this->form_validation->run()) {
+                http_ajax_response(1, $this->form_validation->error_string());
+                return;
+            }
+            $update_info = $this->_get_format_form_data();
+            $this->box_model->setUpdateData($update_info);
+            $insert_result = $this->box_model->modify($box_id);
             if(!empty($insert_result)){
                 http_ajax_response(0,'编辑盒子成功',[]);
                 return;
@@ -135,7 +137,6 @@ class Box extends Admin_Controller
         // view data
         $this->_headerViewVar['h1_title'] = '编辑盒子';
         $this->_headerViewVar['method_name'] = __FUNCTION__;
-        $this->load->model('box_model');
         $theme_data = $this->box_model
             ->setTable('theme')
             ->setSelectFields('id,name')
@@ -143,9 +144,12 @@ class Box extends Admin_Controller
         if (empty($theme_data)) {
             redirect('admin/theme/');
         }
-
+        $box_info = $this->box_model->setTable('box')->setSelectFields('*')->find($box_id);
+        if(empty($box_info)){
+            redirect('admin/box/');
+        }
         $this->_viewVar['theme_data'] = $theme_data;
-        $this->_viewVar['data'] = $this->box_model->find($box_id);
+        $this->_viewVar['data'] = $box_info;
         // 加载视图
         $this->load_view();
     }
