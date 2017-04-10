@@ -1,9 +1,9 @@
 <?php
 
-class Product extends Home_Controller
+class Password extends Home_Controller
 {
     /**
-     * index
+     * index 网站首页
      *
      */
     public function index()

@@ -8,7 +8,6 @@ class Home extends Home_Controller
      */
     public function index()
     {
-        $this->_headerViewVar['title'] = '首页';
         $this->load_view();
     }
 }
