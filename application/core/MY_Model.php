@@ -427,7 +427,7 @@ class MY_Model extends CI_Model
      * @author wangnan <wangnanphp@163.com>
      * @date   2016-11-13 00:22:55
      */
-    public function find(int $id, bool $clean_up = true)
+    public function find($id,$clean_up = true)
     {
         if (0 >= $id) {
             return false;
@@ -475,7 +475,7 @@ class MY_Model extends CI_Model
      * @author wangnan <wangnanphp@163.com>
      * @date   2016-11-14 18:04:54
      */
-    public function read(bool $clean_up = true)
+    public function read($clean_up = true)
     {
         $this->conditions($clean_up);
         $select_fields = $this->_selectFields;
@@ -835,7 +835,7 @@ class MY_Model extends CI_Model
      * @author wangnan <wangnanphp@163.com>
      * @date   2016-11-13 22:09:20
      */
-    public function setInsertData(array $insertData)
+    public function setInsertData($insertData)
     {
         $this->_insertData = $insertData;
         return $this;
@@ -865,7 +865,7 @@ class MY_Model extends CI_Model
      * @author wangnan <wangnanphp@163.com>
      * @date   2016-11-13 22:09:42
      */
-    public function setSelectFields(string $selectFields)
+    public function setSelectFields($selectFields)
     {
         $this->_selectFields = $selectFields;
         return $this;
@@ -880,7 +880,7 @@ class MY_Model extends CI_Model
      * @author haokaiyang
      * @date   2016-11-22 09:49:00
      */
-    public function setTable(string $table_name)
+    public function setTable($table_name)
     {
         $this->_table = $table_name;
         return $this;

@@ -13,7 +13,7 @@ class Theme extends Admin_Controller
      * @author wangnan <wangnanphp@163.com>
      * @date 2017-04-09 14:41:53
      */
-    public function index(int $page = 0)
+    public function index($page = 0)
     {
         // 分页页码
         $page = 0 >= $page ? 1 : $page;
