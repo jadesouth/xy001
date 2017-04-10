@@ -68,20 +68,20 @@
 
                         <section class="dropdown-section dropdown-collapsed">
                             <h3 class="dropdown-hdr ">
-                                <a href="product.html?product=AmazingFun&price=188">AmazingFun</a><i class="fa fa-caret-down fa-lg"></i><i
+                                <a href="/product?product=AmazingFun&price=188">AmazingFun</a><i class="fa fa-caret-down fa-lg"></i><i
                                         class="fa fa-caret-right fa-lg"></i>
                             </h3>
 
                         </section>
                         <section class="dropdown-section dropdown-collapsed">
-                            <h3 class="dropdown-hdr "><a href="product.html?product=AmazingFunDX&price=499">AmazingFunDX</a><i
+                            <h3 class="dropdown-hdr "><a href="/product?product=AmazingFunDX&price=499">AmazingFunDX</a><i
                                         class="fa fa-caret-down fa-lg"></i><i
                                         class="fa fa-caret-right fa-lg"></i>
                             </h3>
 
                         </section>
                         <section class="dropdown-section dropdown-collapsed">
-                            <h3 class="dropdown-hdr "><a href="product.html?product=AmazingFun&price=109">AmazingFunMIN</a><i
+                            <h3 class="dropdown-hdr "><a href="/product?product=AmazingFun&price=109">AmazingFunMIN</a><i
                                         class="fa fa-caret-down fa-lg"></i><i
                                         class="fa fa-caret-right fa-lg"></i>
                             </h3>
