@@ -26,10 +26,10 @@ class Admin_Controller extends MY_Controller
 
         // 检测登陆
         if(empty($this->session->admin_login_user)) {
-            redirect('admin/login');
+//            redirect('admin/box');
         }
         // 赋值登陆信息
-        $this->_loginUser = $this->session->admin_login_user;
+//        $this->_loginUser = $this->session->admin_login_user;
         // 加载后台相关的配置文件
         $this->config->load('admin', true);
         $this->_adminConfig = $this->config->item('admin');
@@ -43,7 +43,7 @@ class Admin_Controller extends MY_Controller
      * @author wangnan <wangnanphp@163.com>
      * @date 2016-11-13 21:26:37
      */
-    public function index(int $page = 0)
+    public function index($page = 0)
     {
         // 分页页码
         $page = 0 >= $page ? 1 : $page;
@@ -109,7 +109,7 @@ class Admin_Controller extends MY_Controller
      * @author wangnan
      * @date 2016-05-04 14:53:16
      */
-    public function edit(int $id = 0)
+    public function edit($id = 0)
     {
         if('post' == $this->input->method()) {
             $this->load->helper('http');
@@ -173,7 +173,7 @@ class Admin_Controller extends MY_Controller
      * @author wangnan <wangnanphp@163.com>
      * @date 2016-11-11 00:45:20
      */
-    public function load_view(string $view = '', array $var = [])
+    public function load_view($view = '', array $var = [])
     {
         // 获取默认视图,默认取与调用此方法的方法同名的视图
         if(empty($view)) {

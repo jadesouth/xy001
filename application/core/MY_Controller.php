@@ -63,7 +63,7 @@ class MY_Controller extends CI_Controller
      * @author wangnan <wangnanphp@163.com>
      * @date 2016-11-23 22:20:16
      */
-    protected function is_login(): bool
+    protected function is_login()
     {
         return empty($this->_loginUser) ? false : true;
     }
