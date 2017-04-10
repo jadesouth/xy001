@@ -111,7 +111,7 @@ class MY_Model extends CI_Model
      * @author wangnan
      * @date   2016-05-04 11:50:56
      */
-    public function getPage(int $page = 0, int $page_size = 20, string $order = '', array $where = [])
+    public function getPage( $page = 0,  $page_size = 20,  $order = '',  $where = [])
     {
         // search
         if (! empty($where)) {
@@ -370,7 +370,7 @@ class MY_Model extends CI_Model
      * @author wangnan <wangnanphp@163.com>
      * @date   2016-11-13 22:41:15
      */
-    public function update(array $data = [], bool $clean_up = true)
+    public function update($data = [], $clean_up = true)
     {
         $data = array_merge($this->_updateData, $data);
         if (empty($data) || ! is_array($data)) {
@@ -395,7 +395,7 @@ class MY_Model extends CI_Model
      * @author wangnan <wangnanphp@163.com>
      * @date   2016-11-14 18:19:38
      */
-    public function modify(int $id, array $data = [], bool $clean_up = true)
+    public function modify($id, array $data = [], $clean_up = true)
     {
         if (0 >= $id) {
             return false;

@@ -46,7 +46,7 @@
                 <li<?='messages' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/messages')?>">留言管理</a></li>
                 <li<?='user' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/user')?>">用户管理</a></li>
                 <li<?='banner' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/banner')?>">Banner 管理</a></li>
-                <li<?='admin' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/index')?>">管理员管理</a></li>
+                <li<?='box' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/box')?>">盒子管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right main-nav-user-info">
                 <li class="dropdown">

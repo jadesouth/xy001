@@ -92,6 +92,12 @@ defined('PATH_APP')   OR define('PATH_APP', PATH_ROOT . 'application' . DS);    
 defined('PATH_CACHE') OR define('PATH_CACHE', PATH_APP . 'cache' . DS);          // Catch目录
 defined('PATH_SESS')  OR define('PATH_SESS', PATH_CACHE . 'session' . DS);       // session保存路径
 defined('PATH_MODEL') OR define('PATH_MODEL', PATH_APP . 'models' . DS);         // model存放路径
-
+defined('PATH_RESOURCE') OR define('PATH_RESOURCE', PATH_ROOT . 'resources' . DS);  // 资源文件绝对物理路径
+defined('PATH_UPLOAD') OR define('PATH_UPLOAD', PATH_RESOURCE . 'uploads' . DS);                            // 上传文件绝对物理路径
+/* upload setting */
+defined('UPLOAD_FILE_MAX_SIZE') OR define('UPLOAD_FILE_MAX_SIZE', 4080);  // 允许上传文件大小的最大值(KB)
 /* Admin CONSTANT */
 defined('ADMIN_PAGE_SIZE') OR define('ADMIN_PAGE_SIZE', 20); // 分页大小
+/* folder name*/
+defined('FOLDER_RESOURCE') OR define('FOLDER_RESOURCE', 'resources' .DS);
+defined('FOLDER_UPLOAD') OR define('FOLDER_UPLOAD', FOLDER_RESOURCE.'uploads'.DS );
