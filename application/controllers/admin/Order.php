@@ -1,17 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
- * Theme 主题管理控制器
+ * Order 订单管理控制器
  */
-class Theme extends Admin_Controller
+class Order extends Admin_Controller
 {
     /**
      * index
-     *
      * @param int $page
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2017-04-09 14:41:53
      */
     public function index($page = 0)
     {

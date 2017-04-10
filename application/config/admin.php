@@ -32,6 +32,13 @@ $config = [
         'table_header' => ['#', '登录账号', '名称', '邮寄电话', '添加时间', '状态', '操作'],
         'index_field'  => 'id,login_email,name,post_phone,created_at,status',
     ],
+    // 订单管理
+    'order' => [
+        'name'         => '订单',
+        'index'        => '订单列表',
+        'table_header' => ['#', '主题名称', '添加时间'],
+        'index_field'  => 'id,name,created_at',
+    ],
 
     'article' => [
         'name'         => '文章管理',
