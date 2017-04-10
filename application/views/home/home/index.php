@@ -23,7 +23,7 @@
                 <button type="button" id="loginuser" class="btn btn-primary" style="width:48%;">登录</button>
                 <button type="button" id="userregister" class="btn btn-primary" style="width:48%;">注册</button>
                 <div class="text-right">
-                    <a href="password.html" style="font-size: 12px;text-align:right ">忘记密码？</a>
+                    <a href="/password" style="font-size: 12px;text-align:right ">忘记密码？</a>
 
                 </div>
 
