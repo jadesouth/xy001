@@ -35,7 +35,6 @@ class Upload extends MY_Controller
 
     public function image()
     {
-
         if (empty($image_name = array_keys($_FILES)[0])) {
             http_ajax_response(1, '上传图片非法');
             return;
@@ -54,5 +53,12 @@ class Upload extends MY_Controller
         } else { // failed
             $this->send_failure_msg();
         }
+    }
+
+    private function send_failure_msg()
+    {
+        $failure_msg = $this->upload->display_errors('', '');
+        $failure_msg = empty($failure_msg) ? '上传失败!' : $failure_msg;
+        http_ajax_response(1, $failure_msg);
     }
 }
