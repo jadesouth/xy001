@@ -39,89 +39,24 @@
             <aside class="filters">
                 <header class="header-2">筛选盒子</header>
                 <ul class="filter-list crate-list">
-                    <li class="filter-group">
-                        <button class="btn-filter selected" id="core-crate-filter-btn"><b class="crate-name">AmazingFun
-                            </b> (<span class="crate-count">1</span>)
-                        </button>
-                        <ul class="filter-sub-list">
-                            <li class="filter-year">
-                                <button class="btn-filter selected" id="core-crate-2016-filter-btn">2017</button>
+                    <?php if(!empty($theme_and_year)):?>
+                        <?php foreach ($theme_and_year as $theme_id=>$theme_data){?>
+                            <li class="filter-group">
+                                <button class="btn-filter selected" id="core-crate-filter-btn-<?=$theme_data['theme_id']?>" onclick="window.location.href='/past?theme_id=<?=$theme_data['theme_id']?>'"><b class="crate-name"><?=$theme_data['theme_name']?>
+                                    </b> (<span class="crate-count"><?=$theme_data['count']?></span>)
+                                </button>
+                                <ul class="filter-sub-list">
+                                    <?php foreach ($theme_data['year'] as $year){?>
+                                    <a href="/past?theme_id=<?=$theme_data['theme_id']?>&year=<?=$year?>">
+                                        <li class="filter-year">
+                                            <button class="btn-filter selected" id="core-crate-<?=$year?>-filter-btn"><?=$year?></button>
+                                        </li>
+                                    </a>
+                                    <?php }?>
+                                </ul>
                             </li>
-                            <!--<li class="filter-year">-->
-                            <!--<button class="btn-filter" id="core-crate-2015-filter-btn">2016</button>-->
-                            <!--</li>-->
-                        </ul>
-                    </li>
-                    <li class="filter-group">
-                        <button class="btn-filter" id="lcdx-crate-filter-btn"><b class="crate-name">AmazingFunDX</b>
-                            (<span class="crate-count">1</span>)
-                        </button>
-                        <ul class="filter-sub-list">
-                            <li class="filter-year">
-                                <button class="btn-filter" id="lcdx-crate-2016-filter-btn">2017</button>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="filter-group">
-                        <button class="btn-filter" id="anime-crate-filter-btn"><b class="crate-name">AmazingFunMIN</b>
-                            (<span class="crate-count">1</span>)
-                        </button>
-                        <ul class="filter-sub-list">
-                            <li class="filter-year">
-                                <button class="btn-filter" id="anime-crate-2016-filter-btn">2017</button>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--<li class="filter-group">-->
-                    <!--<button class="btn-filter" id="gaming-crate-filter-btn"><b class="crate-name">LOOT GAMING</b>-->
-                    <!--(<span class="crate-count">8</span>)-->
-                    <!--</button>-->
-                    <!--<ul class="filter-sub-list">-->
-                    <!--<li class="filter-year">-->
-                    <!--<button class="btn-filter" id="gaming-crate-2016-filter-btn">2016</button>-->
-                    <!--</li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    <!--<li class="filter-group">-->
-                    <!--<button class="btn-filter" id="pets-crate-filter-btn"><b class="crate-name">LOOT PETS</b> (<span-->
-                    <!--class="crate-count">7</span>)-->
-                    <!--</button>-->
-                    <!--<ul class="filter-sub-list">-->
-                    <!--<li class="filter-year">-->
-                    <!--<button class="btn-filter" id="pets-crate-2016-filter-btn">2016</button>-->
-                    <!--</li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    <!--<li class="filter-group">-->
-                    <!--<button class="btn-filter" id="loot-wear-filter-btn"><b class="crate-name">LOOT WEAR</b> (<span-->
-                    <!--class="crate-count">10</span>)-->
-                    <!--</button>-->
-                    <!--<ul class="filter-sub-list">-->
-                    <!--<li class="filter-year">-->
-                    <!--<button class="btn-filter" id="loot-wear-2016-filter-btn">2016</button>-->
-                    <!--</li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    <!--<li class="filter-group">-->
-                    <!--<button class="btn-filter" id="halo-crate-filter-btn"><b class="crate-name">HALO LEGENDARY-->
-                    <!--CRATE</b> (<span class="crate-count">1</span>)-->
-                    <!--</button>-->
-                    <!--<ul class="filter-sub-list">-->
-                    <!--<li class="filter-year">-->
-                    <!--<button class="btn-filter" id="halo-crate-2016-filter-btn">2016</button>-->
-                    <!--</li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    <!--<li class="filter-group">-->
-                    <!--<button class="btn-filter" id="firefly-crate-filter-btn"><b class="crate-name">FIREFLY CARGO-->
-                    <!--CRATE</b> (<span class="crate-count">1</span>)-->
-                    <!--</button>-->
-                    <!--<ul class="filter-sub-list">-->
-                    <!--<li class="filter-year">-->
-                    <!--<button class="btn-filter" id="firefly-crate-2016-filter-btn">2016</button>-->
-                    <!--</li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
+                        <?php }?>
+                    <?php endif;?>
                 </ul>
                 <header class="header-2 hide">Filter by Brand</header>
                 <ul class="filter-list brand-list hide"></ul>
@@ -130,53 +65,25 @@
                 </div>
             </aside>
             <ul class="crates past-slides tabs">
-                <li class="tab filtered" data-product="core-crate" data-name="Loot Crate" data-month="january"
-                    data-year="2016" data-brands=""
-                    style="background-image: url('/resources/assets/images/pastone1.png');">
-                    <button id="core-crate-january-2016-tab" class="btn-reset btn-tab"><h6 class="hdr-6"><span>海贼王手办</span><span></span>
-                        </h6> <h4 class="hdr-3"><span class="product">AmazingFun</span><span
-                                class="date"></span></h4> <h6 class="hdr-6">
-                            <span>魔兽世界装备</span><span></span>
-                        </h6></button>
-                </li>
-                <li class="tab filtered" data-product="core-crate" data-name="Loot Crate" data-month="february"
-                    data-year="2016" data-brands=""
-                    style="background-image: url('/resources/assets/images/pastone2.png');">
-                    <button id="core-crate-february-2016-tab" class="btn-reset btn-tab"><h6 class="hdr-6">
-                            <span>魔兽世界</span></h6> <h4 class="hdr-3"><span class="product">AmazingFunDX</span><span
-                                class="date"></span></h4> <h6 class="hdr-6"><span>Two World One Home</span></h6>
-                    </button>
-                </li>
-                <li class="tab filtered" data-product="core-crate" data-name="Loot Crate" data-month="march"
-                    data-year="2016" data-brands=""
-                    style="background-image: url('/resources/assets/images/pastone3.png');">
-                    <button id="core-crate-march-2016-tab" class="btn-reset btn-tab"><h6 class="hdr-6">
-                            <span></span><span>火影忍者</span></h6> <h4 class="hdr-3"><span class="product">AmazingFunMIN</span><span
-                                class="date"></span></h4> <h6 class="hdr-6"><span></span><span></span>
-                        </h6></button>
-                </li>
-                <article class="slide swiper-slide" id="core-crate-january-2016-slide" data-product="core-crate"
-                         data-name="Loot Crate" data-month="january" data-year="2016"
-                         style="background-image: url(https://images.contentful.com/rzwi86gxgpgo/60CbBFw51u2cAkimUqCC2u/31a8c4bbf3bfad9137fb0c67b3153bb3/past-core-invasion-items.jpg);">
+                <?php if(!empty($box_list)):?>
+                <?php foreach ($box_list as $key=>$box_data){?>
+                    <li class="tab filtered" data-product="core-crate" data-name="Loot Crate" data-month="<?=$box_data['month']?>"
+                        data-year="<?=$box_data['year']?>" data-brands=""
+                        style="background-image: url('<?=$box_data['cover_image']?>');">
+                        <button id="core-crate-<?=$box_data['month']?>-<?=$box_data['year']?>-tab" class="btn-reset btn-tab" data-id="<?=$box_data['id']?>"><h6 class="hdr-6"><span><?=$box_data['cover_title']?></span><span></span>
+                            </h6> <h4 class="hdr-3"><span class="product"><?=$box_data['theme_name']?></span><span
+                                        class="date"></span></h4> <h6 class="hdr-6">
+                                <span><?=$box_data['cover_subtitle']?></span><span></span>
+                            </h6></button>
+                    </li>
+                <?php }?>
+                <?php endif;?>
+                <article class="slide swiper-slide" style="background-image: url(https://images.contentful.com/rzwi86gxgpgo/60CbBFw51u2cAkimUqCC2u/31a8c4bbf3bfad9137fb0c67b3153bb3/past-core-invasion-items.jpg);" id="introduction">
                     <div class="slide-container "><h4 class="hdr">本月介绍</h4>
-
-                        <p class="desc">我们把最流行，最炫酷的动漫手办，游戏装备放进您的盒子中，包括海贼王、魔兽世界等更多！</p>
-
-                        <!--<p>-->
-                        <!--<a href="//images.contentful.com/rzwi86gxgpgo/YvLCoqkB8W8gyQ2M80Gws/fa3ad1839d93a5692219cc62967e4887/past-core-invasion-download.jpg"-->
-                        <!--id="invasion-past-art-download-lnk" class="download-link" download="">Get Theme Art<i-->
-                        <!--class="fa fa-download"></i></a></p>-->
-
-                        <p><a href="product.html?product=AmazingFun&price=188"
-                              id="invasion-past-purchase-lnk" class="btn btn-primary purchase-link">购买</a></p>
-                        <!--<button class="btn-reset btn-view-items" id="invasion-past-btn-view-items"-->
-                        <!--data-view-text="View Items" data-hide-text="Hide Items">View Items-->
-                        <!--</button>-->
-                        <!--<img src="//images.contentful.com/rzwi86gxgpgo/rAOS2nIby8YWwusoSoMQ6/6fbc595d165b9ce117c176dfcccd0e16/past-core-invasion-franchises.png"-->
-                        <!--class="img-franchises" alt="">-->
+                        <p class="desc" id="introduction_title">我们把最流行，最炫酷的动漫手办，游戏装备放进您的盒子中，包括海贼王、魔兽世界等更多！</p>
+                        <p><a href="/product?theme_id=AmazingFun&id=188" class="btn btn-primary purchase-link" id="btn_buy">购买</a></p>
                     </div>
                 </article>
-
             </ul>
         </div>
 
@@ -221,12 +128,29 @@
     });
     $(function () {
         $(".btn-tab").click(function () {
+            var id = $(this).data('id');
+            var ajax_return = false;
+            $.ajax({
+                type: "POST",
+                url: "<?=base_url("/past/ajaxGetBoxIntroduction")?>",
+                data: {"id": id},
+                dataType: "json",
+                success: function(response){
+                    if(0 == response.status) {
+                        var bg_image_url = "https://images.contentful.com/rzwi86gxgpgo/60CbBFw51u2cAkimUqCC2u/31a8c4bbf3bfad9137fb0c67b3153bb3/past-core-invasion-items.jpg";
+                        bg_image_url = response.data.introduction_image ? response.data.introduction_image : bg_image_url;
+                        $('#introduction').css("background-image","url("+bg_image_url+")");
+                        $('#introduction_title').html(response.data.introduction_title);
+                        $('#btn_buy').attr('href',"/product?theme_id="+response.data.theme_id+"&id="+response.data.id);
+                    }
+                }
+            });
             $(this).toggleClass('active').toggleClass('');
             $(this).parent().siblings('.tab').find('.btn-tab').removeClass('active');
             if($(this).hasClass('active')){
-                $('.slide.swiper-slide').show();
+                $('#introduction').show();
             }else{
-                $('.slide.swiper-slide').hide();
+                $('#introduction').hide();
             }
         });
         $('#toggle-filter-btn').click(function(){
