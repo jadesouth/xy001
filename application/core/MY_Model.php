@@ -1,13 +1,9 @@
 <?php
-
 /**
  * Class MY_Model 应用的基模型
  *
  * @property CI_DB_query_builder $db
  * @property CI_Loader           $load
- *
- * @author wangnan <wangnanphp@163.com>
- * @date   2016-11-11 00:41:28
  */
 /**
  * Class MY_Model 模型基类
@@ -108,8 +104,6 @@ class MY_Model extends CI_Model
      * @param array  $where     额外的查询条件
      *
      * @return array 结果集
-     * @author wangnan
-     * @date   2016-05-04 11:50:56
      */
     public function getPage( $page = 0,  $page_size = 20,  $order = '',  $where = [])
     {
@@ -139,9 +133,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return int 查询记录的总条数
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 21:46:21
      */
     public function count(bool $clean_up = true)
     {
@@ -157,9 +148,6 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      *
      * @return bool|int 查询记录的总条数
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-27 20:51:49
      */
     public function leftCount(bool $clean_up = true)
     {
@@ -200,9 +188,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return array|bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-15 15:29:29
      */
     public function leftGet(bool $clean_up = true)
     {
@@ -231,9 +216,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return array|bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-15 15:31:03
      */
     public function rightGet(bool $clean_up = true)
     {
@@ -262,9 +244,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return array|bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-15 14:50:00
      */
     public function leftRead(bool $clean_up = true)
     {
@@ -292,9 +271,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return array|bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-15 15:28:34
      */
     public function rightRead(bool $clean_up = true)
     {
@@ -322,9 +298,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 18:26:11
      */
     public function delete(bool $clean_up = true)
     {
@@ -340,9 +313,6 @@ class MY_Model extends CI_Model
      * @param int  $id       删除的条件主键
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 18:30:42
      */
     public function remove(int $id, bool $clean_up = true)
     {
@@ -366,9 +336,6 @@ class MY_Model extends CI_Model
      * @param array $data     更新的数据
      * @param bool  $clean_up 是否清理查询条件和更新数据,默认清理
      * @return bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 22:41:15
      */
     public function update($data = [], $clean_up = true)
     {
@@ -391,9 +358,6 @@ class MY_Model extends CI_Model
      * @param array $data     更新的数据
      * @param bool  $clean_up 是否清理查询条件和更新数据,默认清理
      * @return bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 18:19:38
      */
     public function modify($id, array $data = [], $clean_up = true)
     {
@@ -423,9 +387,6 @@ class MY_Model extends CI_Model
      * @param int  $id       数据ID
      * @param bool $clean_up 是否清理查询条件和查询数据,默认清理
      * @return array|bool 查询的结果集
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 00:22:55
      */
     public function find($id,$clean_up = true)
     {
@@ -449,9 +410,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件和查询字段,默认清理
      * @return array 数组结果集
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 19:36:09
      */
     public function get(bool $clean_up = true)
     {
@@ -471,9 +429,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件和查询字段,默认清理
      * @return array 二维结果集数组
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 18:04:54
      */
     public function read($clean_up = true)
     {
@@ -493,9 +448,6 @@ class MY_Model extends CI_Model
      * @param array $data     需要插入的数据
      * @param bool  $clean_up 是否清理插入的数据,默认清理
      * @return mixed 成功:插入的主键,失败:false
-     *
-     * @author wangnan
-     * @date   2016-11-13 13:57:50
      */
     public function create(array $data = [], bool $clean_up = true)
     {
@@ -515,9 +467,6 @@ class MY_Model extends CI_Model
      * @param array $data     需要插入的数据,二维数组,每一维代表一条数据
      * @param bool  $clean_up 是否清理插入的数据,默认清理
      * @return mixed 插入的行数或false
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 13:58:52
      */
     public function createBatch(array $data = [], bool $clean_up = true)
     {
@@ -536,9 +485,6 @@ class MY_Model extends CI_Model
      *
      * @param array $condition AND条件数组
      * @return $this|bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-15 16:01:25
      */
     public function setAndCond(array $condition)
     {
@@ -555,9 +501,6 @@ class MY_Model extends CI_Model
      *
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return $this|bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 16:06:11
      */
     protected function conditions(bool $clean_up = true)
     {
@@ -583,9 +526,6 @@ class MY_Model extends CI_Model
      * @param array  $conditions 条件表达式数组
      * @param string $logical    当前被解析的表达式数组各元素之间的逻辑关系 ['AND', 'OR']
      * @return bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 16:02:32
      */
     private function parseConditions(array $conditions, string $logical)
     {
@@ -635,9 +575,6 @@ class MY_Model extends CI_Model
      * @param string $expression 表达式
      * @param mixed  $value      值
      * @return bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 15:51:18
      */
     private function parseConditionOperator(string $logical, string $expression, $value)
     {
@@ -774,9 +711,6 @@ class MY_Model extends CI_Model
      * last_query 最后一次查询预约
      *
      * @return string
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 13:11:44
      */
     public function last_query()
     {
@@ -787,9 +721,6 @@ class MY_Model extends CI_Model
      * print_query 打印最后一条查询语句
      *
      * @return $this
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 13:12:12
      */
     public function print_query()
     {
@@ -801,9 +732,6 @@ class MY_Model extends CI_Model
      * print_query_error 打印查询错误
      *
      * @return $this
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-14 13:13:41
      */
     public function print_query_error()
     {
@@ -831,9 +759,6 @@ class MY_Model extends CI_Model
      *
      * @param array $insertData
      * @return $this
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 22:09:20
      */
     public function setInsertData($insertData)
     {
@@ -846,9 +771,6 @@ class MY_Model extends CI_Model
      *
      * @param array $conditions
      * @return $this
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 22:09:30
      */
     public function setConditions(array $conditions)
     {
@@ -861,9 +783,6 @@ class MY_Model extends CI_Model
      *
      * @param string $selectFields
      * @return $this
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 22:09:42
      */
     public function setSelectFields($selectFields)
     {
@@ -876,9 +795,6 @@ class MY_Model extends CI_Model
      *
      * @param string $table_name
      * @return $this
-     *
-     * @author haokaiyang
-     * @date   2016-11-22 09:49:00
      */
     public function setTable($table_name)
     {
@@ -891,9 +807,6 @@ class MY_Model extends CI_Model
      *
      * @param array $leftJoin
      * @return MY_Model
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-29 13:21:18
      */
     public function setLeftJoin(array $leftJoin)
     {
@@ -906,9 +819,6 @@ class MY_Model extends CI_Model
      *
      * @param array $rightJoin
      * @return MY_Model
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-29 13:21:34
      */
     public function setRightJoin(array $rightJoin)
     {
