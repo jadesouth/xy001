@@ -64,31 +64,16 @@
                         <i class="glyphicon glyphicon-triangle-right"></i>
                     </button>
                     <div class="pick-crate collapse" id="dropdown-pick-crate" aria-expanded="false">
-                        <!--<div class="container">-->
-
+                        <div class="container">
+                        <?php foreach ($header_theme_data as $theme){?>
                         <section class="dropdown-section dropdown-collapsed">
                             <h3 class="dropdown-hdr ">
-                                <a href="/product?product=AmazingFun&price=188">AmazingFun</a><i class="fa fa-caret-down fa-lg"></i><i
+                                <a href="/product?theme_id=<?=$theme['id']?>"><?=$theme['name']?></a><i class="fa fa-caret-down fa-lg"></i><i
                                         class="fa fa-caret-right fa-lg"></i>
                             </h3>
-
+                        <?php }?>
                         </section>
-                        <section class="dropdown-section dropdown-collapsed">
-                            <h3 class="dropdown-hdr "><a href="/product?product=AmazingFunDX&price=499">AmazingFunDX</a><i
-                                        class="fa fa-caret-down fa-lg"></i><i
-                                        class="fa fa-caret-right fa-lg"></i>
-                            </h3>
-
-                        </section>
-                        <section class="dropdown-section dropdown-collapsed">
-                            <h3 class="dropdown-hdr "><a href="/product?product=AmazingFun&price=109">AmazingFunMIN</a><i
-                                        class="fa fa-caret-down fa-lg"></i><i
-                                        class="fa fa-caret-right fa-lg"></i>
-                            </h3>
-
-                        </section>
-
-                        <!--</div>-->
+                        </div>
                     </div>
                 </li>
                 <li class="nav-item  ">
