@@ -118,6 +118,7 @@ class Box extends Admin_Controller
      */
     public function edit($box_id = 0){
         $this->load->model('box_model');
+        $this->load->model('theme_model');
         if('post' == $this->input->method()){
             $this->load->library('form_validation');
             if(false === $this->form_validation->run()) {
@@ -137,14 +138,14 @@ class Box extends Admin_Controller
         // view data
         $this->_headerViewVar['h1_title'] = '编辑盒子';
         $this->_headerViewVar['method_name'] = __FUNCTION__;
-        $theme_data = $this->box_model
+        $theme_data = $this->theme_model
             ->setTable('theme')
             ->setSelectFields('id,name')
             ->read();
         if (empty($theme_data)) {
             redirect('admin/theme/');
         }
-        $box_info = $this->box_model->setTable('box')->setSelectFields('*')->find($box_id);
+        $box_info = $this->box_model->setSelectFields('*')->find($box_id);
         if(empty($box_info)){
             redirect('admin/box/');
         }

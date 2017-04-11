@@ -58,4 +58,18 @@ class Box_model extends MY_Model
         return $this->getPage($page, $page_size, $order, $conditions);
     }
 
+    public function getLastBoxId($theme_id = 0)
+    {
+        $this->_conditions['ORDER'] = 'id desc';
+        $this->_conditions['LIMIT'] = 1;
+        if (! empty($theme_id)) {
+            $this->_conditions['AND']['theme_id'] = $theme_id;
+        }
+        $return = $this->read();
+        if (empty($return[0]['id'])) {
+            return false;
+        }
+        return $return[0]['id'];
+    }
+
 }

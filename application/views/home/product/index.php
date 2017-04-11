@@ -94,7 +94,7 @@
                 </div>
             </article>
             <article class="product-info">
-                <h1 class="hdr-1">AmazingFun</h1>
+                <h1 class="hdr-1"><?=$box_info['theme_name']?></h1>
                 <div id="option-selects-one" class="option-selects">
                 <h2 class="hdr-5"><label for="plan-select">选择订阅计划</label>
                     <span class="glyphicon glyphicon-info-sign fa-info-circle" data-container="body" data-toggle="popover" data-content="我们的认购计划允许您支付1，3，6或12个月。你可以随时取消。"
