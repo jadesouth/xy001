@@ -61,53 +61,52 @@
                 <div class="img-container swiper-container gallery-top ">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img class="img" src="/resources/assets/images/ProductImage.png" alt="魔兽世界精美装备!"/>
+                            <img class="img" src="<?=$box_info['bannber_image1']?>" alt="<?=$box_info['bannber_title1']?>"/>
                         </div>
                         <div class="swiper-slide">
-                            <img class="img" src="/resources/assets/images/ProductImage2.png" alt="AmazingFun礼物盒子"/>
+                            <img class="img" src="<?=$box_info['bannber_image2']?>" alt="<?=$box_info['bannber_title2']?>"/>
 
                         </div>
                         <div class="swiper-slide">
-                            <img class="img" src="/resources/assets/images/ProductImage3.png" alt="逼真的游戏道具"/>
+                            <img class="img" src="<?=$box_info['bannber_image3']?>" alt="<?=$box_info['bannber_title3']?>"/>
                         </div>
                         <div class="swiper-slide">
-                            <img class="img" src="/resources/assets/images/ProductImage4.png" alt="海贼王精美手办"/>
+                            <img class="img" src="<?=$box_info['bannber_image4']?>" alt="<?=$box_info['bannber_title4']?>"/>
                         </div>
                     </div>
                 </div>
-                <p class="item-slide-text" id="item-slide-text"></p>
+                <p class="item-slide-text" id="item-slide-text"><?=$box_info['bannber_title1']?></p>
                 <div class="swiper-container gallery-thumbs">
                     <div class="swiper-wrapper item-list">
                         <div class="swiper-slide item" >
-                            <img class="img" src="/resources/assets/images/ProductImage.png" alt="魔兽世界精美装备!"/>
+                            <img class="img" src="<?=$box_info['bannber_image1']?>" alt="<?=$box_info['bannber_title1']?>"/>
                         </div>
                         <div class="swiper-slide item">
-                            <img class="img" src="/resources/assets/images/ProductImage2.png" alt="AmazingFun礼物盒子"/>
+                            <img class="img" src="<?=$box_info['bannber_image2']?>" alt="<?=$box_info['bannber_title2']?>"/>
                         </div>
                         <div class="swiper-slide item">
-                            <img class="img" src="/resources/assets/images/ProductImage3.png" alt="逼真的游戏道具"/>
+                            <img class="img" src="<?=$box_info['bannber_image3']?>" alt="<?=$box_info['bannber_title3']?>"/>
                         </div>
                         <div class="swiper-slide item">
-                            <img class="img" src="/resources/assets/images/ProductImage4.png" alt="海贼王精美手办"/>
+                            <img class="img" src="<?=$box_info['bannber_image4']?>" alt="<?=$box_info['bannber_title4']?>"/>
                         </div>
                     </div>
                 </div>
             </article>
             <article class="product-info">
                 <h1 class="hdr-1">AmazingFun</h1>
-                <!--<div id="option-selects-one" class="option-selects">-->
+                <div id="option-selects-one" class="option-selects">
                 <h2 class="hdr-5"><label for="plan-select">选择订阅计划</label>
                     <span class="glyphicon glyphicon-info-sign fa-info-circle" data-container="body" data-toggle="popover" data-content="我们的认购计划允许您支付1，3，6或12个月。你可以随时取消。"
                           data-placement="auto top" data-trigger="focus hover" data-original-title="" title=""></span>
                 </h2>
                 <select class="plan-select" id="plan-select" data-bonus=", Includes FREE bonus t-shirt">
-                    <!--<option value="">计划选择</option>-->
-                    <!--<option value="ca-1-month-subscription" data-price="40.11" data-period="1" selected>1个月</option>-->
-                    <!--<option value="ca-3-month-subscription" data-price="37.50" data-period="3">3个月</option>-->
-                    <!--<option value="ca-6-month-subscription" data-price="36.16" data-period="6">6个月</option>-->
-                    <!--<option value="ca-12-month-subscription" data-price="34.82" data-period="12">12个月, 包括一件免费奖励T恤</option>-->
+                    <option value="ca-1-month-subscription" data-price="<?=$box_info['monthly_price']?>" data-period="1" selected>1个月</option>
+                    <option value="ca-3-month-subscription" data-price="<?=$box_info['quarterly_price']?>" data-period="3">3个月</option>
+                    <option value="ca-6-month-subscription" data-price="<?=$box_info['semiannually_price']?>" data-period="6">6个月</option>
+                    <option value="ca-12-month-subscription" data-price="<?=$box_info['annually_price']?>" data-period="12">12个月, 包括一件免费奖励T恤</option>
                 </select> <input type="hidden" id="plan-name" value="ca-1-month-subscription">
-                <!--</div>-->
+                </div>
                 <div id="option-selects-two" class="option-selects">
                     <h2 class="hdr-5">
                         <label for="size-select-1">选择T恤衫号码</label>
@@ -133,7 +132,7 @@
                     </select> <input type="hidden" class="option-value" id="shirt" value="">
                 </div>
                 <p class="pricing">
-                    <span class="hdr-3 price price-total">¥222</span>
+                    <span class="hdr-3 price price-total">¥<?=$box_info['monthly_price']?></span>
                     <span class="sub-text currency"></span>
                     <span class="sub-text">/ 月</span>
                 </p>
@@ -153,9 +152,10 @@
                         </button>
                         <ul class="info-list collapse" id="info-1" aria-labelledby="info-1-btn" aria-expanded="false"
                             style="height: 0px;">
-                            <li class="info-item">4-6件物品</li>
-                            <li class="info-item">零售价值超400元</li>
-                            <li class="info-item">拥有独家授权</li>
+                            <?php $characteristic = explode("\n",$box_info['characteristic']);?>
+                            <?php foreach ($characteristic as $characteristic_value){?>
+                            <li class="info-item"><?=$characteristic_value?></li>
+                            <?php }?>
                         </ul>
                     </div>
                     <div class="panel">
@@ -164,14 +164,13 @@
                         </button>
                         <!--<p class="info collapse in" id="info-2" aria-labelledby="info-2-btn" aria-expanded="false">Your-->
                         <!--crate will arrive between December 20-28 if you order by December 19 at 9pm PT.</p>-->
-                        <p class="info collapse " id="info-2" aria-labelledby="info-2-btn" aria-expanded="false">你的盒子将在订购后的一周内送达.</p>
+                        <p class="info collapse " id="info-2" aria-labelledby="info-2-btn" aria-expanded="false"><?=$box_info['logistics']?></p>
                     </div>
                     <div class="panel">
                         <button class="hdr-3" id="info-3-btn" data-toggle="collapse" data-target="#info-3"
                                 data-parent="#info-accordion" aria-expanded="false" aria-controls="info-3">关于主题
                         </button>
-                        <p class="info collapse" id="info-3" aria-labelledby="info-3-btn" aria-expanded="false">每个月，我们都会选择一个统一的概念或理念，把这个月的所有
-                            和项目。本月的主题是海贼王.</p>
+                        <p class="info collapse" id="info-3" aria-labelledby="info-3-btn" aria-expanded="false"><?=$box_info['about']?></p>
                     </div>
                 </div>
             </article>
@@ -235,10 +234,7 @@
                     theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
                 }
             }
-            console.log(theRequest);
             return theRequest;
-
-
         }
         var funstr='<option value="">计划选择</option><option value="ca-1-month-subscription" data-price="188" data-period="1" selected>1个月</option>'+
             '<option value="ca-3-month-subscription" data-price="178" data-period="3">3个月</option>'+
@@ -266,8 +262,8 @@
         GetRequest();
         var a=GetRequest();
         $('.product-info h1').text(a.product);
-        selectprice(a.product);
-        $('.product-info .price').text("¥ "+a.price);
+//        selectprice(a.product);
+//        $('.product-info .price').text("¥ "+a.price);
         $('#plan-select').change(function(){
             $('.product-info .price').text("¥ "+$(this).children('option:selected').attr("data-price"));
         })
