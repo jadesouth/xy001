@@ -29,9 +29,31 @@ class Order extends Admin_Controller
             $this->pagination->initialize($config);
             $this->_viewVar['page'] = $this->pagination->create_links();
             // get page data
-            $this->_viewVar['data'] = $this->_model
-                ->setSelectFields($this->_adminConfig[$this->_className]['index_field'])
+            $orders = $this->_model
+                ->setSelectFields('id,order_number,plan_number,post_name,post_phone,post_addr')
                 ->getPage($page, ADMIN_PAGE_SIZE);
+            if (! empty($orders)) {
+                $year = date('Y');
+                $month = date('m');
+                $order_ids = array_column($orders, 'id');
+                $this->load->model('order_plan_model');
+                $order_plans = $this->order_plan_model
+                    ->setSelectFields('id,order_id,plan_year,plan_month,plan_date,status')
+                    ->setConditions(['order_id' => $order_ids])
+                    ->get();
+                $order_play_info = [];
+                if (! empty($order_plans)) {
+                    foreach ($order_plans as $order_plan) {
+                        
+                        isset($order_play_info[$order_plan['order_id']][''])
+                    }
+                }
+                foreach ($orders as $order) {
+
+                }
+            }
+
+            $this->_viewVar['data'] = '';
         }
         // 加载视图
         $this->load_view();
