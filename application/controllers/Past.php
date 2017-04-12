@@ -13,8 +13,13 @@ class Past extends Home_Controller
         $this->load->helper('http');
         $year = (int)$this->input->get('year');
         $theme_id = (int)$this->input->get('theme_id');
+        $month = 0;
+        if (empty($year) && empty($theme_id)) {
+            $year = date('Y', strtotime('-1 month'));
+            $month = date('n', strtotime('-1 month'));
+        }
         $select_fields = 'id,theme_id,theme_name,year,month,cover_title,cover_subtitle,cover_image';
-        $box_list = $this->box_model->readBox($theme_id, $year, $select_fields, 0, 21);
+        $box_list = $this->box_model->readBox($theme_id, $year, $month, $select_fields, 0, 21);
         $this->_viewVar['box_list'] = $box_list;
         $this->load_view();
     }
