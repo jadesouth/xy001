@@ -106,6 +106,8 @@ CREATE TABLE IF NOT EXISTS `order_plan` (
   `order_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单id(FK:order id)',
   `user_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id(FK:user id)',
   `box_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '盒子id(FK:box id)',
+  `plan_year` MEDIUMINT NOT NULL DEFAULT 0 COMMENT '计划年份',
+  `plan_month` TINYINT NOT NULL DEFAULT 0 COMMENT '计划月份',
   `plan_date` DATE NOT NULL DEFAULT '0000-00-00' COMMENT '计划日期',
   `status` TINYINT NOT NULL DEFAULT 0 COMMENT '状态[0:正常邮寄,1:暂停邮寄]',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
