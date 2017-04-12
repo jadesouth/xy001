@@ -4,7 +4,7 @@
         <!-- left nav -->
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li <?='index' == $method_name ? 'class="active"' : ''?>><a href="<?=base_url('admin/theme')?>">订单列表<?='index' == $method_name ? '<span class="sr-only">(current)</span>' : ''?></a></li>
+                <li <?=('index' == $method_name || 'detail' == $method_name) ? 'class="active"' : ''?>><a href="<?=base_url('admin/order')?>">订单列表<?='index' == $method_name ? '<span class="sr-only">(current)</span>' : ''?></a></li>
             </ul>
         </div>
         <!-- right content -->
