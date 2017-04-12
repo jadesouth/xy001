@@ -34,33 +34,6 @@
     }
 
 </style>
-<!--<body class="all-crates" id="gifts-index">-->
-<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title text-center" id="exampleModalLabel">账号登录</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <!--<label for="recipient-name" class="control-label">邮箱:</label>-->
-                        <input type="email" class="form-control" id="recipient-user" placeholder="邮箱：" required>
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="recipient-name" class="control-label">密码:</label>-->
-                        <input type="password" class="form-control" id="recipient-pwd" placeholder="密码：" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer " style="text-align: center;">
-                <button type="button" id="loginuser" class="btn btn-primary" style="width:150px;">登录</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="main-content">
     <div class="section section-header">
         <div class="wrapper">
