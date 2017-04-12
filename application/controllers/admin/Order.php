@@ -89,22 +89,45 @@ class Order extends Admin_Controller
     }
 
     /**
-     * ajax_disable 禁用账号
+     * detail 订单详情
      */
-    public function ajax_disable()
+    public function detail()
     {
-        $this->load->helper('http');
-        $user_id = (int)$this->input->post('user_id', 0);
-        if (0 >= $user_id) {
-            http_ajax_response(1, '非法请求');
+        // view data
+        $this->_headerViewVar['h1_title'] = '盒子详情';
+        $this->_headerViewVar['method_name'] = __FUNCTION__;
+        $order_id = (int)$this->input->get('order', true);
+        if (0 >= $order_id) {
+            $this->load_view();
             return;
         }
 
-        $this->load->model('theme_model');
-        if (true == $this->theme_model->modify($user_id, ['status' => 1])) {
-            http_ajax_response(0, '关闭权限成功');
-        } else {
-            http_ajax_response(2, '关闭权限成功');
+        // 获取订单基本信息
+        $order = $this->_model->setSelectFields('*')
+            ->setConditions(['id' => $order_id])->get();
+        $this->_viewVar['order'] = $order;
+        if (! empty($order)) {
+            // 获取订单计划信息
+            $this->load->model('order_plan_model');
+            $order_plans = $this->order_plan_model
+                ->setSelectFields('*')
+                ->setConditions(['order_id' => $order_id])
+                ->read();
+            $this->_viewVar['order_plans'] = $order_plans;
+            // 获取下订单用户信息
+            $this->load->model('user_model');
+            $user = $this->user_model->setSelectFields('*')
+                ->setAndCond(['id' => $order['user_id']])
+                ->get();
+            $this->_viewVar['user'] = $user;
+            // 获取盒子名称
+            $this->load->model('box_model');
+            $box_name = $this->box_model->setSelectFields('name')
+                ->setAndCond(['id' => $order['box_id']])
+                ->get();
+            $this->_viewVar['box'] = $box_name;
         }
+
+        $this->load_view();
     }
 }
