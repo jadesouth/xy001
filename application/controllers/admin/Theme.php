@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
- * Thema 主题管理控制器
+ * Theme 主题管理控制器
  */
 class Theme extends Admin_Controller
 {
@@ -42,11 +42,7 @@ class Theme extends Admin_Controller
     }
 
     /**
-     * ajax_disable
-     * 禁用账号
-     *
-     * @author haokaiyang
-     * @date   2016-11-12 23:49:39
+     * ajax_disable 禁用账号
      */
     public function ajax_disable()
     {
