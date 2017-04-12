@@ -55,12 +55,11 @@ $config = [
         ['field' => 'qq', 'label' => 'QQ号码', 'rules' => 'trim|required|is_natural_no_zero|integer|greater_than_equal_to[10000]'],
     ],
     'user/ajax_register' => [ // 用户注册
-        ['field' => 'login_name', 'label' => '登录名', 'rules'=> 'trim|required|is_unique[user.login_name]'],
+        ['field' => 'email', 'label' => '邮箱', 'rules'=> 'trim|required|valid_email|is_unique[user.login_email]'],
         ['field' => 'password', 'label' => '密码', 'rules'=> 'trim|required'],
-        ['field' => 'con_password', 'label' => '确认密码', 'rules'=> 'trim|required|matches[password]'],
     ],
-    'user/ajax_login' => [ // 用户注册
-        ['field' => 'login_name', 'label' => '登录名', 'rules'=> 'trim|required'],
+    'user/ajax_login' => [ // 用户登录
+        ['field' => 'email', 'label' => '邮箱', 'rules'=> 'trim|required|valid_email'],
         ['field' => 'password', 'label' => '密码', 'rules'=> 'trim|required'],
     ],
     'user/detail' => [ // 个人设置

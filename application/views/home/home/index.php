@@ -1,36 +1,3 @@
-<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title text-center" id="exampleModalLabel">账号登录</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <!--<label for="recipient-name" class="control-label">邮箱:</label>-->
-                        <input type="email" class="form-control" id="recipient-user" placeholder="邮箱：" required>
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="recipient-name" class="control-label">密码:</label>-->
-                        <input type="password" class="form-control" id="recipient-pwd" placeholder="密码：" required>
-                    </div>
-                </form>
-
-            </div>
-            <div class="modal-footer " style="text-align: center;">
-                <button type="button" id="loginuser" class="btn btn-primary" style="width:48%;">登录</button>
-                <button type="button" id="userregister" class="btn btn-primary" style="width:48%;">注册</button>
-                <div class="text-right">
-                    <a href="/password" style="font-size: 12px;text-align:right ">忘记密码？</a>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 <div class="main-content">
     <div class="section banner">
         <img src="/resources/assets/images/banner.png" alt="banner"/>
@@ -312,27 +279,4 @@
 //        pagination: '.swiper-pagination'
 
     });
-    //    var str = '<div class="dropdown">' + '<button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">我的帐户<span class="caret"></span></button><ul class="dropdown-menu pull-left" aria-labelledby="dLabel"> <li class=""> <a href="">管理帐户</a></li> <li class=""><a href="#">退出登录</a></li></ul> </div>'
-    //    $(function () {
-    //        $('#loginuser').on('click', function () {
-    //            var user = $('#recipient-user').val();
-    //            var pwd = $('#recipient-pwd').val();
-    ////            console.log(user, pwd);
-    //            if (user == "amazingfun@163.com" && pwd == "123456") {
-    //                $("#loginmodal").modal('hide');
-    //                $('.loginbtn').addClass('hidden');
-    //                $('#header-my-account-link').removeClass('hidden');
-    //                $("#loginaccount").removeClass('hidden');
-    //
-    //            }
-    //        });
-    //        $('#logout,#loginout').on('click', function () {
-    //            $('#header-my-account-link').addClass('hidden');
-    //            $('#dropdown-account').attr('aria-expanded', false);
-    //            $('#dropdown-account').removeClass('in');
-    //            $('#header-log-in-modal-link').removeClass('hidden').show();
-    //            $("#loginaccount").addClass('hidden');
-    //            $('.loginbtn').removeClass('hidden');
-    //        })
-    //    })
 </script>
