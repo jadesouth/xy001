@@ -25,9 +25,9 @@ class Admin_Controller extends MY_Controller
         parent::__construct();
 
         // 检测登陆
-        if(empty($this->session->admin_login_user)) {
-//            redirect('admin/box');
-        }
+//        if(empty($this->session->admin_login_user)) {
+//            redirect('admin/login');
+//        }
         // 赋值登陆信息
 //        $this->_loginUser = $this->session->admin_login_user;
         // 加载后台相关的配置文件
@@ -103,7 +103,7 @@ class Admin_Controller extends MY_Controller
     /**
      * edit 后台通用修改方法
      *
-     * @param int id 数据表主键
+     * @param int $id 数据表主键
      *
      * @return json {"status":0, "msg":"info"}
      * @author wangnan

@@ -41,6 +41,7 @@
             <ul class="nav navbar-nav main-nav-font">
                 <li<?='box' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/box')?>">盒子管理</a></li>
                 <li<?='theme' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/theme')?>">主题管理</a></li>
+                <li<?='order' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/order')?>">订单管理</a></li>
                 <li<?='user' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/user')?>">用户管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right main-nav-user-info">
