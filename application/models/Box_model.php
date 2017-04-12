@@ -45,14 +45,16 @@ class Box_model extends MY_Model
         return $return;
     }
 
-    public function readBox($theme_id = 0, $year = 0, $select_fields = '*', $page = 0, $page_size = 20, $order = '')
+    public function readBox($theme_id = 0, $year = 0, $month = 0,$select_fields = '*', $page = 0, $page_size = 20, $order = '',$conditions = [])
     {
-        $conditions = [];
         if (! empty($theme_id)) {
             $conditions['AND']['theme_id'] = $theme_id;
         }
         if (! empty($year)) {
             $conditions['AND']['year'] = $year;
+        }
+        if (! empty($month)) {
+            $conditions['AND']['month'] = $month;
         }
         $this->_selectFields = $select_fields;
         return $this->getPage($page, $page_size, $order, $conditions);
@@ -70,6 +72,27 @@ class Box_model extends MY_Model
             return false;
         }
         return $return[0]['id'];
+    }
+
+    /**
+     * 获取首页的3个盒子数据
+     *
+     * @return array
+     */
+    public function getHomePageBoxInfo(){
+        $return = [];
+        $year = date('Y',strtotime('-1 month'));
+        $month = date('n',strtotime('-1 month'));
+        $sql = "SELECT `id`, `theme_id`, `theme_name`, `monthly_price`, `image1`, `image2`, `image3`, `image4` FROM (SELECT * from box order by id desc) as box WHERE   ( `theme_id` IN(1, 2, 3) AND `year` <= '{$year}' AND `month` <= '{$month}'  ) AND `deleted_at` = '0000-00-00 00:00:00' GROUP BY `theme_id`";
+        $box_list = $this->query($sql);
+        if(empty($box_list)){
+            return $return;
+        }
+        foreach ($box_list as $box){
+            $return[$box['theme_id']] = $box;
+        }
+        return $return;
+;
     }
 
 }

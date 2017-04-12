@@ -708,6 +708,17 @@ class MY_Model extends CI_Model
     }
 
     /**
+     * query 执行sql语句
+     * @param string $sql
+     *
+     * @return array
+     */
+    public function query($sql)
+    {
+        return $this->db->query($sql)->result_array();;
+    }
+
+    /**
      * last_query 最后一次查询预约
      *
      * @return string

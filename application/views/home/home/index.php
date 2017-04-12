@@ -109,17 +109,26 @@
 
                             <div class="swiper-container swiper-two-1 mt10">
                                 <div class="swiper-wrapper">
+                                    <?php if(!empty($box_list[1]['image1'])):?>
                                     <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-1.png" alt="" class="item"/>
+                                        <img src="<?=$box_list[1]['image1']?>" alt="" class="item"/>
                                     </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[1]['image2'])):?>
                                     <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-6.png" alt="" class="item"/>
-
+                                        <img src="<?=$box_list[1]['image2']?>" alt="" class="item"/>
                                     </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[1]['image3'])):?>
                                     <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-3.png" alt="" class="item"/>
-
+                                        <img src="<?=$box_list[1]['image3']?>" alt="" class="item"/>
                                     </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[1]['image4'])):?>
+                                    <div class="swiper-slide">
+                                        <img src="<?=$box_list[1]['image4']?>" alt="" class="item"/>
+                                    </div>
+                                    <?php endif;?>
                                 </div>
                                 <!-- 如果需要分页器 -->
                                 <div class="swiper-pagination"></div>
@@ -129,9 +138,9 @@
                                 <div class="swiper-button-next"></div>
                             </div>
                             <div class="crate-info">
-                                <p>¥188/月 包含运费</p>
-                                <a href="product.html?product=AmazingFun&price=188" class="btn btn-primary"
-                                   data-product="AmazingFun" data-price="188">Get AmazingFun</a>
+                                <p>¥<?=$box_list[1]['monthly_price']?>/月 包含运费</p>
+                                <a href="/product.html?theme_id=<?=$box_list[1]['theme_id']?>&id=<?=$box_list[1]['id']?>" class="btn btn-primary"
+                                   data-product="AmazingFun">Get AmazingFun</a>
                             </div>
                         </div>
                     </div>
@@ -147,17 +156,26 @@
 
                             <div class="swiper-container swiper-two-2 mt10">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-7.png" alt="" class="item"/>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-6.png" alt="" class="item"/>
-
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-4.png" alt="" class="item"/>
-
-                                    </div>
+                                    <?php if(!empty($box_list[2]['image1'])):?>
+                                        <div class="swiper-slide">
+                                            <img src="<?=$box_list[2]['image1']?>" alt="" class="item"/>
+                                        </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[2]['image2'])):?>
+                                        <div class="swiper-slide">
+                                            <img src="<?=$box_list[2]['image2']?>" alt="" class="item"/>
+                                        </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[2]['image3'])):?>
+                                        <div class="swiper-slide">
+                                            <img src="<?=$box_list[2]['image3']?>" alt="" class="item"/>
+                                        </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[2]['image4'])):?>
+                                        <div class="swiper-slide">
+                                            <img src="<?=$box_list[2]['image4']?>" alt="" class="item"/>
+                                        </div>
+                                    <?php endif;?>
                                 </div>
                                 <!-- 如果需要分页器 -->
                                 <div class="swiper-pagination"></div>
@@ -167,9 +185,9 @@
                                 <div class="swiper-button-next"></div>
                             </div>
                             <div class="crate-info">
-                                <p>¥499/月 包含运费</p>
-                                <a href="product.html?product=AmazingFunDX&price=499" class="btn btn-primary"
-                                   data-product="AmazingFunDX" data-price="499">Get AmazingFunDX</a>
+                                <p>¥<?=$box_list[2]['monthly_price']?>/月 包含运费</p>
+                                <a href="/product.html?theme_id=<?=$box_list[2]['theme_id']?>&id=<?=$box_list[2]['id']?>" class="btn btn-primary"
+                                   data-product="AmazingFunDX">Get AmazingFunDX</a>
                             </div>
                         </div>
 
@@ -186,17 +204,26 @@
 
                             <div class="swiper-container swiper-two-3 mt10">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-8.png" alt="" class="item"/>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-1.png" alt="" class="item"/>
-
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/resources/assets/images/doll-3.png" alt="" class="item"/>
-
-                                    </div>
+                                    <?php if(!empty($box_list[3]['image1'])):?>
+                                        <div class="swiper-slide">
+                                            <img src="<?=$box_list[3]['image1']?>" alt="" class="item"/>
+                                        </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[3]['image2'])):?>
+                                        <div class="swiper-slide">
+                                            <img src="<?=$box_list[3]['image2']?>" alt="" class="item"/>
+                                        </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[3]['image3'])):?>
+                                        <div class="swiper-slide">
+                                            <img src="<?=$box_list[3]['image3']?>" alt="" class="item"/>
+                                        </div>
+                                    <?php endif;?>
+                                    <?php if(!empty($box_list[3]['image4'])):?>
+                                        <div class="swiper-slide">
+                                            <img src="<?=$box_list[3]['image4']?>" alt="" class="item"/>
+                                        </div>
+                                    <?php endif;?>
                                 </div>
                                 <!-- 如果需要分页器 -->
                                 <div class="swiper-pagination"></div>
@@ -206,9 +233,9 @@
                                 <div class="swiper-button-next"></div>
                             </div>
                             <div class="crate-info">
-                                <p>¥109/月 包含运费</p>
-                                <a href="product.html?product=AmazingFunMIN&price=109" class="btn btn-primary"
-                                   data-product="AmazingFunMIN" data-price="109">Get AmazingFunMIN</a>
+                                <p>¥<?=$box_list[3]['monthly_price']?>/月 包含运费</p>
+                                <a href="/product.html?theme_id=<?=$box_list[3]['theme_id']?>&id=<?=$box_list[3]['id']?>" class="btn btn-primary"
+                                   data-product="AmazingFunMIN">Get AmazingFunMIN</a>
                             </div>
                         </div>
                     </div>
