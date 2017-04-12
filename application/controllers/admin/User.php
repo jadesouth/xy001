@@ -6,6 +6,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class User extends Admin_Controller
 {
+    public function email()
+    {
+        $this->load->library('email');
+
+        //以下设置Email参数
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'smtp.163.com';
+        $config['smtp_user'] = 'wangnanphp@163.com';
+        $config['smtp_pass'] = 'mail.php.wangnan';
+        $config['smtp_port'] = '25';
+        $config['charset'] = 'utf-8';
+        $config['wordwrap'] = TRUE;
+        $config['mailtype'] = 'html';
+        $this->email->initialize($config);
+
+        $this->email->from('wangnanphp@163.com', 'WN');
+        $this->email->to('hky1218@163.com');
+
+        $this->email->subject('Email WN');
+        $this->email->message('Testing the email class.');
+
+        var_dump($this->email->send(false), $this->email->print_debugger());
+    }
+
     /**
      * index 全部用户列表
      * @param int $page
