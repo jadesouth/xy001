@@ -8,6 +8,7 @@
  * @property CI_Input                      $input
  * @property CI_Pagination                 $pagination
  * @property CI_Session                    $session
+ * @property Admin_model                   $admin_model
  * @property Order_plan_model              $order_plan_model
  * @property Theme_model                   $theme_model
  * @property User_model                    $user_model
