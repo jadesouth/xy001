@@ -24,4 +24,18 @@ class Menu_model extends MY_Model
         $this->_insertData['list_order'] = $menu_info['list_order'];
         return $this->create();
     }
+
+    /**
+     * edit 根据ID修改菜单信息
+     *
+     * @param int $id 主键ID
+     * @return int 影响的行数
+     */
+    public function edit($id)
+    {
+        if(0 >= $id ) {
+            return false;
+        }
+        return $this->modify($id);
+    }
 }

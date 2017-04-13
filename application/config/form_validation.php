@@ -26,6 +26,11 @@ $config = [
         ['field' => 'url', 'label' => '链接地址', 'rules' => 'trim|required|valid_url|is_unique[menu.url]'],
         ['field' => 'list_order', 'label' => '排序', 'rules' => 'trim|is_natural'],
     ],
+    'admin/menu/edit' => [ // 添加菜单
+        ['field' => 'name', 'label' => '菜单名称', 'rules' => 'trim|required|min_length[1]|max_length[18]'],
+        ['field' => 'url', 'label' => '链接地址', 'rules' => 'trim|required|valid_url'],
+        ['field' => 'list_order', 'label' => '排序', 'rules' => 'trim|is_natural'],
+    ],
     // 盒子相关
     'box/add' => [ // 添加盒子
         ['field' => 'name', 'label' => '盒子名称', 'rules' => 'trim|required'],
