@@ -44,6 +44,7 @@ $config = [
         'name'         => '菜单',
         'index'        => '菜单列表',
         'add'          => '添加主题',
+        'edit'         => '修改菜单',
         'table_header' => ['#', '菜单名称', '链接地址', '排序', '状态', '操作'],
         'index_field'  => 'id,name,url,list_order,status',
     ],

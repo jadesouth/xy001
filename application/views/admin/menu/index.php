@@ -11,9 +11,9 @@
                 echo '<tr>';
                 foreach ($tr as $column_name => $value) { $td = 'status' == $column_name ? $status[$value] : $value; echo "<td>{$td}</td>";}
                 if('status' == $column_name && 0 == $value){ // 0.有权限 1.无权限
-                    echo '<td><a class="btn btn-danger btn-xs menu-disable" data-menu_id="'. $tr['id'] . '">隐藏</a>&nbsp;&nbsp;<a class="btn btn-default btn-xs menu-info" data-menu_id="'. $tr['id'] . '">查看详情</a>&nbsp;&nbsp;<a class="btn btn-default btn-xs delete-menu" data-menu_id="'. $tr['id'] . '">删除</a></td></tr>';
+                    echo '<td><a class="btn btn-danger btn-xs menu-disable" data-menu_id="'. $tr['id'] . '">隐藏</a>&nbsp;&nbsp;<a class="btn btn-default btn-xs menu-info" data-menu_id="'. $tr['id'] . '">查看详情</a>&nbsp;&nbsp;<a href="/admin/menu/edit/'.$tr['id'].'" class="btn btn-default btn-xs btn-warning" >编辑</a><a class="btn btn-default btn-xs delete-menu" data-menu_id="'. $tr['id'] . '">删除</a></td></tr>';
                 }else{
-                    echo '<td><a class="btn btn-success btn-xs menu-enable" data-menu_id="'. $tr['id'] . '">显示</a>&nbsp;&nbsp;<a class="btn btn-default btn-xs menu-info" data-menu_id="'. $tr['id'] . '">查看详情</a>&nbsp;&nbsp;<a class="btn btn-default btn-xs delete-menu" data-menu_id="'. $tr['id'] . '">删除</a></td></tr>';
+                    echo '<td><a class="btn btn-success btn-xs menu-enable" data-menu_id="'. $tr['id'] . '">显示</a>&nbsp;&nbsp;<a class="btn btn-default btn-xs menu-info" data-menu_id="'. $tr['id'] . '">查看详情</a>&nbsp;&nbsp;<a href="/admin/menu/edit/'.$tr['id'].'" class="btn btn-default btn-xs btn-warning" >编辑</a>&nbsp;&nbsp;<a class="btn btn-default btn-xs delete-menu" data-menu_id="'. $tr['id'] . '">删除</a></td></tr>';
                 }
             }
         } else {
