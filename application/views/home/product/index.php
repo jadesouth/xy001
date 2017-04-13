@@ -35,34 +35,34 @@
                 <div class="img-container swiper-container gallery-top ">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img class="img" src="<?=$box_info['bannber_image1']?>" alt="<?=$box_info['bannber_title1']?>"/>
+                            <img class="img" src="<?=$box_info['banner_image1']?>" alt="<?=$box_info['banner_title1']?>"/>
                         </div>
                         <div class="swiper-slide">
-                            <img class="img" src="<?=$box_info['bannber_image2']?>" alt="<?=$box_info['bannber_title2']?>"/>
+                            <img class="img" src="<?=$box_info['banner_image2']?>" alt="<?=$box_info['banner_title2']?>"/>
 
                         </div>
                         <div class="swiper-slide">
-                            <img class="img" src="<?=$box_info['bannber_image3']?>" alt="<?=$box_info['bannber_title3']?>"/>
+                            <img class="img" src="<?=$box_info['banner_image3']?>" alt="<?=$box_info['banner_title3']?>"/>
                         </div>
                         <div class="swiper-slide">
-                            <img class="img" src="<?=$box_info['bannber_image4']?>" alt="<?=$box_info['bannber_title4']?>"/>
+                            <img class="img" src="<?=$box_info['banner_image4']?>" alt="<?=$box_info['banner_title4']?>"/>
                         </div>
                     </div>
                 </div>
-                <p class="item-slide-text" id="item-slide-text"><?=$box_info['bannber_title1']?></p>
+                <p class="item-slide-text" id="item-slide-text"><?=$box_info['banner_title1']?></p>
                 <div class="swiper-container gallery-thumbs">
                     <div class="swiper-wrapper item-list">
                         <div class="swiper-slide item" >
-                            <img class="img" src="<?=$box_info['bannber_image1']?>" alt="<?=$box_info['bannber_title1']?>"/>
+                            <img class="img" src="<?=$box_info['banner_image1']?>" alt="<?=$box_info['banner_title1']?>"/>
                         </div>
                         <div class="swiper-slide item">
-                            <img class="img" src="<?=$box_info['bannber_image2']?>" alt="<?=$box_info['bannber_title2']?>"/>
+                            <img class="img" src="<?=$box_info['banner_image2']?>" alt="<?=$box_info['banner_title2']?>"/>
                         </div>
                         <div class="swiper-slide item">
-                            <img class="img" src="<?=$box_info['bannber_image3']?>" alt="<?=$box_info['bannber_title3']?>"/>
+                            <img class="img" src="<?=$box_info['banner_image3']?>" alt="<?=$box_info['banner_title3']?>"/>
                         </div>
                         <div class="swiper-slide item">
-                            <img class="img" src="<?=$box_info['bannber_image4']?>" alt="<?=$box_info['bannber_title4']?>"/>
+                            <img class="img" src="<?=$box_info['banner_image4']?>" alt="<?=$box_info['banner_title4']?>"/>
                         </div>
                     </div>
                 </div>

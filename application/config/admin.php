@@ -39,28 +39,19 @@ $config = [
         'table_header' => ['#', '邮寄姓名', '邮寄电话', '邮寄地址', '计划', '下月是否'],
         'index_field'  => 'id,order_number,plan_number,post_name,post_phone,post_addr,status,created_at',
     ],
-
-    'article' => [
-        'name'         => '文章管理',
-        'index'        => '文章列表',
-        'add'          => '添加文章',
-        'edit'         => '修改文章',
-        'table_header' => ['#', '文章标题', '所属类型', '短标题', '状态<br>0:显示,1:隐藏', '操作'],
-        'index_field'  => 'id,title,cid,subtitle,status',
+    // 菜单管理
+    'menu' => [
+        'name'         => '菜单',
+        'index'        => '菜单列表',
+        'add'          => '添加主题',
+        'table_header' => ['#', '菜单名称', '链接地址', '排序', '状态', '操作'],
+        'index_field'  => 'id,name,url,list_order,status',
     ],
-    // 查询权限申请管理
-    'detection' => [
-        'name'         => '申请管理',
-        'index'        => '申请列表',
-        'table_header' => ['#', '申请用户', '电话', 'QQ', 'E-mail', '申请时间', '操作'],
-        'index_field'  => 'id,title,cid,subtitle,status',
-    ],
-    // Banner 管理
-    'banner' => [
-        'name'         => 'Banner 管理',
-        'index'        => 'Banner 列表',
-        'add'          => '添加 Banner',
-        'table_header' => ['#', 'Banner', '添加时间', '状态', '操作'],
-        'index_field'  => 'id,img_path,created_at,status',
+    // 盒子管理
+    'box' => [
+        'name'         => '盒子',
+        'index'        => '盒子列表',
+        'table_header' => ['#', '名称', '主题', '年', '月', '操作'],
+        'index_field'  => 'id,name,theme_name,year,month',
     ],
 ];

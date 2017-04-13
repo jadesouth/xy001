@@ -76,51 +76,51 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_image1" class="col-sm-2 control-label">轮播图1</label>
+        <label for="banner_image1" class="col-sm-2 control-label">轮播图1</label>
         <div class="col-sm-9">
-            <img src="<?=$data['bannber_image1']?>" alt="">
+            <img src="<?=$data['banner_image1']?>" alt="">
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_image2" class="col-sm-2 control-label">轮播图2</label>
+        <label for="banner_image2" class="col-sm-2 control-label">轮播图2</label>
         <div class="col-sm-9">
-            <img src="<?=$data['bannber_image2']?>" alt="">
+            <img src="<?=$data['banner_image2']?>" alt="">
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_image3" class="col-sm-2 control-label">轮播图3</label>
+        <label for="banner_image3" class="col-sm-2 control-label">轮播图3</label>
         <div class="col-sm-9">
-            <img src="<?=$data['bannber_image3']?>" alt="">
+            <img src="<?=$data['banner_image3']?>" alt="">
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_image4" class="col-sm-2 control-label">轮播图4</label>
+        <label for="banner_image4" class="col-sm-2 control-label">轮播图4</label>
         <div class="col-sm-9">
-            <img src="<?=$data['bannber_image4']?>" alt="">
+            <img src="<?=$data['banner_image4']?>" alt="">
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_title1" class="col-sm-2 control-label">轮播图标题1</label>
+        <label for="banner_title1" class="col-sm-2 control-label">轮播图标题1</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" value="<?=$data['bannber_title1']?>" disabled>
+            <input type="text" class="form-control" value="<?=$data['banner_title1']?>" disabled>
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_title2" class="col-sm-2 control-label">轮播图标题2</label>
+        <label for="banner_title2" class="col-sm-2 control-label">轮播图标题2</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" value="<?=$data['bannber_title2']?>" disabled>
+            <input type="text" class="form-control" value="<?=$data['banner_title2']?>" disabled>
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_title3" class="col-sm-2 control-label">轮播图标题3</label>
+        <label for="banner_title3" class="col-sm-2 control-label">轮播图标题3</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" value="<?=$data['bannber_title3']?>" disabled>
+            <input type="text" class="form-control" value="<?=$data['banner_title3']?>" disabled>
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_title4" class="col-sm-2 control-label">轮播图标题4</label>
+        <label for="banner_title4" class="col-sm-2 control-label">轮播图标题4</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" value="<?=$data['bannber_title4']?>" disabled>
+            <input type="text" class="form-control" value="<?=$data['banner_title4']?>" disabled>
         </div>
     </div>
     <div class="form-group">

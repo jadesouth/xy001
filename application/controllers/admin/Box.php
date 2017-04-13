@@ -14,27 +14,24 @@ class Box extends Admin_Controller
         $page = 0 >= $page ? 1 : $page;
 
         // view data
-        $this->_headerViewVar['h1_title'] = '盒子列表';
+        $this->_headerViewVar['h1_title'] = $this->_adminConfig[$this->_className][__FUNCTION__];
         $this->_headerViewVar['method_name'] = __FUNCTION__;
-        $this->_viewVar['table_header'] = ['#', '名称', '主题', '年', '月', '操作'];
+        $this->_viewVar['table_header'] = $this->_adminConfig[$this->_className]['table_header'];
 
-        // model
-        $this->load->model('box_model');
         // 获取记录总条数
-        $count = $this->box_model->count();
-        if (! empty($count)) {
+        $count = $this->_model->count();
+        if(! empty($count)) {
             // Page configure
             $this->load->library('pagination');
-            $config['base_url'] = base_url("admin/".$this->_className."/index");
+            $config['base_url'] = base_url("admin/{$this->_className}/index");
             $config['total_rows'] = (int)$count;
             $this->pagination->initialize($config);
             $this->_viewVar['page'] = $this->pagination->create_links();
             // get page data
-            $this->_viewVar['data'] = $this->box_model
-                ->setSelectFields('id,name,theme_name,year,month')
+            $this->_viewVar['data'] = $this->_model
+                ->setSelectFields($this->_adminConfig[$this->_className]['index_field'])
                 ->getPage($page, ADMIN_PAGE_SIZE);
         }
-
         // 加载视图
         $this->load_view();
     }
@@ -59,14 +56,14 @@ class Box extends Admin_Controller
             'introduction_image' => $this->input->post('introduction_image_url'),
             'gift_introduction' => $this->input->post('gift_introduction'),
             'gift_image' => $this->input->post('gift_image_url'),
-            'bannber_image1' => $this->input->post('bannber_image1_url'),
-            'bannber_image2' => $this->input->post('bannber_image2_url'),
-            'bannber_image3' => $this->input->post('bannber_image3_url'),
-            'bannber_image4' => $this->input->post('bannber_image4_url'),
-            'bannber_title1' => $this->input->post('bannber_title1'),
-            'bannber_title2' => $this->input->post('bannber_title2'),
-            'bannber_title3' => $this->input->post('bannber_title3'),
-            'bannber_title4' => $this->input->post('bannber_title4'),
+            'banner_image1' => $this->input->post('banner_image1_url'),
+            'banner_image2' => $this->input->post('banner_image2_url'),
+            'banner_image3' => $this->input->post('banner_image3_url'),
+            'banner_image4' => $this->input->post('banner_image4_url'),
+            'banner_title1' => $this->input->post('banner_title1'),
+            'banner_title2' => $this->input->post('banner_title2'),
+            'banner_title3' => $this->input->post('banner_title3'),
+            'banner_title4' => $this->input->post('banner_title4'),
             'image1' => $this->input->post('image1_url'),
             'image2' => $this->input->post('image2_url'),
             'image3' => $this->input->post('image3_url'),

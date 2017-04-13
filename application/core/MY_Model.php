@@ -314,7 +314,7 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return bool
      */
-    public function remove(int $id, bool $clean_up = true)
+    public function remove($id, $clean_up = true)
     {
         if (0 >= $id) {
             return false;
