@@ -46,10 +46,10 @@
                     </button>
                     <div class="pick-crate collapse" id="dropdown-pick-crate" aria-expanded="false">
                         <div class="container">
-                        <?php foreach ($header_theme_data as $theme){?>
+                        <?php foreach ($header_menu_list as $menu){?>
                         <section class="dropdown-section dropdown-collapsed">
                             <h3 class="dropdown-hdr ">
-                                <a href="/product?theme_id=<?=$theme['id']?>"><?=$theme['name']?></a><i class="fa fa-caret-down fa-lg"></i><i
+                                <a href="<?=$menu['url']?>"><?=$menu['name']?></a><i class="fa fa-caret-down fa-lg"></i><i
                                         class="fa fa-caret-right fa-lg"></i>
                             </h3>
                         <?php }?>

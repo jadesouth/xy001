@@ -99,63 +99,63 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_image1" class="col-sm-2 control-label">轮播图1</label>
+        <label for="banner_image1" class="col-sm-2 control-label">轮播图1</label>
         <div class="col-sm-9">
-            <input type="file" class="form-control" name="bannber_image1" id="bannber_image1" placeholder="">
-            <input type="hidden" name="bannber_image1_url">
+            <input type="file" class="form-control" name="banner_image1" id="banner_image1" placeholder="">
+            <input type="hidden" name="banner_image1_url">
             <img class="img-thumbnail" style="display: none">
             <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过4.0M</p>
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_image2" class="col-sm-2 control-label">轮播图2</label>
+        <label for="banner_image2" class="col-sm-2 control-label">轮播图2</label>
         <div class="col-sm-9">
-            <input type="file" class="form-control" name="bannber_image2" id="bannber_image2" placeholder="">
-            <input type="hidden" name="bannber_image2_url">
+            <input type="file" class="form-control" name="banner_image2" id="banner_image2" placeholder="">
+            <input type="hidden" name="banner_image2_url">
             <img class="img-thumbnail" style="display: none">
             <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过4.0M</p>
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_image3" class="col-sm-2 control-label">轮播图3</label>
+        <label for="banner_image3" class="col-sm-2 control-label">轮播图3</label>
         <div class="col-sm-9">
-            <input type="file" class="form-control" name="bannber_image3" id="bannber_image3" placeholder="">
-            <input type="hidden" name="bannber_image3_url">
+            <input type="file" class="form-control" name="banner_image3" id="banner_image3" placeholder="">
+            <input type="hidden" name="banner_image3_url">
             <img class="img-thumbnail" style="display: none">
             <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过4.0M</p>
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_image4" class="col-sm-2 control-label">轮播图4</label>
+        <label for="banner_image4" class="col-sm-2 control-label">轮播图4</label>
         <div class="col-sm-9">
-            <input type="file" class="form-control" name="bannber_image4" id="bannber_image4" placeholder="">
-            <input type="hidden" name="bannber_image4_url">
+            <input type="file" class="form-control" name="banner_image4" id="banner_image4" placeholder="">
+            <input type="hidden" name="banner_image4_url">
             <img class="img-thumbnail" style="display: none">
             <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过4.0M</p>
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_title1" class="col-sm-2 control-label">轮播图标题1</label>
+        <label for="banner_title1" class="col-sm-2 control-label">轮播图标题1</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" name="bannber_title1" placeholder="">
+            <input type="text" class="form-control" name="banner_title1" placeholder="">
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_title2" class="col-sm-2 control-label">轮播图标题2</label>
+        <label for="banner_title2" class="col-sm-2 control-label">轮播图标题2</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" name="bannber_title2" placeholder="">
+            <input type="text" class="form-control" name="banner_title2" placeholder="">
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_title3" class="col-sm-2 control-label">轮播图标题3</label>
+        <label for="banner_title3" class="col-sm-2 control-label">轮播图标题3</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" name="bannber_title3" placeholder="">
+            <input type="text" class="form-control" name="banner_title3" placeholder="">
         </div>
     </div>
     <div class="form-group">
-        <label for="bannber_title4" class="col-sm-2 control-label">轮播图标题4</label>
+        <label for="banner_title4" class="col-sm-2 control-label">轮播图标题4</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" name="bannber_title4" placeholder="">
+            <input type="text" class="form-control" name="banner_title4" placeholder="">
         </div>
     </div>
     <div class="form-group">
@@ -261,10 +261,10 @@
         }
         box_upload_image("cover_image"); // 上传封面图片
         box_upload_image("introduction_image"); // 上传介绍图片
-        box_upload_image("bannber_image1");
-        box_upload_image("bannber_image2");
-        box_upload_image("bannber_image3");
-        box_upload_image("bannber_image4");
+        box_upload_image("banner_image1");
+        box_upload_image("banner_image2");
+        box_upload_image("banner_image3");
+        box_upload_image("banner_image4");
         box_upload_image("gift_image");
         box_upload_image("image1");
         box_upload_image("image2");

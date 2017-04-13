@@ -60,14 +60,14 @@ CREATE TABLE IF NOT EXISTS `box` (
   `introduction_image` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '介绍图片(筛选)',
   `gift_introduction` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '礼物封面介绍(他人订购)',
   `gift_image` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '礼物封面(他人订购)',
-  `bannber_image1` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图1(详情)',
-  `bannber_image2` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图2(详情)',
-  `bannber_image3` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图3(详情)',
-  `bannber_image4` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图4(详情)',
-  `bannber_title1` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图标题1(详情)',
-  `bannber_title2` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图标题2(详情)',
-  `bannber_title3` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图标题3(详情)',
-  `bannber_title4` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图标题4(详情)',
+  `banner_image1` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图1(详情)',
+  `banner_image2` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图2(详情)',
+  `banner_image3` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图3(详情)',
+  `banner_image4` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图4(详情)',
+  `banner_title1` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图标题1(详情)',
+  `banner_title2` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图标题2(详情)',
+  `banner_title3` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图标题3(详情)',
+  `banner_title4` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '轮播图标题4(详情)',
   `image1` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '物品图1(主页)',
   `image2` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '物品图2(主页)',
   `image3` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '物品图3(主页)',
@@ -116,3 +116,16 @@ CREATE TABLE IF NOT EXISTS `order_plan` (
   PRIMARY KEY (`id`),
   KEY `fk_order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单计划表';
+
+-- Table: `menu`
+CREATE TABLE `menu` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单名称',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
+  `list_order` tinyint(4) UNSIGNED NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态[0:正常,1:禁用]',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单表';

@@ -17,13 +17,13 @@ class Home_Controller extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('theme_model');
-        // 渲染导航
-        $theme_data = $this->theme_model
-            ->setTable('theme')
-            ->setSelectFields('id,name')
+        $this->load->model('menu_model');
+        // 渲染菜单
+        $menu_list = $this->menu_model
+            ->setConditions(['AND'=>['status'=>0],'ORDER'=>'list_order desc'])
+            ->setSelectFields('id,name,url')
             ->read();
-        $this->_viewVar['header_theme_data'] = $theme_data;
+        $this->_viewVar['header_menu_list'] = $menu_list;
 
         // 检测登陆
         if (! empty($this->session->home_login_user)) {
