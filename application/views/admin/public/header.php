@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>管理系统</title>
+    <title>AmazingFun 管理系统</title>
     <!-- Bootstrap -->
     <link href="<?=base_url()?>resources/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- main -->
@@ -44,6 +44,7 @@
                 <li<?='order' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/order')?>">订单管理</a></li>
                 <li<?='user' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/user')?>">用户管理</a></li>
                 <li<?='menu' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/menu')?>">菜单管理</a></li>
+                <li<?='admin' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/admin')?>">管理员管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right main-nav-user-info">
                 <li class="dropdown">
