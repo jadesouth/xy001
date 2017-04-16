@@ -37,6 +37,82 @@ class User extends Home_Controller
     }
 
     /**
+     * 修改姓名
+     */
+    public function ajax_edit_name()
+    {
+        $this->load->library('form_validation');
+        if (false === $this->form_validation->run()) {
+            http_ajax_response(1, $this->form_validation->error_string());
+        } else {
+            $user_id = $this->_loginUser['id'];
+            $update_data['name'] = $this->input->post('name', true);
+            $return = $this->_model->modify($user_id, $update_data);
+            if (! empty($return)) {
+                http_ajax_response(0, '修改成功');
+                return;
+            }
+            http_ajax_response(1, '修改失败');
+        }
+
+    }
+
+    /**
+     * 修改邮箱
+     */
+    public function ajax_edit_email()
+    {
+        $this->load->library('form_validation');
+        if (false === $this->form_validation->run()) {
+            http_ajax_response(1, $this->form_validation->error_string());
+        } else {
+            $user_id = $this->_loginUser['id'];
+            $update_data['login_email'] = $this->input->post('email', true);
+            $return = $this->_model->modify($user_id, $update_data);
+            if (! empty($return)) {
+                http_ajax_response(0, '修改成功');
+                $this->set_user_login($user_id, $update_data['login_email']);
+                return;
+            }
+            http_ajax_response(1, '修改失败');
+        }
+    }
+
+    /**
+     * 修改密码
+     */
+    public function ajax_edit_password()
+    {
+        $this->load->library('form_validation');
+        if (false === $this->form_validation->run()) {
+            http_ajax_response(1, $this->form_validation->error_string());
+        } else {
+            $user_id = $this->_loginUser['id'];
+            $old_password = $this->input->post('user_current_password', true);
+            $new_password = $this->input->post('user_password', true);
+            $user_info = $this->_model->setConditions(['id' => $user_id])->setSelectFields('password, salt')->get();
+            if (empty($user_info)) {
+                http_ajax_response(1, '登录账号不存在');
+                return;
+            }
+            $this->load->helper('security');
+            if ($user_info['password'] !== generate_admin_password($old_password, $user_info['salt'])) {
+                http_ajax_response(1, '原密码错误,请重新输入');
+                return;
+            }
+            $this->load->helper(['tools', 'security']);
+            $update_data['salt'] = random_characters();
+            $update_data['password'] = generate_admin_password($new_password, $update_data['salt']);
+            $return = $this->_model->modify($user_id, $update_data);
+            if (! empty($return)) {
+                http_ajax_response(0, '修改成功');
+                return;
+            }
+            http_ajax_response(1, '修改失败');
+        }
+    }
+
+    /**
      * ajax_login
      * 用户登录
      *
