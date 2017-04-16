@@ -19,3 +19,26 @@ $('#header-pick-a-crate-link').on('click',function(){
         $('#dropdown-pick-crate').removeClass('in');
     }
 });
+var str = '<div class="dropdown">' + '<button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><a href="subscriptions.html">我的帐户</a><span class="caret"></span></button><ul class="dropdown-menu pull-left" aria-labelledby="dLabel"> <li class=""> <a href="">管理帐户</a></li> <li class=""><a href="#">退出登录</a></li></ul> </div>'
+$(function () {
+    $('#loginuser').on('click', function () {
+        var user = $('#recipient-user').val();
+        var pwd = $('#recipient-pwd').val();
+//            console.log(user, pwd);
+        if (user == "amazingfun@163.com" && pwd == "123456") {
+            $("#loginmodal").modal('hide');
+            $('.loginbtn').addClass('hidden');
+            $('#header-my-account-link').removeClass('hidden');
+            $("#loginaccount").removeClass('hidden');
+
+        }
+    });
+    $('#logout,#loginout').on('click', function () {
+        $('#header-my-account-link').addClass('hidden');
+        $('#dropdown-account').attr('aria-expanded', false);
+        $('#dropdown-account').removeClass('in');
+        $('#header-log-in-modal-link').removeClass('hidden').show();
+        $("#loginaccount").addClass('hidden');
+        $('.loginbtn').removeClass('hidden');
+    })
+})
