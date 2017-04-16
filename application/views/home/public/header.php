@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/resources/assets/css/home/normalize.css"/>
     <link rel="stylesheet" href="/resources/assets/css/home/main.css"/>
 </head>
-<body<?=$body_attr ?: ''?>>
+<body<?=isset($body_attr) ? $body_attr : ''?>>
 <!--<div class="header navbar-fixed-top">-->
 <div class="nav-header navbar-fixed-top">
     <div class="container">
