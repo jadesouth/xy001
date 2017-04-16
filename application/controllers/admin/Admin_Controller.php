@@ -1,10 +1,6 @@
 <?php
-
 /**
- * Admin_Controller.php
- *
- * @author wangnan <wangnanphp@163.com>
- * @date   2016-11-11 03:13:09
+ * Class Admin_Controller
  */
 class Admin_Controller extends MY_Controller
 {
@@ -16,9 +12,6 @@ class Admin_Controller extends MY_Controller
 
     /**
      * Admin_Controller constructor.
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-11-13 20:00:13
      */
     public function __construct()
     {
@@ -39,9 +32,6 @@ class Admin_Controller extends MY_Controller
      * index 后台通用列表页
      *
      * @param int $page 分页页码
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-11-13 21:26:37
      */
     public function index($page = 0)
     {
@@ -73,9 +63,6 @@ class Admin_Controller extends MY_Controller
 
     /**
      * add 后台通用的添加方法
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-11-13 21:00:04
      */
     public function add()
     {
@@ -104,10 +91,7 @@ class Admin_Controller extends MY_Controller
      * edit 后台通用修改方法
      *
      * @param int $id 数据表主键
-     *
      * @return json {"status":0, "msg":"info"}
-     * @author wangnan
-     * @date 2016-05-04 14:53:16
      */
     public function edit($id = 0)
     {
@@ -141,9 +125,6 @@ class Admin_Controller extends MY_Controller
 
     /**
      * delete 后台通用根据ID删除数据
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-11-16 16:20:41
      */
     public function delete()
     {
@@ -169,9 +150,6 @@ class Admin_Controller extends MY_Controller
      *
      * @param string $view 模板名称,默认取与调用此方法的方法同名的视图
      * @param array  $var 分配给模板的变量,会和类变量$_viewVar合并
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-11-11 00:45:20
      */
     public function load_view($view = '', array $var = [])
     {
