@@ -62,4 +62,13 @@ class Member extends Home_Controller
         $this->_viewVar['sex'] = [1 => '男', 2 => '女'];
         $this->load_view();
     }
+
+
+    public function account(){
+        $user_id = $this->session->home_login_user['id'];
+        $this->load->model('user_model');
+        $user_info = $this->user_model->setSelectFields('id,login_email,name,created_at')->find($user_id);
+        $this->_viewVar['user_info'] = $user_info;
+        $this->load_view();
+    }
 }
