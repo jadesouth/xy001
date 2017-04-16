@@ -64,8 +64,8 @@
                                             <div class="row">
                                                 <div class="col-sm-4"></div>
                                                 <div class="col-xs-12 col-sm-8 pull-text-right">
-                                                    <a id="" class="btn btn-primary btn-sm" href="">本月暂订</a>
-                                                    <!--<a id="" class="btn btn-primary btn-sm" href="">激活</a>-->
+<!--                                                    <a id="" class="btn btn-primary btn-sm" href="">本月暂订</a>-->
+                                                    <a id="" class="btn btn-primary btn-sm" href="">激活</a>
                                                 </div>
                                             </div>
                                             <?php endif;?>
