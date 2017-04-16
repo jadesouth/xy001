@@ -3,8 +3,8 @@
         <div class="container"><h1 class="account-header">我的账户</h1>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a id="account-menu-subscriptions-lnk" href="subscriptions.html">我的订阅</a></li>
-                <li role="presentation"><a id="account-menu-account-info-lnk" href="account.html">账户信息</a>
+                    <a id="account-menu-subscriptions-lnk" href="/member/order">我的订阅</a></li>
+                <li role="presentation"><a id="account-menu-account-info-lnk" href="/member/account">账户信息</a>
                 </li>
             </ul>
             <br>
