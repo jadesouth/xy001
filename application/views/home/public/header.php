@@ -74,7 +74,7 @@
                         <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">我的帐户<span class="caret"></span></button>
                         <ul class="dropdown-menu pull-left" aria-labelledby="dLabel">
-                            <li class=""><a href="">管理帐户</a></li>
+                            <li class=""><a href="/member/account">管理帐户</a></li>
                             <li class=""><a href="/user/logout" id="loginout">退出登录</a></li>
                         </ul>
                     </div>

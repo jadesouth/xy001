@@ -114,6 +114,17 @@ $config = [
         ['field' => 'email', 'label' => '邮箱', 'rules'=> 'trim|required|valid_email'],
         ['field' => 'password', 'label' => '密码', 'rules'=> 'trim|required'],
     ],
+    'user/ajax_edit_name' => [ // 用户编辑姓名
+        ['field' => 'name', 'label' => '姓名', 'rules'=> 'trim|required'],
+    ],
+    'user/ajax_edit_email' => [ // 用户编辑邮箱
+        ['field' => 'email', 'label' => 'Email', 'rules'=> 'trim|required|valid_email'],
+    ],
+    'user/ajax_edit_password' => [ // 用户编辑密码
+        ['field' => 'user_current_password', 'label' => '旧密码', 'rules'=> 'trim|required'],
+        ['field' => 'user_password', 'label' => '新密码', 'rules'=> 'trim|required'],
+        ['field' => 'user_password_confirmation', 'label' => '新密码确认', 'rules'=> 'trim|required|matches[user_password]'],
+    ],
     'admin/keywords/add' => [ // 添加关键字
         ['field' => 'type', 'label' => '关键字类型', 'rules' => 'trim|required|in_list[1,2,3,4]'],
         ['field' => 'word', 'label' => '关键字', 'rules' => 'trim|required'],

@@ -65,10 +65,11 @@ class Member extends Home_Controller
 
 
     public function account(){
-        $user_id = $this->session->home_login_user['id'];
+        $user_id = $this->_loginUser['id'];
         $this->load->model('user_model');
         $user_info = $this->user_model->setSelectFields('id,login_email,name,created_at')->find($user_id);
         $this->_viewVar['user_info'] = $user_info;
+        $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
         $this->load_view();
     }
 }
