@@ -30,6 +30,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="tag" class="col-sm-2 control-label">标签</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" name="tag"  placeholder="请输入标签" value="<?=$data['tag']?>">
+        </div>
+    </div>
+    <div class="form-group">
         <label for="year" class="col-sm-2 control-label">年</label>
         <div class="col-sm-9">
             <input type="text" class="form-control"  name="year" placeholder="请输入年,如2017" value="<?=$data['year']?>">

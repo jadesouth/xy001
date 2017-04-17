@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `box` (
   `semiannually_price` DECIMAL(10,2) NOT NULL COMMENT '6月价格',
   `annually_price` DECIMAL(10,2) NOT NULL COMMENT '12月价格',
   `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '盒子名称',
+  `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '标签',
   `cover_title` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '封面标题(筛选)',
   `cover_subtitle` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '封面副标题(筛选)',
   `cover_image` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '封面图(正方形)(筛选)',
