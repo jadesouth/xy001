@@ -95,4 +95,24 @@ class Box_model extends MY_Model
 ;
     }
 
+    /**
+     * 读取tag列表
+     * @return array
+     */
+    public function readTagList()
+    {
+        $result = [];
+        $this->_selectFields = 'tag';
+        $this->_conditions['GROUP'] = 'tag';
+        $this->_conditions['tag !='] = '';
+        $tag_list = $this->read();
+        if (empty($tag_list)) {
+            return $result;
+        }
+        foreach ($tag_list as $tag) {
+            $result[] = $tag['tag'];
+        }
+        return $result;
+    }
+
 }

@@ -153,7 +153,7 @@
     <div style="clear: both"></div>
     <section class="section section-cta-module">
         <div class="wrapper"><h2 class="hdr-2">你还在等什么?</h2>
-            <a href="past.html" class="btn btn-primary scroll-link"
+            <a href="/product/all" class="btn btn-primary scroll-link"
                id="link-homepage-bottom-cta">获取Amazing</a>
         </div>
     </section>
