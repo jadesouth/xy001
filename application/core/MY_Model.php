@@ -2,8 +2,7 @@
 /**
  * Class MY_Model 应用的基模型
  *
- * @property CI_DB_query_builder $db
- * @property CI_Loader           $load
+ *
  */
 /**
  * Class MY_Model 模型基类
@@ -13,6 +12,7 @@
  * @property CI_Cart $cart
  * @property CI_Config $config
  * @property CI_Controller $controller
+ * @property CI_DB_query_builder $db
  * @property CI_Email $email
  * @property CI_Encrypt $encrypt
  * @property CI_Exceptions $exceptions

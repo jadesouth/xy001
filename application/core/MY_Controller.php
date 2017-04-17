@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class MY_Controller 应用的基控制器
  *
@@ -13,9 +12,6 @@
  * @property Order_plan_model              $order_plan_model
  * @property Theme_model                   $theme_model
  * @property User_model                    $user_model
- *
- * @author wangnan <wangnanphp@163.com>
- * @date   2017-04-09 15:35:05
  */
 class MY_Controller extends CI_Controller
 {
@@ -64,9 +60,6 @@ class MY_Controller extends CI_Controller
      * is_login 是否登录
      *
      * @return bool
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-11-23 22:20:16
      */
     protected function is_login()
     {
