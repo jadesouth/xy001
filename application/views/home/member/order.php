@@ -37,7 +37,7 @@
                                                     <div class="col-xs-4"><p><?=$order['next_plan_date']?></p></div>
                                                 </strong>
                                                 <div class="col-xs-4 order-history">
-                                                    <a id="order-tracking-lnk-2549757" href="order.html">订单详情
+                                                    <a id="order-tracking-lnk-2549757" href="<?=base_url('member/orderdetail?order=') . $order['id']?>">订单详情
                                                     </a></div>
                                             </div>
                                             <looter_info id="looter-info2549757" class="no-margin-bottom">
@@ -64,8 +64,8 @@
                                             <div class="row">
                                                 <div class="col-sm-4"></div>
                                                 <div class="col-xs-12 col-sm-8 pull-text-right">
-                                                    <a id="" class="btn btn-primary btn-sm" href="">本月暂订</a>
-                                                    <!--<a id="" class="btn btn-primary btn-sm" href="">激活</a>-->
+<!--                                                    <a id="" class="btn btn-primary btn-sm" href="">本月暂订</a>-->
+                                                    <a id="" class="btn btn-primary btn-sm" href="">激活</a>
                                                 </div>
                                             </div>
                                             <?php endif;?>

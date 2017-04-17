@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class Member
  */
@@ -63,7 +62,6 @@ class Member extends Home_Controller
         $this->load_view();
     }
 
-
     public function account(){
         $user_id = $this->_loginUser['id'];
         $this->load->model('user_model');
@@ -71,5 +69,93 @@ class Member extends Home_Controller
         $this->_viewVar['user_info'] = $user_info;
         $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
         $this->load_view();
+    }
+
+    /**
+     * orderDetail 订单详情
+     */
+    public function orderDetail()
+    {
+        $order_id = $this->input->get('order', true);
+        if (0 >= $order_id) {
+            show_404();
+        }
+
+        $this->load->model('order_model');
+        $order = $this->order_model
+            ->setSelectFields('id,order_number,box_name,plan_number,post_name,post_phone,post_addr,created_at')
+            ->setAndCond(['id' => $order_id, 'status' => 1, 'user_id' => $this->_loginUser['id']])
+            ->get();
+        $this->_viewVar['order'] = $order;
+
+        $this->load->model('order_plan_model');
+        $order_plans = $this->order_plan_model
+            ->setSelectFields('plan_year,plan_month,plan_date,status')
+            ->setAndCond(['order_id' => $order_id])
+            ->read();
+        if (! empty($order_plans)) {
+            $current_date = date('Y-m-d');
+            $current_year = date('Y');
+            $current_month = date('m');
+            foreach ($order_plans as &$order_plan) {
+                if (1 == $order_plan['status']) {
+                    $order_plan['status_msg'] = '已暂停';
+                } else {
+                    if ($current_year == $order_plan['plan_year']) {
+                        if ($current_month > $order_plan['plan_month']) {
+                            $order_plan['status_msg'] = '已完成';
+                        } elseif ($current_month == $order_plan['plan_month']) {
+                            if ($current_date > $order_plan['plan_date']) {
+                                $order_plan['status_msg'] = '已完成';
+                            } else {
+                                $order_plan['status_msg'] = '未完成';
+                            }
+                        } else {
+                            $order_plan['status_msg'] = '未完成';
+                        }
+                    } elseif ($current_year < $order_plan['plan_year']) {
+                        $order_plan['status_msg'] = '未完成';
+                    }
+                }
+            }
+            $end_order_plan = end($order_plans);
+            if (! empty($end_order_plan)) {
+                if ($current_date > $end_order_plan['plan_date']) {
+                    $order_status_msg = '已完成';
+                }
+            }
+        }
+
+
+
+        $this->_viewVar['order_plans'] = $order_plans;
+        $this->_viewVar['body_attr'] = ' id="subscriptions-order_history" class="user_accounts subscriptions is-mobile"';
+        $this->_viewVar['order_status_msg'] = empty($order_status_msg) ? '未完成' : $order_status_msg;
+
+        $this->load_view();
+    }
+
+    /**
+     * cancelCurrentMonth 暂停当月邮寄
+     *
+     * @return bool
+     */
+    public function cancelCurrentMonth()
+    {
+        $order_plan_id = $this->input->post('order_plan', true);
+        $this->load->helper('http');
+        if (0 >= $order_plan_id) {
+            http_ajax_response(1, '订单信息有误');
+            return false;
+        }
+
+        $this->load->model('order_plan_model');
+        $this->order_plan_model
+            ->setAndCond(['id' => $order_plan_id])
+            ->setUpdateData(['status' => 1])
+            ->update();
+
+        http_ajax_response(0, 'OK');
+        return true;
     }
 }
