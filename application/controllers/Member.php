@@ -136,23 +136,55 @@ class Member extends Home_Controller
     }
 
     /**
-     * cancelCurrentMonth 暂停当月邮寄
+     * cancelNextPlan 取消下月计划
      *
      * @return bool
      */
-    public function cancelCurrentMonth()
+    public function cancelNextPlan()
     {
-        $order_plan_id = $this->input->post('order_plan', true);
+        $order_id = $this->input->post('order', true);
         $this->load->helper('http');
-        if (0 >= $order_plan_id) {
+        if (0 >= $order_id) {
             http_ajax_response(1, '订单信息有误');
             return false;
         }
 
+        $next_month_timestamp = strtotime(date('Y-m-d') . ' +1 month');
+        $next_year = (int)date('Y', $next_month_timestamp);
+        $next_month = (int)date('m', $next_month_timestamp);
+
         $this->load->model('order_plan_model');
         $this->order_plan_model
-            ->setAndCond(['id' => $order_plan_id])
+            ->setAndCond(['order_id' => $order_id, 'plan_year' => $next_year, 'plan_month' => $next_month])
             ->setUpdateData(['status' => 1])
+            ->update();
+
+        http_ajax_response(0, 'OK');
+        return true;
+    }
+
+    /**
+     * openNextPlan 开启下月计划
+     *
+     * @return bool
+     */
+    public function openNextPlan()
+    {
+        $order_id = $this->input->post('order', true);
+        $this->load->helper('http');
+        if (0 >= $order_id) {
+            http_ajax_response(1, '订单信息有误');
+            return false;
+        }
+
+        $next_month_timestamp = strtotime(date('Y-m-d') . ' +1 month');
+        $next_year = (int)date('Y', $next_month_timestamp);
+        $next_month = (int)date('m', $next_month_timestamp);
+
+        $this->load->model('order_plan_model');
+        $this->order_plan_model
+            ->setAndCond(['order_id' => $order_id, 'plan_year' => $next_year, 'plan_month' => $next_month])
+            ->setUpdateData(['status' => 0])
             ->update();
 
         http_ajax_response(0, 'OK');
