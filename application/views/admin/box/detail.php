@@ -7,6 +7,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="tag" class="col-sm-2 control-label">标签</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" value="<?=$data['tag']?>" disabled>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="theme_name" class="col-sm-2 control-label">主题名称</label>
         <div class="col-sm-9">
             <input type="text" class="form-control" value="<?=$data['theme_name']?>" disabled>

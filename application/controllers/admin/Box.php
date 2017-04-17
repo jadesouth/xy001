@@ -41,6 +41,7 @@ class Box extends Admin_Controller
         $theme = explode('-',$this->input->post('theme'));
         return [
             'name' => $this->input->post('name'),
+            'tag' => $this->input->post('tag'),
             'theme_id' => $theme[0],
             'theme_name' => $theme[1],
             'year' => $this->input->post('year'),
