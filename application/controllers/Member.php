@@ -62,6 +62,9 @@ class Member extends Home_Controller
         $this->load_view();
     }
 
+    /**
+     * orderDetail 订单详情
+     */
     public function orderDetail()
     {
         $order_id = $this->input->get('order', true);
@@ -74,10 +77,11 @@ class Member extends Home_Controller
             ->setSelectFields('id,order_number,box_name,plan_number,post_name,post_phone,post_addr,created_at')
             ->setAndCond(['id' => $order_id, 'status' => 1, 'user_id' => $this->_loginUser['id']])
             ->get();
+        $this->_viewVar['order'] = $order;
 
         $this->load->model('order_plan_model');
         $order_plans = $this->order_plan_model
-            ->setSelectFields('plan_date,status')
+            ->setSelectFields('plan_year,plan_month,plan_date,status')
             ->setAndCond(['order_id' => $order_id])
             ->read();
         if (! empty($order_plans)) {
@@ -105,9 +109,19 @@ class Member extends Home_Controller
                     }
                 }
             }
+            $end_order_plan = end($order_plans);
+            if (! empty($end_order_plan)) {
+                if ($current_date > $end_order_plan['plan_date']) {
+                    $order_status_msg = '已完成';
+                }
+            }
         }
 
+
+
         $this->_viewVar['order_plans'] = $order_plans;
+        $this->_viewVar['body_attr'] = ' id="subscriptions-order_history" class="user_accounts subscriptions is-mobile"';
+        $this->_viewVar['order_status_msg'] = empty($order_status_msg) ? '未完成' : $order_status_msg;
 
         $this->load_view();
     }
