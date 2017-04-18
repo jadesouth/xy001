@@ -35,8 +35,8 @@
     <div class="container">
         <div class="text-center" style="margin: 100px 0">
             <p>忘记密码？请发送邮件</p>
-            <input type="email" class="input-lg" placeholder="Email" required/>
-            <button type="button" class="btn btn-danger">发送</button>
+            <input type="email" class="input-lg" placeholder="Email" required id="email"/>
+            <button type="button" class="btn btn-danger" id="send">发送</button>
         </div>
 
     </div>
@@ -45,14 +45,35 @@
 <script src="/resources/assets/js/home/swiper-3.4.0.jquery.min.js"></script>
 <script src="/resources/assets/js/home/bootstrap.min.js"></script>
 <script src="/resources/assets/js/home/main.js"></script>
+<script src="/resources/assets/libs/layui/layui.js" type="application/javascript"></script>
 <script>
     $(function () {
+        // 加载layer
+        layui.use('layer', function () {
+            var layer = layui.layer;
+        });
 
-        $('#checkout-continue-link').click(function(){
+        $('#checkout-continue-link').click(function () {
             $('.checkout-login-box').hide();
             $('#accordion').removeClass('hide');
         })
-    })
-
-
+        $('#send').on('click', function () {
+            var email = $('#email').val();
+            $.ajax({
+                type: "POST",
+                url: "/password/ajaxFindPwd",
+                data: {"email": email},
+                dataType: "json",
+                success: function (response) {
+                    if (0 == response.status) {
+                        layer.msg(response.msg, {icon: 6, time: 1000});
+                        return false;
+                    } else if (1 == response.status) {
+                        layer.alert(response.msg, {icon: 2});
+                        return false;
+                    }
+                }
+            });
+        });
+    });
 </script>
