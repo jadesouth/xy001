@@ -72,7 +72,7 @@ h2.logo{margin: 10px}
 /*.introduce .desc{padding: 0 15% 20px;}*/
 .introduce .desc{padding: 10px 15% 20px;font-size: 16px;}
 .value-list .value{width:32%;display: inline-block}
-.section-whats-in-a-crate{background: url("../img/bg-01.jpg") no-repeat center;background-size:cover;}
+.section-whats-in-a-crate{background: url("../../images/bg-01.jpg") no-repeat center;background-size:cover;}
 .banner{padding: 0;text-align: center;width:100%;}
 .banner img{width: 100%;}
 .navbar-nav{float:none;}
@@ -343,7 +343,7 @@ h2.logo{margin: 10px}
     .main-content{
         margin-top:63px;
     }
-    #gifts-index .main-content,.all-crates .main-content,.past .main-content{
+    #gifts-index .main-content,.all-crates .main-content,.past .main-content,.product .main-content{
         margin-top:43px;
     }
 }
@@ -1528,6 +1528,10 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
 }
+
+.checkout_shipping_pay img{
+    width: 40px;
+}
 @media (max-width: 767px) {
     #checkouts-steps #sub-details h3 {
     display: block;
@@ -1584,6 +1588,9 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     min-height: 500px;
     background-color: white;
 }
+#user_accounts-index .nav-tabs>li>a, #user_accounts-subscriptions .nav-tabs>li>a, #user_accounts-store_credits .nav-tabs>li>a, #user_accounts-free_crates .nav-tabs>li>a{
+    margin-right: 0;
+}
 #user_accounts-index .main-content, #user_accounts-subscriptions .main-content, #user_accounts-store_credits .main-content, #user_accounts-free_crates .main-content {
     margin-top: 15px;
 }
@@ -1610,7 +1617,7 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     background-size: 21% 24%, 60% 100%;
 }
 #user_accounts-subscriptions .account-summary #upgrade-promotion-content>div, #user_accounts-free_crates .account-summary #upgrade-promotion-content>div {
-    background-image: url(../img/conv-arrow.png),url(../img/tshirt-gift.png);
+    background-image: url(../../images/conv-arrow.png),url(../../images/tshirt-gift.png);
     background-position: 150px 215px, 0 0;
     background-size: 30% 30%, 55% 100%;
     background-repeat: no-repeat;
@@ -1841,3 +1848,29 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
         padding: 0;
     }
 }
+
+/*******************************密码重置*/
+.btn-reset{background-color: #ff4c00}
+#pwreset-steps .repwd input{
+    display:block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 30%;
+}
+#pwreset-steps .repwd .btn{
+    width:30%;
+}
+@media (max-width: 991px){
+    #pwreset-steps .repwd input,#pwreset-steps .repwd .btn, #forgetpw .repwd input,#forgetpw .repwd .btn{
+        width:90%;
+        margin-bottom:20px;
+    }
+
+}
+.youhui img{
+    margin:1%;
+}
+input[type=checkbox].pay, input[type=radio].pay{
+    margin:0 10px;
+}
+.coupon-row img{width:100px;}
