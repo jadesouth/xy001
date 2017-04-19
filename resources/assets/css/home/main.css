@@ -72,7 +72,7 @@ h2.logo{margin: 10px}
 /*.introduce .desc{padding: 0 15% 20px;}*/
 .introduce .desc{padding: 10px 15% 20px;font-size: 16px;}
 .value-list .value{width:32%;display: inline-block}
-.section-whats-in-a-crate{background: url("../img/bg-01.jpg") no-repeat center;background-size:cover;}
+.section-whats-in-a-crate{background: url("../../images/bg-01.jpg") no-repeat center;background-size:cover;}
 .banner{padding: 0;text-align: center;width:100%;}
 .banner img{width: 100%;}
 .navbar-nav{float:none;}
@@ -1617,7 +1617,7 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     background-size: 21% 24%, 60% 100%;
 }
 #user_accounts-subscriptions .account-summary #upgrade-promotion-content>div, #user_accounts-free_crates .account-summary #upgrade-promotion-content>div {
-    background-image: url(../img/conv-arrow.png),url(../img/tshirt-gift.png);
+    background-image: url(../../images/conv-arrow.png),url(../../images/tshirt-gift.png);
     background-position: 150px 215px, 0 0;
     background-size: 30% 30%, 55% 100%;
     background-repeat: no-repeat;
