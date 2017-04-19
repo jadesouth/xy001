@@ -107,6 +107,7 @@ class Password extends Home_Controller
                 http_ajax_response(1, '修改失败');
             }
         } else {
+            $this->_viewVar['body_attr'] = ' id="pwreset-steps"';
             $this->_viewVar['url'] = "/password/find?email=$email&token=$token&time=$timestamp";
             $this->load_view();
         }
