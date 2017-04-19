@@ -62,6 +62,22 @@ class Member extends Home_Controller
         $this->load_view();
     }
 
+    /**
+     * coupon 优惠券
+     */
+    public function coupon()
+    {
+        $this->load->model('coupon_model');
+        $this->_viewVar['coupons'] = $this->coupon_model
+            ->setSelectFields('id,value,status,use_time,expiration_time')
+            ->setAndCond(['user_id' => $this->_loginUser['id']])
+            ->read();
+
+        $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
+
+        $this->load_view();
+    }
+
     public function account(){
         $user_id = $this->_loginUser['id'];
         $this->load->model('user_model');
