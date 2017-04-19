@@ -75,11 +75,11 @@
                           data-placement="auto top" data-trigger="focus hover" data-original-title="" title=""></span>
                 </h2>
                 <select class="plan-select" id="plan-select" data-bonus=", Includes FREE bonus t-shirt">
-                    <option value="ca-1-month-subscription" data-price="<?=$box_info['monthly_price']?>" data-period="1" selected>1个月</option>
-                    <option value="ca-3-month-subscription" data-price="<?=$box_info['quarterly_price']?>" data-period="3">3个月</option>
-                    <option value="ca-6-month-subscription" data-price="<?=$box_info['semiannually_price']?>" data-period="6">6个月</option>
-                    <option value="ca-12-month-subscription" data-price="<?=$box_info['annually_price']?>" data-period="12">12个月, 包括一件免费奖励T恤</option>
-                </select> <input type="hidden" id="plan-name" value="ca-1-month-subscription">
+                    <option value="1" data-price="<?=$box_info['monthly_price']?>" data-period="1" selected>1个月</option>
+                    <option value="3" data-price="<?=$box_info['quarterly_price']?>" data-period="3">3个月</option>
+                    <option value="6" data-price="<?=$box_info['semiannually_price']?>" data-period="6">6个月</option>
+                    <option value="12" data-price="<?=$box_info['annually_price']?>" data-period="12">12个月, 包括一件免费奖励T恤</option>
+                </select>
                 </div>
                 <div id="option-selects-two" class="option-selects">
                     <h2 class="hdr-5">
@@ -115,7 +115,7 @@
                     <span class="plus-sh" style="display: none;">包含运费和包装</span>
                     <span class="inc-sh">包含运费和包装</span>
                 </p>
-                <a class="btn btn-primary" id="btn-header-checkout" href="checkout.html">支付</a>
+                <a class="btn btn-primary" id="btn-header-checkout">支付</a>
                 <!--<button class="btn btn-primary btn-cross-sell" id="btn-header-checkout-cs" data-toggle="modal"-->
                 <!--data-target="#crossModal" data-url="" data-options="" disabled="">Check Out-->
                 <!--</button>-->
@@ -172,6 +172,7 @@
 <script src="/resources/assets/js/home/swiper-3.4.0.jquery.min.js"></script>
 <script src="/resources/assets/js/home/bootstrap.min.js"></script>
 <script src="/resources/assets/js/home/main.js"></script>
+<script src="/resources/assets/libs/layui/layui.js" type="application/javascript"></script>
 
 <script>
 
@@ -192,6 +193,10 @@
     galleryThumbs.params.control = galleryTop;
 
     $(function(){
+        // 加载layer
+        layui.use('layer', function () {
+            var layer = layui.layer;
+        });
         $('.item').click(function(){
             $('#item-slide-text').html( $(this).find('img').attr('alt'));
         });
@@ -241,5 +246,15 @@
         $('#plan-select').change(function(){
             $('.product-info .price').text("¥ "+$(this).children('option:selected').attr("data-price"));
         })
+
+        $('#btn-header-checkout').on('click', function () {
+            var plan = $('#plan-select').val();//订阅计划
+            var tSize = $('#size-select-1').val();
+            if(plan == 12 && tSize == ''){
+                layer.alert('请选择T恤衫号码', {icon: 2});
+                return false;
+            }
+            window.location.href = '/product/checkout?id=<?=$box_info['id']?>&plan='+plan+'&tsize='+tSize;
+        });
     });
 </script>
