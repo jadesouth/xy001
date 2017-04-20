@@ -133,3 +133,15 @@ CREATE TABLE `menu` (
   `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单表';
+
+-- Table: `show_wall`
+CREATE TABLE `show_wall` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
+  `image` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '图片地址',
+  `url` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '链接地址',
+  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '类型[0:视频,1:图片]',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='展示墙';
