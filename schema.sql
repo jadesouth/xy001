@@ -89,7 +89,9 @@ CREATE TABLE IF NOT EXISTS `order` (
   `order_number` CHAR(18) NOT NULL DEFAULT '' COMMENT '订单编号',
   `user_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id(FK:user id)',
   `box_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '盒子id(FK:box id)',
+  `coupon_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '优惠券id(FK:coupon id)',
   `box_name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '盒子名称',
+  `coupon_value` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '优惠券面值',
   `plan_number` TINYINT NOT NULL DEFAULT 1 COMMENT '订购盒子几期',
   `shirt_sex` TINYINT NOT NULL DEFAULT 1 COMMENT '衬衫性别[1:男,2:女]',
   `shirt_size` ENUM('S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL') NOT NULL DEFAULT 'S' COMMENT '衬衫尺寸',
@@ -145,3 +147,18 @@ CREATE TABLE `show_wall` (
   `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='展示墙';
+
+-- Table: `coupon`
+CREATE TABLE `coupon` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
+  `user_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id(FK:user id)',
+  `value` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '面值',
+  `use_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '使用时间',
+  `expiration_time` DATETIME NOT NULL DEFAULT '2199-12-31 23:59:59' COMMENT '过期时间',
+  `status` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态[0:已使用,1:未使用,2:已废弃]',
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
+  PRIMARY KEY `pk_id` (`id`),
+  KEY `k_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券';

@@ -68,6 +68,14 @@ class User extends Home_Controller
         } else {
             $user_id = $this->_loginUser['id'];
             $update_data['login_email'] = $this->input->post('email', true);
+            // 查看邮箱是否已经被占用
+            $this->_model->setConditions(['login_email' => $update_data['login_email']]);
+            $this->_model->setSelectFields('login_email');
+            $user_info = $this->user_model->get();
+            if (! empty($user_info)) {
+                http_ajax_response(1, '邮箱已经被占用');
+                return;
+            }
             $return = $this->_model->modify($user_id, $update_data);
             if (! empty($return)) {
                 http_ajax_response(0, '修改成功');
