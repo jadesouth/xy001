@@ -1,5 +1,4 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Class User_model 用户模型
