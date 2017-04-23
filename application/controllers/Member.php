@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class Member
  */
@@ -59,6 +60,22 @@ class Member extends Home_Controller
         $this->_viewVar['orders'] = $orders;
         $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
         $this->_viewVar['sex'] = [1 => '男', 2 => '女'];
+        $this->load_view();
+    }
+
+    /**
+     * coupon 优惠券
+     */
+    public function coupon()
+    {
+        $this->load->model('coupon_model');
+        $this->_viewVar['coupons'] = $this->coupon_model
+            ->setSelectFields('id,value,status,use_time,expiration_time')
+            ->setAndCond(['user_id' => $this->_loginUser['id']])
+            ->read();
+
+        $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
+
         $this->load_view();
     }
 

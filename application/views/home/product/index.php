@@ -115,7 +115,7 @@
                     <span class="plus-sh" style="display: none;">包含运费和包装</span>
                     <span class="inc-sh">包含运费和包装</span>
                 </p>
-                <a class="btn btn-primary" id="btn-header-checkout" href="checkout.html">支付</a>
+                <a class="btn btn-primary" id="btn-header-checkout">支付</a>
                 <!--<button class="btn btn-primary btn-cross-sell" id="btn-header-checkout-cs" data-toggle="modal"-->
                 <!--data-target="#crossModal" data-url="" data-options="" disabled="">Check Out-->
                 <!--</button>-->
@@ -172,6 +172,7 @@
 <script src="/resources/assets/js/home/swiper-3.4.0.jquery.min.js"></script>
 <script src="/resources/assets/js/home/bootstrap.min.js"></script>
 <script src="/resources/assets/js/home/main.js"></script>
+<script src="/resources/assets/libs/layui/layui.js" type="application/javascript"></script>
 
 <script>
 
@@ -192,6 +193,10 @@
     galleryThumbs.params.control = galleryTop;
 
     $(function(){
+        // 加载layer
+        layui.use('layer', function () {
+            var layer = layui.layer;
+        });
         $('.item').click(function(){
             $('#item-slide-text').html( $(this).find('img').attr('alt'));
         });
@@ -241,5 +246,15 @@
         $('#plan-select').change(function(){
             $('.product-info .price').text("¥ "+$(this).children('option:selected').attr("data-price"));
         })
+
+        $('#btn-header-checkout').on('click', function () {
+            var plan = $('#plan-select').val();//订阅计划
+            var tSize = $('#size-select-1').val();
+            if(plan == 12 && tSize == ''){
+                layer.alert('请选择T恤衫号码', {icon: 2});
+                return false;
+            }
+            window.location.href = '/product/checkout?id=<?=$box_info['id']?>&plan='+plan+'&tsize='+tSize;
+        });
     });
 </script>

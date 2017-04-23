@@ -1,11 +1,7 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * 表单验证匹配规则配置文件
- *
- * @author wangnan <wangnanphp@163.com>
- * @date   2016-11-13 20:17:30
  */
 $config = [
     // 配置错误定界符
@@ -124,6 +120,13 @@ $config = [
         ['field' => 'user_current_password', 'label' => '旧密码', 'rules'=> 'trim|required'],
         ['field' => 'user_password', 'label' => '新密码', 'rules'=> 'trim|required'],
         ['field' => 'user_password_confirmation', 'label' => '新密码确认', 'rules'=> 'trim|required|matches[user_password]'],
+    ],
+    'password/ajaxFindPwd' => [ // ajax提交密码找回邮件
+        ['field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|valid_email'],
+    ],
+    'password/find'        => [ // 用户找回密码
+        ['field' => 'password', 'label' => '新密码', 'rules' => 'trim|required'],
+        ['field' => 'password_confirmation', 'label' => '新密码确认', 'rules' => 'trim|required|matches[password]'],
     ],
     'admin/keywords/add' => [ // 添加关键字
         ['field' => 'type', 'label' => '关键字类型', 'rules' => 'trim|required|in_list[1,2,3,4]'],

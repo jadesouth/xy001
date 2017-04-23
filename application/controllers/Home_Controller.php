@@ -2,17 +2,11 @@
 
 /**
  * Class Home_Controller
- *
- * @author wangnan <wangnanphp@163.com>
- * @date   16-11-17 15:24
  */
 class Home_Controller extends MY_Controller
 {
     /**
      * Home_Controller constructor.
-     *
-     * @author haokaiyang
-     * @date 2016-11-20 16:16:49
      */
     public function __construct()
     {
@@ -29,6 +23,8 @@ class Home_Controller extends MY_Controller
         if (! empty($this->session->home_login_user)) {
             $this->_loginUser = $this->session->home_login_user;
         }
+
+        $this->_loginUser['id'] = 1;
     }
 
     /**
@@ -36,9 +32,6 @@ class Home_Controller extends MY_Controller
      *
      * @param string $view 模板名称,默认取与调用此方法的方法同名的视图
      * @param array  $var 分配给模板的变量,会和类变量$_viewVar合并
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-11-17 15:51:18
      */
     protected function load_view($view = '', $var = [])
     {
