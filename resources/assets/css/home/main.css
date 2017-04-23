@@ -1793,7 +1793,6 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
 
 }
 
-
 @media (max-width: 767px){
     #user_accounts-index .main-content, #user_accounts-subscriptions .main-content, #user_accounts-store_credits .main-content, #user_accounts-free_crates .main-content {
         margin-top: 5px;

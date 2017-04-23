@@ -9,7 +9,6 @@ class User_model extends MY_Model
      * add 添加用户,同时添加user和user_profile表数据
      *
      * @param array $user_info 用户信息
-     *
      * @return bool
      */
     public function add_user($user_info)

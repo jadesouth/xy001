@@ -1,11 +1,7 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * 表单验证匹配规则配置文件
- *
- * @author wangnan <wangnanphp@163.com>
- * @date   2016-11-13 20:17:30
  */
 $config = [
     // 配置错误定界符
