@@ -1,10 +1,12 @@
 <?php
 
+/**
+ * Class Password
+ */
 class Password extends Home_Controller
 {
     /**
      * index 网站首页
-     *
      */
     public function index()
     {
@@ -113,6 +115,3 @@ class Password extends Home_Controller
         }
     }
 }
-
-
-

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class User
+ */
 class User extends Home_Controller
 {
     /**
@@ -123,7 +126,6 @@ class User extends Home_Controller
     /**
      * ajax_login
      * 用户登录
-     *
      */
     public function ajax_login()
     {
@@ -168,7 +170,6 @@ class User extends Home_Controller
 
     /**
      * logout 退出账号
-     *
      */
     public function logout()
     {

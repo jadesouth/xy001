@@ -4,7 +4,6 @@ class Product extends Home_Controller
 {
     /**
      * 订阅妹子页面
-     *
      */
     public function index()
     {
