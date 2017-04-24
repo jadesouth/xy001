@@ -1,51 +1,48 @@
 <?php
-/**
- * Class MY_Model 应用的基模型
- *
- *
- */
+
 /**
  * Class MY_Model 模型基类
- * @property CI_DB_forge $dbforge
- * @property CI_Benchmark $benchmark
- * @property CI_Calendar $calendar
- * @property CI_Cart $cart
- * @property CI_Config $config
- * @property CI_Controller $controller
- * @property CI_DB_query_builder $db
- * @property CI_Email $email
- * @property CI_Encrypt $encrypt
- * @property CI_Exceptions $exceptions
+ *
+ * @property CI_DB_forge        $dbforge
+ * @property CI_Benchmark       $benchmark
+ * @property CI_Calendar        $calendar
+ * @property CI_Cart            $cart
+ * @property CI_Config          $config
+ * @property CI_Controller      $controller
+ * @property CI_DB_pdo_driver   $db
+ * @property CI_Email           $email
+ * @property CI_Encrypt         $encrypt
+ * @property CI_Exceptions      $exceptions
  * @property CI_Form_validation $form_validation
- * @property CI_Ftp $ftp
- * @property CI_Hooks $hooks
- * @property CI_Image_lib $image_lib
- * @property CI_Input $input
- * @property CI_Lang $lang
- * @property CI_Loader $load
- * @property CI_Log $log
- * @property CI_Model $model
- * @property CI_Output $output
- * @property CI_Pagination $pagination
- * @property CI_Parser $parser
- * @property CI_Profiler $profiler
- * @property CI_Router $router
- * @property CI_Session $session
- * @property CI_Table $table
- * @property CI_Trackback $trackback
- * @property CI_Typography $typography
- * @property CI_Unit_test $unit_test
- * @property CI_Upload $upload
- * @property CI_URI $uri
- * @property CI_User_agent $user_agent
- * @property CI_Xmlrpc $xmlrpc
- * @property CI_Xmlrpcs $xmlrpcs
- * @property CI_Zip $zip
- * @property CI_Javascript $javascript
- * @property CI_Jquery $jquery
- * @property CI_Utf8 $utf8
- * @property CI_Security $security
- * @property User_model $user_model
+ * @property CI_Ftp             $ftp
+ * @property CI_Hooks           $hooks
+ * @property CI_Image_lib       $image_lib
+ * @property CI_Input           $input
+ * @property CI_Lang            $lang
+ * @property CI_Loader          $load
+ * @property CI_Log             $log
+ * @property CI_Model           $model
+ * @property CI_Output          $output
+ * @property CI_Pagination      $pagination
+ * @property CI_Parser          $parser
+ * @property CI_Profiler        $profiler
+ * @property CI_Router          $router
+ * @property CI_Session         $session
+ * @property CI_Table           $table
+ * @property CI_Trackback       $trackback
+ * @property CI_Typography      $typography
+ * @property CI_Unit_test       $unit_test
+ * @property CI_Upload          $upload
+ * @property CI_URI             $uri
+ * @property CI_User_agent      $user_agent
+ * @property CI_Xmlrpc          $xmlrpc
+ * @property CI_Xmlrpcs         $xmlrpcs
+ * @property CI_Zip             $zip
+ * @property CI_Javascript      $javascript
+ * @property CI_Jquery          $jquery
+ * @property CI_Utf8            $utf8
+ * @property CI_Security        $security
+ * @property User_model         $user_model
  */
 class MY_Model extends CI_Model
 {
@@ -102,10 +99,9 @@ class MY_Model extends CI_Model
      * @param int    $page_size 页大小,默认为20
      * @param string $order     排序
      * @param array  $where     额外的查询条件
-     *
      * @return array 结果集
      */
-    public function getPage( $page = 0,  $page_size = 20,  $order = '',  $where = [])
+    public function getPage($page = 0, $page_size = 20, $order = '', $where = [])
     {
         // search
         if (! empty($where)) {
@@ -134,7 +130,7 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return int 查询记录的总条数
      */
-    public function count(bool $clean_up = true)
+    public function count($clean_up = true)
     {
         $this->conditions($clean_up);
 
@@ -149,10 +145,12 @@ class MY_Model extends CI_Model
      *
      * @return bool|int 查询记录的总条数
      */
-    public function leftCount(bool $clean_up = true)
+    public function leftCount($clean_up = true)
     {
         reset($this->_leftJoin);
-        if (empty($table = key($this->_leftJoin)) || empty($join_cond = current($this->_leftJoin))) {
+        $table = key($this->_leftJoin);
+        $join_cond = current($this->_leftJoin);
+        if (empty($table) || empty($join_cond)) {
             return false;
         }
 
@@ -166,10 +164,12 @@ class MY_Model extends CI_Model
             ->count_all_results();
     }
 
-    public function rightCount(bool $clean_up = true)
+    public function rightCount($clean_up = true)
     {
         reset($this->_rightJoin);
-        if (empty($table = key($this->_rightJoin)) || empty($join_cond = current($this->_rightJoin))) {
+        $table = key($this->_rightJoin);
+        $join_cond = current($this->_rightJoin);
+        if (empty($table) || empty($join_cond)) {
             return false;
         }
 
@@ -189,10 +189,12 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return array|bool
      */
-    public function leftGet(bool $clean_up = true)
+    public function leftGet($clean_up = true)
     {
         reset($this->_leftJoin);
-        if (empty($table = key($this->_leftJoin)) || empty($join_cond = current($this->_leftJoin))) {
+        $table = key($this->_leftJoin);
+        $join_cond = current($this->_leftJoin);
+        if (empty($table) || empty($join_cond)) {
             return false;
         }
 
@@ -217,10 +219,12 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return array|bool
      */
-    public function rightGet(bool $clean_up = true)
+    public function rightGet($clean_up = true)
     {
         reset($this->_rightJoin);
-        if (empty($table = key($this->_rightJoin)) || empty($join_cond = current($this->_rightJoin))) {
+        $table = key($this->_rightJoin);
+        $join_cond = current($this->_rightJoin);
+        if (empty($table) || empty($join_cond)) {
             return false;
         }
 
@@ -245,10 +249,12 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return array|bool
      */
-    public function leftRead(bool $clean_up = true)
+    public function leftRead($clean_up = true)
     {
         reset($this->_leftJoin);
-        if (empty($table = key($this->_leftJoin)) || empty($join_cond = current($this->_leftJoin))) {
+        $table = key($this->_leftJoin);
+        $join_cond = current($this->_leftJoin);
+        if (empty($table) || empty($join_cond)) {
             return false;
         }
 
@@ -272,10 +278,11 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return array|bool
      */
-    public function rightRead(bool $clean_up = true)
+    public function rightRead($clean_up = true)
     {
         reset($this->_rightJoin);
-        if (empty($table = key($this->_rightJoin)) || $join_cond = current($this->_rightJoin)) {
+        $table = key($this->_rightJoin);
+        if (empty($table) || $join_cond = current($this->_rightJoin)) {
             return false;
         }
 
@@ -299,7 +306,7 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return bool
      */
-    public function delete(bool $clean_up = true)
+    public function delete($clean_up = true)
     {
         $this->conditions($clean_up);
         $data['deleted_at'] = date('Y-m-d H:i:s');
@@ -388,7 +395,7 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件和查询数据,默认清理
      * @return array|bool 查询的结果集
      */
-    public function find($id,$clean_up = true)
+    public function find($id, $clean_up = true)
     {
         if (0 >= $id) {
             return false;
@@ -411,7 +418,7 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件和查询字段,默认清理
      * @return array 数组结果集
      */
-    public function get(bool $clean_up = true)
+    public function get($clean_up = true)
     {
         $this->conditions($clean_up);
         $this->db->limit(1);
@@ -449,7 +456,7 @@ class MY_Model extends CI_Model
      * @param bool  $clean_up 是否清理插入的数据,默认清理
      * @return mixed 成功:插入的主键,失败:false
      */
-    public function create(array $data = [], bool $clean_up = true)
+    public function create(array $data = [], $clean_up = true)
     {
         $data = array_merge($this->_insertData, $data);
         if (empty($data) || ! is_array($data)) {
@@ -468,7 +475,7 @@ class MY_Model extends CI_Model
      * @param bool  $clean_up 是否清理插入的数据,默认清理
      * @return mixed 插入的行数或false
      */
-    public function createBatch(array $data = [], bool $clean_up = true)
+    public function createBatch(array $data = [], $clean_up = true)
     {
         $data = array_merge($this->_insertData, $data);
         if (empty($data) || ! is_array($data)) {
@@ -502,7 +509,7 @@ class MY_Model extends CI_Model
      * @param bool $clean_up 是否清理查询条件,默认清理
      * @return $this|bool
      */
-    protected function conditions(bool $clean_up = true)
+    protected function conditions($clean_up = true)
     {
         if (empty($this->_conditions) || ! is_array($this->_conditions)) {
             return false;
@@ -527,7 +534,7 @@ class MY_Model extends CI_Model
      * @param string $logical    当前被解析的表达式数组各元素之间的逻辑关系 ['AND', 'OR']
      * @return bool
      */
-    private function parseConditions(array $conditions, string $logical)
+    private function parseConditions(array $conditions, $logical)
     {
         if (empty($conditions) || ('AND' != $logical && 'OR' != $logical)) {
             return false;
@@ -576,7 +583,7 @@ class MY_Model extends CI_Model
      * @param mixed  $value      值
      * @return bool
      */
-    private function parseConditionOperator(string $logical, string $expression, $value)
+    private function parseConditionOperator($logical, $expression, $value)
     {
         $logical = strtoupper($logical);
         if ('AND' != $logical && 'OR' != $logical || empty($expression)) {
@@ -588,9 +595,22 @@ class MY_Model extends CI_Model
         $field = $expression_array[0]; // 字段名
         $operator = empty($expression_array[1]) ? '=' : $expression_array[1]; // 操作符
         $supported_operator = [
-            '=', '!=', '>', '>=', '<', '<=',
-            '[]', '![]', '<>', '!<>',
-            '%*', '*%', '%%', '!%*', '!*%', '!%%',
+            '=',
+            '!=',
+            '>',
+            '>=',
+            '<',
+            '<=',
+            '[]',
+            '![]',
+            '<>',
+            '!<>',
+            '%*',
+            '*%',
+            '%%',
+            '!%*',
+            '!*%',
+            '!%%',
         ];
         if (empty($field) || ! in_array($operator, $supported_operator)) {
             return false;
@@ -709,13 +729,13 @@ class MY_Model extends CI_Model
 
     /**
      * query 执行sql语句
-     * @param string $sql
      *
+     * @param string $sql
      * @return array
      */
     public function query($sql)
     {
-        return $this->db->query($sql)->result_array();;
+        return $this->db->query($sql)->result_array();
     }
 
     /**
@@ -755,9 +775,6 @@ class MY_Model extends CI_Model
      *
      * @param array $updateData
      * @return $this
-     *
-     * @author wangnan <wangnanphp@163.com>
-     * @date   2016-11-13 22:08:48
      */
     public function setUpdateData(array $updateData)
     {
