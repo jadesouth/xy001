@@ -1,7 +1,9 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
 /**
  * Order 订单管理控制器
+ *
+ * @property Order_model $_model
  */
 class Order extends Admin_Controller
 {
@@ -21,7 +23,6 @@ class Order extends Admin_Controller
         // 获取记录总条数
         $count = $this->_model->count();
         if(! empty($count)) {
-            $view_orders = [];
             // Page configure
             $this->load->library('pagination');
             $config['base_url'] = base_url("admin/{$this->_className}/index");
@@ -83,6 +84,36 @@ class Order extends Admin_Controller
             }
 
             $this->_viewVar['data'] = $orders;
+        }
+        // 加载视图
+        $this->load_view();
+    }
+
+    /**
+     * nextPlan 下期计划列表
+     *
+     * @param int $page
+     */
+    public function nextPlan($page = 0)
+    {
+        // 分页页码
+        $page = 0 >= $page ? 1 : $page;
+
+        // view data
+        $this->_headerViewVar['h1_title'] = $this->_adminConfig[$this->_className][__FUNCTION__];
+        $this->_headerViewVar['method_name'] = __FUNCTION__;
+
+        // 获取记录总条数
+        $count = $this->_model->nextPlanCount();
+        if(! empty($count)) {
+            // Page configure
+            $this->load->library('pagination');
+            $config['base_url'] = base_url("admin/{$this->_className}/nextPlan");
+            $config['total_rows'] = (int)$count;
+            $this->pagination->initialize($config);
+            $this->_viewVar['page'] = $this->pagination->create_links();
+            // get page data
+            $this->_viewVar['data'] = $this->_model->nextPlan($page, ADMIN_PAGE_SIZE);
         }
         // 加载视图
         $this->load_view();

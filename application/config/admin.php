@@ -36,6 +36,7 @@ $config = [
     'order' => [
         'name'         => '订单',
         'index'        => '订单列表',
+        'nextPlan'     => '下期订单列表',
         'table_header' => ['#', '邮寄姓名', '邮寄电话', '邮寄地址', '计划', '下月是否'],
         'index_field'  => 'id,order_number,plan_number,post_name,post_phone,post_addr,status,created_at',
     ],
