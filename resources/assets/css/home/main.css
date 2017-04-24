@@ -24,7 +24,7 @@ button {
 }
 .red{color:#cc2b2b;}
 /*html,body{*/
-/*width:-moz-fit-content;*/
+    /*width:-moz-fit-content;*/
 /*}*/
 .main-content{margin-top: 80px;width: 100%}
 /*.navbar-fixed-top, .navbar-fixed-bottom {position: fixed;right: 0;left: 0;z-index: 1030;  }*/
@@ -179,11 +179,11 @@ h2.logo{margin: 10px}
     .copy{
         text-align: center;text-transform: uppercase;
     }
-    .section-whats-in-a-crate .img-container .copy {
-        display: block;
-        margin-bottom: 0;
-        margin-top: 20px;
-    }
+   .section-whats-in-a-crate .img-container .copy {
+       display: block;
+       margin-bottom: 0;
+       margin-top: 20px;
+   }
     .section-whats-in-a-crate .img-container .copy.mobile .desc, .section-whats-in-a-crate .img-container .copy.mobile .hdr-4 {
         display: block;
         padding: 0;
@@ -194,7 +194,7 @@ h2.logo{margin: 10px}
     .introduce .value-list{display: none}
     /*.container{ width: 100%;}*/
     .nav-list .login {
-        width:100px;
+       width:100px;
     }
     /*.row{margin:10px 0;}*/
 }
@@ -678,28 +678,28 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     text-align: center;
 }
 /*.section-info-selection .product-items .item-list {*/
-/*display: flex;*/
-/*margin-left: -2px;*/
-/*text-align: left;*/
-/*width: calc(100% - 4px);*/
+    /*display: flex;*/
+    /*margin-left: -2px;*/
+    /*text-align: left;*/
+    /*width: calc(100% - 4px);*/
 /*}*/
 /*.section-info-selection .product-items .item-list .item {*/
-/*flex-basis: calc(20% - 4px);*/
-/*margin: 0 2px;*/
-/*position: relative;*/
-/*vertical-align: top;*/
-/*width: auto;*/
+    /*flex-basis: calc(20% - 4px);*/
+    /*margin: 0 2px;*/
+    /*position: relative;*/
+    /*vertical-align: top;*/
+    /*width: auto;*/
 /*}*/
 .section-info-selection .product-items .item-list .item .img {
     max-height: 100%;
     max-width: 100%;
 }
 /*.section-info-selection .product-items .item-list .item {*/
-/*flex-basis: calc(20% - 4px);*/
-/*margin: 0 2px;*/
-/*position: relative;*/
-/*vertical-align: top;*/
-/*width: auto;*/
+    /*flex-basis: calc(20% - 4px);*/
+    /*margin: 0 2px;*/
+    /*position: relative;*/
+    /*vertical-align: top;*/
+    /*width: auto;*/
 /*}*/
 
 .section-info-selection .product-info .hdr-5 .fa-info-circle,.fa-info-circle-t{
@@ -827,7 +827,7 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
 }
 .all-crates .section-listing .btn-link:hover,.all-crates .section-listing .btn-link:focus{
     color:#fe2232;
-    text-decoration: none;
+     text-decoration: none;
 }
 .all-crates .section-listing .filter-item.active:after {
     border-top: 3px solid #fe2232;
@@ -1150,12 +1150,12 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
 #how-it-works .how-it-works-section .how-it-works-item .how-it-works-icon, #gift_claim-new #how-it-works .how-it-works-section .how-it-works-item .how-it-works-icon, #gift_claim-confirmation #how-it-works .how-it-works-section .how-it-works-item .how-it-works-icon {
     margin: 0 auto 20px;
 }
-#gifts-blocks .panel, #gift_claim-new #gifts-blocks .section-container, #gift_claim-new #gifts-blocks .panel, #gift_claim-confirmation #gifts-blocks .section-container, #gift_claim-confirmation #gifts-blocks .panel {
+ #gifts-blocks .panel, #gift_claim-new #gifts-blocks .section-container, #gift_claim-new #gifts-blocks .panel, #gift_claim-confirmation #gifts-blocks .section-container, #gift_claim-confirmation #gifts-blocks .panel {
     background: white;
     padding: 20px 20px 10px 20px;
     margin-top: 20px;
 }
-#gifts-blocks .panel .panel-heading, #gift_claim-new #gifts-blocks .section-container .panel-heading, #gift_claim-new #gifts-blocks .panel .panel-heading, #gift_claim-confirmation #gifts-blocks .section-container .panel-heading, #gift_claim-confirmation #gifts-blocks .panel .panel-heading {
+ #gifts-blocks .panel .panel-heading, #gift_claim-new #gifts-blocks .section-container .panel-heading, #gift_claim-new #gifts-blocks .panel .panel-heading, #gift_claim-confirmation #gifts-blocks .section-container .panel-heading, #gift_claim-confirmation #gifts-blocks .panel .panel-heading {
     padding: 0 15px 0 0;
     position: relative;
     display: flex;
@@ -1166,7 +1166,7 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
 }
-#gifts-blocks .panel .panel-heading .step-number, #gift_claim-new #gifts-blocks .section-container .panel-heading .step-number, #gift_claim-new #gifts-blocks .panel .panel-heading .step-number, #gift_claim-confirmation #gifts-blocks .section-container .panel-heading .step-number, #gift_claim-confirmation #gifts-blocks .panel .panel-heading .step-number {
+ #gifts-blocks .panel .panel-heading .step-number, #gift_claim-new #gifts-blocks .section-container .panel-heading .step-number, #gift_claim-new #gifts-blocks .panel .panel-heading .step-number, #gift_claim-confirmation #gifts-blocks .section-container .panel-heading .step-number, #gift_claim-confirmation #gifts-blocks .panel .panel-heading .step-number {
     display: inline-block;
     width: 26px;
     height: 26px;
@@ -1377,11 +1377,11 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
         width: 100%;
     }
     #gifts-index #gifts-blocks #subscription-builder #section-variants .variant-filters .btn-gender, #gifts-index #gifts-blocks .panel #section-variants .variant-filters .btn-gender, #gift_claim-new #gifts-blocks #subscription-builder #section-variants .variant-filters .btn-gender, #gift_claim-new #gifts-blocks .panel #section-variants .variant-filters .btn-gender, #gift_claim-confirmation #gifts-blocks #subscription-builder #section-variants .variant-filters .btn-gender, #gift_claim-confirmation #gifts-blocks .panel #section-variants .variant-filters .btn-gender {
-        font-weight: 600;
-        min-width: 125px;
-        max-width: none;
-        width: 40%;
-    }
+         font-weight: 600;
+         min-width: 125px;
+         max-width: none;
+         width: 40%;
+     }
     #gifts-index #gifts-blocks #subscription-builder #section-variants .variant-filters, #gifts-index #gifts-blocks .panel #section-variants .variant-filters, #gift_claim-new #gifts-blocks #subscription-builder #section-variants .variant-filters, #gift_claim-new #gifts-blocks .panel #section-variants .variant-filters, #gift_claim-confirmation #gifts-blocks #subscription-builder #section-variants .variant-filters, #gift_claim-confirmation #gifts-blocks .panel #section-variants .variant-filters {
         text-align: center;
         padding: 0;
@@ -1534,16 +1534,16 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
 }
 @media (max-width: 767px) {
     #checkouts-steps #sub-details h3 {
-        display: block;
-        margin: 10px 0 0 20px;
-        text-align: center;
+    display: block;
+    margin: 10px 0 0 20px;
+    text-align: center;
     }
     #checkouts-steps .checkout-indicator{
         display: none;
     }
     /*#checkouts-steps h3 {*/
-    /*text-align: center;*/
-    /*font-size: 18px;*/
+        /*text-align: center;*/
+        /*font-size: 18px;*/
     /*}*/
     .checkout-login-box .left-60 {
         padding-left: 0px;
@@ -1560,8 +1560,8 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     .checkout-login-box .right-60 {
         padding-right: 15px;
     }.checkout-login-box .left-60 {
-         padding-left: 15px;
-     }
+        padding-left: 15px;
+    }
 }
 
 @media (min-width: 768px){
@@ -1616,6 +1616,13 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     background-position: 110px 175px, 0 13px;
     background-size: 21% 24%, 60% 100%;
 }
+#user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div.bootstrap-select,#user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div.bootstrap-select .open{
+    padding-left: 0;
+    padding-right: 0;
+    background-color: #ccc;
+    /*background-position: 0;*/
+    /*background-size:0;*/
+}
 #user_accounts-subscriptions .account-summary #upgrade-promotion-content>div, #user_accounts-free_crates .account-summary #upgrade-promotion-content>div {
     background-image: url(../../images/conv-arrow.png),url(../../images/tshirt-gift.png);
     background-position: 150px 215px, 0 0;
@@ -1643,9 +1650,9 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     transform: translateY(-50%);
 }
 #user_accounts-subscriptions .account-summary .hpanel .status-inactive, .panel-body .hpanel .status-inactive, #user_accounts-subscriptions .account-summary .hpanel .status-canceled, .panel-body .hpanel .status-canceled, #user_accounts-subscriptions .account-summary .hpanel .status-pending-cancellation, .panel-body .hpanel .status-pending-cancellation, #user_accounts-subscriptions .account-summary .hpanel .status-skipped, .panel-body .hpanel .status-skipped, #subscriptions-order_history .account-summary .hpanel .status-inactive, .hpanel .status-inactive, #subscriptions-order_history .account-summary .hpanel .status-pending-cancellation, .hpanel .status-pending-cancellation, #subscriptions-order_history .account-summary .hpanel .status-skipped, .hpanel .status-skipped {
-    background: #f1da36;
-    background: linear-gradient(to bottom, #f1da36 0%, #fefcea 100%);
-}
+     background: #f1da36;
+     background: linear-gradient(to bottom, #f1da36 0%, #fefcea 100%);
+ }
 #user_accounts-subscriptions .account-summary .panel-tools, #user_accounts-free_crates .account-summary .panel-tools {
     display: inline-block;
     float: right;
@@ -1787,11 +1794,12 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
         padding: 5% 7%;
     }
     #user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div, #user_accounts-free_crates .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div {
-        background-position: 100px 160px, 0 0;
-        background-size: 30% 24%, 50% 100%;
-    }
+         background-position: 100px 160px, 0 0;
+         background-size: 30% 24%, 50% 100%;
+     }
 
 }
+
 
 @media (max-width: 767px){
     #user_accounts-index .main-content, #user_accounts-subscriptions .main-content, #user_accounts-store_credits .main-content, #user_accounts-free_crates .main-content {
@@ -1801,6 +1809,9 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     #user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content, #user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-12 #upgrade-promotion-content, #user_accounts-free_crates .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content, #user_accounts-free_crates .account-summary #upgrade-promotion.col-lg-12 #upgrade-promotion-content {
         min-height: 100%;
         padding: 0;
+    }
+    #user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div.bootstrap-select,#user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div.bootstrap-select .open {
+        padding:0;
     }
     #user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div, #user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-12 #upgrade-promotion-content div, #user_accounts-free_crates .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div, #user_accounts-free_crates .account-summary #upgrade-promotion.col-lg-12 #upgrade-promotion-content div {
         padding: 20px;
@@ -1873,3 +1884,79 @@ input[type=checkbox].pay, input[type=radio].pay{
     margin:0 10px;
 }
 .coupon-row img{width:100px;}
+
+.youhui ul li{
+    float:left;
+    width: 33.33%;
+    text-align: center;
+    background-color: #eee;
+    border-right: 1px solid #ccc;
+}
+.youhui ul li a{
+    color:#666;
+}
+.youhui ul li a.active{
+    color:red;
+}
+.coupon-item{
+    float: left;
+    width:31%;
+    background-color: #F39B00;
+    margin:5px 6px;
+    /*background: url(../img/coupon.png) no-repeat;*/
+    /*background-size: 100%;*/
+}
+.coupon-item{
+    border-radius:6px;
+}
+.coupon-item a{
+    text-decoration:none;
+}
+.coupon-item p{line-height: normal}
+.coupon-item.overtime,.coupon-item.coupon-use{background-color:#ccc;}
+.coupon-item .overtime{background:url('../../images/couponicon_02.png') no-repeat;background-size: 28%}
+.coupon-item .coupon-use{background:url('../../images/couponicon_01.png') no-repeat;background-size: 28%}
+.coupon-up{
+    text-align:center;
+    /*margin-bottom:5px;*/
+}
+.coupon-left{
+    display: inline;
+    margin:5px 0 0 10px;
+}
+.coupon-price{
+    font-size: 48px;
+}
+.coupon-a,.coupon-title{
+    font-size: 14px;
+}
+.coupon-right{
+    background-color: #eeeeee;
+    font-size: 12px;
+    padding:2px 6px ;
+    border-radius:10px;
+}
+.coupon-time{
+    font-size:12px;
+}
+@media(max-width:767px){
+    .coupon-item{
+        width:46%;
+    }
+    .coupon-price{
+        font-size: 34px;
+    }
+}@media(max-width:320px){
+    .coupon-item{
+        width:48%;
+    }
+    .coupon-left{
+        display: block;
+    }
+    .coupon-price{
+        font-size: 30px;
+    }
+    .coupon-item{
+        margin:5px 2px;
+    }
+}
