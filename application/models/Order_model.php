@@ -59,7 +59,8 @@ class Order_model extends MY_Model
         $nextYear = (int)date('Y', $nextTimestamp);
         $nextMonth = (int)date('m', $nextTimestamp);
 
-        return $this->db->select('order.id,order_number,post_name,post_phone,post_addr,plan_year,plan_month,plan_date')
+        $fields = 'order.id AS order_id,order_plan.id AS order_plan_id,order_number,post_name,post_phone,post_addr,plan_year,plan_month,plan_date,sign';
+        return $this->db->select($fields)
             ->from('order_plan')
             ->group_start()
             ->group_start()
@@ -75,6 +76,7 @@ class Order_model extends MY_Model
             ->where('order.status', 1)
             ->where('order_plan.status', 0)
             ->join('order', 'order_plan.order_id = order.id', 'left')
+            ->order_by('order.id', 'DESC')
             ->get()
             ->result_array();
     }

@@ -48,7 +48,7 @@ class Order extends Admin_Controller
                 $order_ids = array_column($orders, 'id');
                 $this->load->model('order_plan_model');
                 $order_plans = $this->order_plan_model
-                    ->setSelectFields('id,order_id,plan_year,plan_month,plan_date,status')
+                    ->setSelectFields('id,order_id,plan_year,plan_month,plan_date,sign,status')
                     ->setConditions(['AND' => ['order_id []' => $order_ids]])
                     ->read();
                 $order_play_info = [];
@@ -64,15 +64,22 @@ class Order extends Admin_Controller
                         }
                         // 下次邮寄日期
                         if ($order_plan['plan_date'] <= $current_date) {
-                            if ((int)$year == (int)$order_plan['plan_year'] && (int)$month == (int)$order_plan['plan_month']) {
+                            if ((int)$year == (int)$order_plan['plan_year'] && (int)$month == (int)$order_plan['plan_month']) { // 当月
                                 $order_play_info[$order_plan['order_id']]['plan_date'] = $order_plan['plan_date'];
+                                $order_play_info[$order_plan['order_id']]['order_plan_id'] = $order_plan['id'];
+                                $order_play_info[$order_plan['order_id']]['sign'] = $order_plan['sign'];
                             }
                         } else {
-                            if ((int)$year == (int)$order_plan['plan_year'] && (int)$month == (int)$order_plan['plan_month']) {
+                            if ((int)$year == (int)$order_plan['plan_year'] && (int)$month == (int)$order_plan['plan_month']) { // 当月
                                 $order_play_info[$order_plan['order_id']]['plan_date'] = $order_plan['plan_date'];
+                                $order_play_info[$order_plan['order_id']]['order_plan_id'] = $order_plan['id'];
+                                $order_play_info[$order_plan['order_id']]['sign'] = $order_plan['sign'];
                             }
+                            // 下月
                             if ((int)$next_year == (int)$order_plan['plan_year'] && (int)$next_month == (int)$order_plan['plan_month'] && empty($order_play_info[$order_plan['order_id']]['plan_date'])) {
                                 $order_play_info[$order_plan['order_id']]['plan_date'] = $order_plan['plan_date'];
+                                $order_play_info[$order_plan['order_id']]['order_plan_id'] = $order_plan['id'];
+                                $order_play_info[$order_plan['order_id']]['sign'] = $order_plan['sign'];
                             }
                         }
                     }
@@ -80,6 +87,8 @@ class Order extends Admin_Controller
                 foreach ($orders as &$order) {
                     $order['completed'] = isset($order_play_info[$order['id']]['completed']) ? $order_play_info[$order['id']]['completed'] : 0;
                     $order['plan_date'] = isset($order_play_info[$order['id']]['plan_date']) ? $order_play_info[$order['id']]['plan_date'] : 0;
+                    $order['order_plan_id'] = isset($order_play_info[$order['id']]['order_plan_id']) ? $order_play_info[$order['id']]['order_plan_id'] : 0;
+                    $order['sign'] = isset($order_play_info[$order['id']]['sign']) ? $order_play_info[$order['id']]['sign'] : -1;
                 }
             }
 
@@ -160,5 +169,25 @@ class Order extends Admin_Controller
         }
 
         $this->load_view();
+    }
+
+    /**
+     * setSign 标记订单计划状态
+     */
+    public function setSign()
+    {
+        $this->load->helper('http');
+        $order_plan_id = (int)$this->input->post('order_plan', 0);
+        if (0 >= $order_plan_id) {
+            http_ajax_response(1, '非法请求');
+            return;
+        }
+
+        $this->load->model('order_plan_model');
+        if (true == $this->order_plan_model->modify($order_plan_id, ['sign' => 1])) {
+            http_ajax_response(0, '状态标记成功');
+        } else {
+            http_ajax_response(2, '状态标记失败');
+        }
     }
 }
