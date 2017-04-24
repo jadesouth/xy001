@@ -9,7 +9,6 @@ class Theme_model extends MY_Model
      * add
      *
      * @param $theme_info
-     *
      * @return bool|mixed
      */
     public function add($theme_info)
