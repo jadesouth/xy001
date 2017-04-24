@@ -55,4 +55,13 @@ $config = [
         'table_header' => ['#', '名称', '主题', '年', '月', '操作'],
         'index_field'  => 'id,name,theme_name,year,month',
     ],
+    // 展示墙管理
+    'show_wall' => [
+        'name'         => '展示墙',
+        'index'        => '展示墙列表',
+        'add'          => '添加展示墙',
+        'edit'         => '修改展示墙',
+        'table_header' => ['#', '封面图片', '链接地址', '类型', '添加时间', '操作'],
+        'index_field'  => 'id,image,url,type,created_at',
+    ],
 ];

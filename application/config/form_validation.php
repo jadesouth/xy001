@@ -36,6 +36,12 @@ $config = [
         ['field' => 'url', 'label' => '链接地址', 'rules' => 'trim|required|valid_url'],
         ['field' => 'list_order', 'label' => '排序', 'rules' => 'trim|is_natural'],
     ],
+    // 展示墙相关
+    'admin/show_wall/add' => [ // 添加展示墙
+        ['field' => 'image', 'label' => '展示墙封面图', 'rules' => 'trim|required'],
+        ['field' => 'url', 'label' => '链接地址', 'rules' => 'trim|required'],
+        ['field' => 'type', 'label' => '展示墙类型', 'rules' => 'trim|required|is_natural'],
+    ],
     // 盒子相关
     'box/add' => [ // 添加盒子
         ['field' => 'name', 'label' => '盒子名称', 'rules' => 'trim|required'],
