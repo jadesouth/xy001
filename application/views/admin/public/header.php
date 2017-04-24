@@ -43,6 +43,7 @@
                 <li<?='theme' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/theme')?>">主题管理</a></li>
                 <li<?='order' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/order')?>">订单管理</a></li>
                 <li<?='user' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/user')?>">用户管理</a></li>
+                <li<?='show_wall' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/show_wall')?>">展示墙管理</a></li>
                 <li<?='menu' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/menu')?>">菜单管理</a></li>
                 <li<?='admin' == $controller ? ' class="active"' : ''?>><a href="<?=base_url('admin/admin')?>">管理员管理</a></li>
             </ul>
