@@ -25,7 +25,7 @@ class Password extends Home_Controller
                 $email = $this->input->post('email', true);
                 $this->load->model('user_model');
                 $this->user_model->setConditions(['login_email' => $email, 'status' => 0]);
-                $this->user_model->setSelectFields('id,login_email,password,salt');
+                $this->user_model->setSelectFields('id,login_email,name,password,salt');
                 $user_info = $this->user_model->get();
                 if (empty($user_info)) {
                     http_ajax_response(1, '您的邮箱未注册');
@@ -51,7 +51,22 @@ class Password extends Home_Controller
                 $this->email->to($email);
 
                 $this->email->subject('AmazingFun-找回密码');
-                $this->email->message($find_pwd_url);
+                $user_name = empty($user_info['name']) ? '': ($user_info['name'].',');
+                $message = "<div class=\"\" style=\"display:block;padding:0;margin:0;height:100%;max-height:none;min-height:none;line-height:normal;overflow:visible;\">
+    <span style=\"font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;\">
+".$user_name."你好 :<br><br>
+        您最近提出了重设 AmazingFun ID 密码的请求。要完成此过程，请点按下方链接。
+
+        <br/><br/>
+        <a target=\"_blank\" href=\"".$find_pwd_url."\">立即重设</a>
+        <br/><br/>
+        如果您未做过此更改并认为有人未经授权访问了您的帐户，您应尽快前往 <a target=\"_blank\" href=\"http://www.amazingfun.cn\">www.amazingfun.cn</a> 重设您的密码。
+        <br><br>
+AmazinFun 团队,
+        <br><br>
+    </span>
+</div>";
+                $this->email->message($message);
 
                 $this->email->send(false);
                 http_ajax_response(0, '邮件已经发送至您的邮箱！');
