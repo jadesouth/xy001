@@ -101,3 +101,11 @@ defined('ADMIN_PAGE_SIZE') OR define('ADMIN_PAGE_SIZE', 20); // 分页大小
 /* folder name*/
 defined('FOLDER_RESOURCE') OR define('FOLDER_RESOURCE', 'resources' .DS);
 defined('FOLDER_UPLOAD') OR define('FOLDER_UPLOAD', FOLDER_RESOURCE.'uploads'.DS );
+/* alipay SDK工作目录 存放日志，AOP缓存数据*/
+defined('AOP_SDK_WORK_DIR') OR define('AOP_SDK_WORK_DIR', "/logs/aop/" );
+/**
+ * 是否处于开发模式
+ * 在你自己电脑上开发程序的时候千万不要设为false，以免缓存造成你的代码修改了不生效
+ * 部署到生产环境正式运营后，如果性能压力大，可以把此常量设定为false，能提高运行速度（对应的代价就是你下次升级程序时要清一下缓存）
+ */
+defined('AOP_SDK_DEV_MODE') OR define('AOP_SDK_DEV_MODE', true);
