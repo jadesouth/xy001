@@ -70,9 +70,18 @@ class Member extends Home_Controller
     {
         $this->load->model('coupon_model');
         $this->_viewVar['coupons'] = $this->coupon_model
-            ->setSelectFields('id,value,status,use_time,expiration_time')
+            ->setSelectFields('id,value,status,use_time,expiration_time,created_at')
             ->setAndCond(['user_id' => $this->_loginUser['id']])
             ->read();
+
+        if (! empty($this->_viewVar['coupons'])) {
+            foreach ($this->_viewVar['coupons'] as &$coupon) {
+                $coupon['use_time'] = date('Y-m-d', strtotime($coupon['created_at'])) . '-' . $coupon['expiration_time'];
+                if (date('Y-m-d') > $coupon['expiration_time'] && 0 == $coupon['status']) { // 未使用已过期
+                    $coupon['status'] = 2;
+                }
+            }
+        }
 
         $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
 

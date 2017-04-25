@@ -59,7 +59,7 @@
         <div class="col-sm-12">
             <table class="table">
                 <thead>
-                <tr><th>订单编号</th><th>计划年份</th><th>计划月份</th><th>邮寄日期</th><th>计划状态</th></tr>
+                <tr><th>订单编号</th><th>计划年份</th><th>计划月份</th><th>邮寄日期</th><th>计划状态</th><th>标记状态</th></tr>
                 </thead>
                 <tbody>
                 <?php if(! empty($order_plans)):foreach($order_plans as $order_plan):?>
@@ -69,9 +69,10 @@
                     <td><?=$order_plan['plan_month']?></td>
                     <td><?=$order_plan['plan_date']?></td>
                     <td><?=0 == $order_plan['status'] ? '<span class="label label-success">正常邮寄</span>' : '<span class="label label-danger">暂停邮寄</span>'?></td>
+                    <td><?=1 == $order_plan['sign'] ? '<span class="label label-success">已标记</span>' : '<span class="label label-info">未标记</span>'?></td>
                 </tr>
                 <?php endforeach; else:?>
-                <tr><td style="text-align:center;font-size:16px;padding-top:10px" colspan="5">暂无计划</td></tr>
+                <tr><td style="text-align:center;font-size:16px;padding-top:10px" colspan="6">暂无计划</td></tr>
                 <?php endif;?>
                 </tbody>
             </table>

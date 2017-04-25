@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/resources/assets/css/home/swiper-3.4.0.min.css"/>
     <link rel="stylesheet" href="/resources/assets/css/home/normalize.css"/>
     <link rel="stylesheet" href="/resources/assets/css/home/main.css"/>
+    <link rel="stylesheet" href="/resources/assets/css/home/bootstrap-select.min.css"/>
 </head>
 <body<?=isset($body_attr) ? $body_attr : ''?>>
 <!--<div class="header navbar-fixed-top">-->

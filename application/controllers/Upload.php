@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: wangnan
- * Date: 16-5-7
- * Time: 上午10:36
- */
-defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Class Upload 处理各种上传任务
@@ -50,6 +43,28 @@ class Upload extends MY_Controller
             $img_url = site_url() . FOLDER_UPLOAD . $folder_name . DS . $upload_file['file_name'];
 
             http_ajax_response(0, 'OK', ['image_url' => $img_url]);
+        } else { // failed
+            $this->send_failure_msg();
+        }
+    }
+
+    /**
+     * showWallImage 上传展示墙图片
+     */
+    public function showWallImage()
+    {
+        $folder_data = date('Ymd', time());
+        $this->_config['upload_path'] = FCPATH . 'resources/uploads/show_wall/' . $folder_data;
+        $this->_config['allowed_types'] = 'gif|jpg|jpeg|png|bmp';
+        $this->_config['max_size'] = 10240;
+        // init upload
+        $this->upload->initialize($this->_config);
+        // upload
+        if (true === $this->upload->do_upload('show-wall-image')) { // success
+            // 获取上传图片的信息
+            $upload_file = $this->upload->data();
+            $file_path = 'show_wall/' . $folder_data . '/' . $upload_file['orig_name'];
+            http_ajax_response(0, '展示墙图片上传成功', ['show_wall' => $file_path]);
         } else { // failed
             $this->send_failure_msg();
         }

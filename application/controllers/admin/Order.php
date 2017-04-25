@@ -1,7 +1,9 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
 /**
  * Order 订单管理控制器
+ *
+ * @property Order_model $_model
  */
 class Order extends Admin_Controller
 {
@@ -21,7 +23,6 @@ class Order extends Admin_Controller
         // 获取记录总条数
         $count = $this->_model->count();
         if(! empty($count)) {
-            $view_orders = [];
             // Page configure
             $this->load->library('pagination');
             $config['base_url'] = base_url("admin/{$this->_className}/index");
@@ -47,7 +48,7 @@ class Order extends Admin_Controller
                 $order_ids = array_column($orders, 'id');
                 $this->load->model('order_plan_model');
                 $order_plans = $this->order_plan_model
-                    ->setSelectFields('id,order_id,plan_year,plan_month,plan_date,status')
+                    ->setSelectFields('id,order_id,plan_year,plan_month,plan_date,sign,status')
                     ->setConditions(['AND' => ['order_id []' => $order_ids]])
                     ->read();
                 $order_play_info = [];
@@ -63,15 +64,22 @@ class Order extends Admin_Controller
                         }
                         // 下次邮寄日期
                         if ($order_plan['plan_date'] <= $current_date) {
-                            if ((int)$year == (int)$order_plan['plan_year'] && (int)$month == (int)$order_plan['plan_month']) {
+                            if ((int)$year == (int)$order_plan['plan_year'] && (int)$month == (int)$order_plan['plan_month']) { // 当月
                                 $order_play_info[$order_plan['order_id']]['plan_date'] = $order_plan['plan_date'];
+                                $order_play_info[$order_plan['order_id']]['order_plan_id'] = $order_plan['id'];
+                                $order_play_info[$order_plan['order_id']]['sign'] = $order_plan['sign'];
                             }
                         } else {
-                            if ((int)$year == (int)$order_plan['plan_year'] && (int)$month == (int)$order_plan['plan_month']) {
+                            if ((int)$year == (int)$order_plan['plan_year'] && (int)$month == (int)$order_plan['plan_month']) { // 当月
                                 $order_play_info[$order_plan['order_id']]['plan_date'] = $order_plan['plan_date'];
+                                $order_play_info[$order_plan['order_id']]['order_plan_id'] = $order_plan['id'];
+                                $order_play_info[$order_plan['order_id']]['sign'] = $order_plan['sign'];
                             }
+                            // 下月
                             if ((int)$next_year == (int)$order_plan['plan_year'] && (int)$next_month == (int)$order_plan['plan_month'] && empty($order_play_info[$order_plan['order_id']]['plan_date'])) {
                                 $order_play_info[$order_plan['order_id']]['plan_date'] = $order_plan['plan_date'];
+                                $order_play_info[$order_plan['order_id']]['order_plan_id'] = $order_plan['id'];
+                                $order_play_info[$order_plan['order_id']]['sign'] = $order_plan['sign'];
                             }
                         }
                     }
@@ -79,10 +87,42 @@ class Order extends Admin_Controller
                 foreach ($orders as &$order) {
                     $order['completed'] = isset($order_play_info[$order['id']]['completed']) ? $order_play_info[$order['id']]['completed'] : 0;
                     $order['plan_date'] = isset($order_play_info[$order['id']]['plan_date']) ? $order_play_info[$order['id']]['plan_date'] : 0;
+                    $order['order_plan_id'] = isset($order_play_info[$order['id']]['order_plan_id']) ? $order_play_info[$order['id']]['order_plan_id'] : 0;
+                    $order['sign'] = isset($order_play_info[$order['id']]['sign']) ? $order_play_info[$order['id']]['sign'] : -1;
                 }
             }
 
             $this->_viewVar['data'] = $orders;
+        }
+        // 加载视图
+        $this->load_view();
+    }
+
+    /**
+     * nextPlan 下期计划列表
+     *
+     * @param int $page
+     */
+    public function nextPlan($page = 0)
+    {
+        // 分页页码
+        $page = 0 >= $page ? 1 : $page;
+
+        // view data
+        $this->_headerViewVar['h1_title'] = $this->_adminConfig[$this->_className][__FUNCTION__];
+        $this->_headerViewVar['method_name'] = __FUNCTION__;
+
+        // 获取记录总条数
+        $count = $this->_model->nextPlanCount();
+        if(! empty($count)) {
+            // Page configure
+            $this->load->library('pagination');
+            $config['base_url'] = base_url("admin/{$this->_className}/nextPlan");
+            $config['total_rows'] = (int)$count;
+            $this->pagination->initialize($config);
+            $this->_viewVar['page'] = $this->pagination->create_links();
+            // get page data
+            $this->_viewVar['data'] = $this->_model->nextPlan($page, ADMIN_PAGE_SIZE);
         }
         // 加载视图
         $this->load_view();
@@ -129,5 +169,25 @@ class Order extends Admin_Controller
         }
 
         $this->load_view();
+    }
+
+    /**
+     * setSign 标记订单计划状态
+     */
+    public function setSign()
+    {
+        $this->load->helper('http');
+        $order_plan_id = (int)$this->input->post('order_plan', 0);
+        if (0 >= $order_plan_id) {
+            http_ajax_response(1, '非法请求');
+            return;
+        }
+
+        $this->load->model('order_plan_model');
+        if (true == $this->order_plan_model->modify($order_plan_id, ['sign' => 1])) {
+            http_ajax_response(0, '状态标记成功');
+        } else {
+            http_ajax_response(2, '状态标记失败');
+        }
     }
 }
