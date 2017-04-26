@@ -103,7 +103,8 @@ CREATE TABLE IF NOT EXISTS `order` (
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   PRIMARY KEY (`id`),
-  KEY `fk_user_id` (`user_id`)
+  KEY `fk_user_id` (`user_id`),
+  UNIQUE KEY `uk_order_number` (`order_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- Table: `order_plan`
@@ -163,3 +164,18 @@ CREATE TABLE `coupon` (
   PRIMARY KEY `pk_id` (`id`),
   KEY `k_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券';
+
+-- Table: pay_callback_result 支付回调结果表
+CREATE TABLE IF NOT EXISTS `pay_callback_result` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
+  `user_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK: user id',
+  `order_number` CHAR(18) NOT NULL DEFAULT '' COMMENT '支付的订单编号,商户网站唯一订单号',
+  `pay_type` TINYINT NOT NULL DEFAULT 0 COMMENT '支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]',
+  `content` VARCHAR(8192) NOT NULL DEFAULT '' COMMENT '回调传回的内容,JSON格式',
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_order_number` (`order_number`),
+  KEY `fk_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='支付回调结果表';
