@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   KEY `deleted_at` (`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户表';
 
--- Table: `theme`
+-- Table: `theme` 盒子主题表
 CREATE TABLE IF NOT EXISTS `theme` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `name` VARCHAR(255) NOT NULL DEFAULT '' '主题名称',
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `theme` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='盒子主题表';
 
--- Table: `box`
+-- Table: `box` 盒子信息表
 CREATE TABLE IF NOT EXISTS `box` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `theme_id` INT(10) UNSIGNED DEFAULT NULL COMMENT '主题id(FK:box_subject id)',
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `box` (
   KEY `theme_id` (`theme_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='盒子信息表';
 
--- Table: `order`
+-- Table: `order` 订单表
 CREATE TABLE IF NOT EXISTS `order` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `order_number` CHAR(18) NOT NULL DEFAULT '' COMMENT '订单编号',
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `order` (
   `post_name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT '邮寄姓名',
   `post_phone` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '邮寄电话',
   `post_addr` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '邮寄地址',
-  `status` TINYINT NOT NULL DEFAULT 0 COMMENT '状态[0:未付款,1:已付款]',
+  `status` TINYINT NOT NULL DEFAULT 0 COMMENT '状态[0:未支付,1:已支付,2:支付成功,3:取消支付,4:支付失败]',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `order` (
   UNIQUE KEY `uk_order_number` (`order_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
--- Table: `order_plan`
+-- Table: `order_plan` 订单计划表
 CREATE TABLE IF NOT EXISTS `order_plan` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `order_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单id(FK:order id)',
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `order_plan` (
   KEY `fk_order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单计划表';
 
--- Table: `menu`
+-- Table: `menu` 菜单表
 CREATE TABLE `menu` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单名称',
@@ -142,7 +142,7 @@ CREATE TABLE `menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
--- Table: `show_wall`
+-- Table: `show_wall` 展示墙
 CREATE TABLE `show_wall` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `image` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '图片地址',
@@ -154,7 +154,7 @@ CREATE TABLE `show_wall` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='展示墙';
 
--- Table: `coupon`
+-- Table: `coupon` 优惠券
 CREATE TABLE `coupon` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `user_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id(FK:user id)',
