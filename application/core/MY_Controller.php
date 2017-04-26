@@ -8,7 +8,9 @@
  * @property CI_Pagination                 $pagination
  * @property CI_Session                    $session
  * @property Admin_model                   $admin_model
+ * @property Box_model                     $box_model
  * @property Coupon_model                  $coupon_model
+ * @property Menu_model                    $menu_model
  * @property Order_model                   $order_model
  * @property Order_plan_model              $order_plan_model
  * @property Show_wall_model               $show_wall_model
