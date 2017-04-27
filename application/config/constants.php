@@ -99,6 +99,7 @@ defined('UPLOAD_FILE_MAX_SIZE') OR define('UPLOAD_FILE_MAX_SIZE', 4080);  // 允
 /* Admin CONSTANT */
 defined('ADMIN_PAGE_SIZE') OR define('ADMIN_PAGE_SIZE', 20); // 分页大小
 /* folder name*/
+defined('PATH_LIBRARY') OR define('PATH_LIBRARY', PATH_APP . 'libraries' .DS);
 defined('FOLDER_RESOURCE') OR define('FOLDER_RESOURCE', 'resources' .DS);
 defined('FOLDER_UPLOAD') OR define('FOLDER_UPLOAD', FOLDER_RESOURCE.'uploads'.DS );
 /* alipay SDK工作目录 存放日志，AOP缓存数据*/

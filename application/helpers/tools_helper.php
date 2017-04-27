@@ -2,9 +2,12 @@
 
 /**
  * 通用辅助函数
+<<<<<<< HEAD
  *
  * @author haokaiyang
  * @date   2016-07-02 12:46:21
+=======
+>>>>>>> development
  */
 
 if (! function_exists('price_format')) {
@@ -17,7 +20,7 @@ if (! function_exists('price_format')) {
      * @author haokaiyang
      * @date   2016-07-02 12:49:24
      */
-    function price_format($price = 0): float
+    function price_format($price = 0)
     {
         return sprintf('%.2f', $price);
     }

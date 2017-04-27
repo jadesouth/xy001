@@ -80,4 +80,20 @@ class Order_model extends MY_Model
             ->get()
             ->result_array();
     }
+
+    /**
+     * generateOrderNumber 生成订单编号
+     *
+     * @return string
+     */
+    public function generateOrderNumber()
+    {
+        do {
+            $orderNumber = date('YmdHis') . random_number(4);
+            $existed = (bool)$this->setAndCond(['order_number' => $orderNumber])
+                ->count();
+        } while ($existed);
+
+        return $orderNumber;
+    }
 }

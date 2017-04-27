@@ -11,7 +11,7 @@ class Member extends Home_Controller
     public function order()
     {
         $condition['AND'] = [
-            'user_id' => 1,
+            'user_id' => $this->_loginUser['id'],
             'status'  => 1,
         ];
         $fields = 'id,order_number,box_id,box_name,plan_number,shirt_sex,shirt_size,post_name,post_phone,post_addr,created_at';
@@ -21,6 +21,7 @@ class Member extends Home_Controller
             ->setConditions($condition)
             ->read();
         $orders = array_column($orders, null, 'id');
+        $this->_viewVar['order_numbers'] = array_column($orders, 'order_number');
         $this->_viewVar['next_plan_date'] = '已完成计划';
         if (! empty($orders)) {
             $order_ids = array_column($orders, 'id');
@@ -39,7 +40,7 @@ class Member extends Home_Controller
                 $next_year = $current_year;
                 $next_month = $current_month + 1;
             }
-            array_walk($orders, function(&$item, $key) {
+            array_walk($orders, function (&$item, $key) {
                 $item['next_plan_date'] = '订单完成';
                 $item['next_plan_status'] = '订单完成';
             });
@@ -56,6 +57,16 @@ class Member extends Home_Controller
                 }
             }
         }
+
+        // 查询需要升级的订单
+        $this->_viewVar['upgrade_orders'] = $this->order_model
+            ->setSelectFields('id,order_number,box_name')
+            ->setAndCond([
+                'user_id'        => $this->_loginUser['id'],
+                'plan_number !=' => 12,
+                'status'         => 1,
+            ])
+            ->read();
 
         $this->_viewVar['orders'] = $orders;
         $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
@@ -88,7 +99,8 @@ class Member extends Home_Controller
         $this->load_view();
     }
 
-    public function account(){
+    public function account()
+    {
         $user_id = $this->_loginUser['id'];
         $this->load->model('user_model');
         $user_info = $this->user_model->setSelectFields('id,login_email,name,created_at')->find($user_id);
@@ -151,8 +163,6 @@ class Member extends Home_Controller
                 }
             }
         }
-
-
 
         $this->_viewVar['order_plans'] = $order_plans;
         $this->_viewVar['body_attr'] = ' id="subscriptions-order_history" class="user_accounts subscriptions is-mobile"';
