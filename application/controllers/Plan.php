@@ -20,7 +20,7 @@ class Plan extends Home_Controller
         $fields = 'id,order_number,user_id,box_id,box_name,order_value,plan_number,shirt_sex,shirt_size,post_name,post_phone,post_addr';
         $order = $this->order_model
             ->setSelectFields($fields)
-            ->setAndCond(['id' => $order_id, 'user_id' => $this->_loginUser['id'], 'status' => 1])
+            ->setAndCond(['id' => $order_id, 'user_id' => $this->_loginUser['id'], 'status' => 2])
             ->get();
         if (empty($order) || 12 == $order['plan_number']) {
             show_404();
