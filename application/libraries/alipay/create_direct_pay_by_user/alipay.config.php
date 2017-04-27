@@ -15,7 +15,7 @@
  
 //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 //合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：https://openhome.alipay.com/platform/keyManage.htm?keyType=partner
-$alipay_config['partner']		= '';
+$alipay_config['partner']		= '2088621742262088';
 
 //收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
 $alipay_config['seller_id']	= $alipay_config['partner'];
@@ -31,9 +31,13 @@ $alipay_config['notify_url'] = "http://商户网址/create_direct_pay_by_user-PH
 
 // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 $alipay_config['return_url'] = "http://商户网址/create_direct_pay_by_user-PHP-UTF-8/return_url.php";
+$alipay_config['return_url'] = base_url('order/prepaid_deposit_complete');
 
 //签名方式
-$alipay_config['sign_type']    = strtoupper('RSA');
+//$alipay_config['sign_type']    = strtoupper('RSA');
+$alipay_config['sign_type']    = strtoupper('MD5');
+// MD5密钥，安全检验码，由数字和字母组成的32位字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
+$alipay_config['key']           = 'v2ukmr2v50kl45mdx83x5hfjrxrkhdh7';
 
 //字符编码格式 目前支持 gbk 或 utf-8
 $alipay_config['input_charset']= strtolower('utf-8');

@@ -13,6 +13,7 @@
  * @property Menu_model                    $menu_model
  * @property Order_model                   $order_model
  * @property Order_plan_model              $order_plan_model
+ * @property Pay_callback_result_model     $pay_callback_result_model
  * @property Show_wall_model               $show_wall_model
  * @property Theme_model                   $theme_model
  * @property User_model                    $user_model

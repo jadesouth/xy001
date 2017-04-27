@@ -52,4 +52,14 @@ class Home_Controller extends MY_Controller
         $this->load->view('home/' . $view);
         $this->load->view('home/public/footer');
     }
+
+    /**
+     * checkLogin 检查用户登录状态,未登录跳转到首页,或指定URL
+     */
+    protected function checkLogin($redirect = '/')
+    {
+        if (! $this->is_login()) {
+            redirect(base_url($redirect));
+        }
+    }
 }
