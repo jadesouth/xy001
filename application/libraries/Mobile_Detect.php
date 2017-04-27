@@ -24,7 +24,7 @@
  *
  * @version     2.8.25
  */
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 class Mobile_Detect
 {
     /**
@@ -664,7 +664,7 @@ class Mobile_Detect
         'Symbian'          => array('SymbianOS/[VER]', 'Symbian/[VER]'),
         'webOS'            => array('webOS/[VER]', 'hpwOS/[VER];'),
     );
-
+    protected $CI;
     /**
      * Construct an instance of this class.
      *
@@ -677,6 +677,7 @@ class Mobile_Detect
         array $headers = null,
         $userAgent = null
     ) {
+        $this->CI =& get_instance();
         $this->setHttpHeaders($headers);
         $this->setUserAgent($userAgent);
     }

@@ -4,10 +4,10 @@
  * 通用辅助函数
  *
  * @author haokaiyang
- * @date 2016-07-02 12:46:21
+ * @date   2016-07-02 12:46:21
  */
 
-if ( ! function_exists('price_format')) {
+if (! function_exists('price_format')) {
     /**
      * price_format 格式化价格
      *
@@ -15,7 +15,7 @@ if ( ! function_exists('price_format')) {
      *
      * @return float 带两位小数点的价格
      * @author haokaiyang
-     * @date 2016-07-02 12:49:24
+     * @date   2016-07-02 12:49:24
      */
     function price_format($price = 0): float
     {
@@ -23,23 +23,21 @@ if ( ! function_exists('price_format')) {
     }
 }
 
-if(! function_exists('random_number')) {
+if (! function_exists('random_number')) {
     /**
      * random_number 生成一个指定长度的随机数字串
      *
      * @param int $length 需要生成的长度
-     * @return string
      *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-07-28 14:22:04
+     * @return string
      */
-    function random_number(int $length = 6): string
+    function random_number($length = 6)
     {
-        if(0 >= $length)
+        if (0 >= $length)
             return '';
 
         $number = '';
-        for($i = 0; $i < $length; $i++) {
+        for ($i = 0;$i < $length;$i++) {
             $number .= random_int(0, 9);
         }
 
@@ -47,25 +45,23 @@ if(! function_exists('random_number')) {
     }
 }
 
-if(! function_exists('random_characters')) {
+if (! function_exists('random_characters')) {
     /**
      * random_characters 生成一个指定长度的随机字符串(包含数字和字母)
      *
      * @param int $length 需要生成的长度
-     * @return string
      *
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-08-16 19:57:12
+     * @return string
      */
-    function random_characters(int $length = 6): string
+    function random_characters($length = 6)
     {
-        if(0 >= $length)
+        if (0 >= $length)
             return '';
 
         $characters = '0123456789abcdefjhijklmnopqrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ';
         $max = strlen($characters) - 1;
         $generate_characters = '';
-        for($i = 0; $i < $length; $i++) {
+        for ($i = 0;$i < $length;$i++) {
             $generate_characters .= $characters[random_int(0, $max)];
         }
 
@@ -78,8 +74,6 @@ if (! function_exists('get_ip')) {
      * 获取客户端ip地址
      *
      * @return string
-     * @author haokaiyang
-     * @date   2016-11-20 15:47:30
      */
     function get_ip()
     {
@@ -101,10 +95,8 @@ if (! function_exists('is_ip')) {
      * @param string $str
      *
      * @return bool|int
-     * @author haokaiyang
-     * @date $DATETIME
      */
-    function is_ip(string $str)
+    function is_ip($str)
     {
         $ip = explode('.', $str);
         for ($i = 0;$i < count($ip);$i++) {
@@ -113,5 +105,14 @@ if (! function_exists('is_ip')) {
             }
         }
         return preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/', $str);
+    }
+}
+
+if (! function_exists('is_mobile')) {
+
+    function is_mobile()
+    {
+        $this->load->library('mobile_detect');
+        return $this->mobile_detect->isMobile();
     }
 }
