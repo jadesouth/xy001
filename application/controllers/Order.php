@@ -23,7 +23,7 @@ class Order extends Home_Controller
             $fields = 'id,order_number,user_id,box_id,box_name,order_value,plan_number';
             $order = $this->order_model
                 ->setSelectFields($fields)
-                ->setAndCond(['order_number' => $orderId, 'user_id' => $userId, 'status' => 1])
+                ->setAndCond(['id' => $orderId, 'user_id' => $userId, 'status' => 2])
                 ->get();
             if (empty($order) || 12 == $order['plan_number']) {
                 show_404();
@@ -176,7 +176,7 @@ class Order extends Home_Controller
 
         // 建立请求
         $alipaySubmit = new AlipaySubmit($alipay_config);
-        $html_text = $alipaySubmit->buildRequestForm($parameter, "get", "确认");
+        $html_text = $alipaySubmit->buildRequestForm($parameter, "post", "确认");
         return $html_text;
     }
 }

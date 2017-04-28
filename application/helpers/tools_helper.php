@@ -2,14 +2,23 @@
 
 /**
  * 通用辅助函数
+<<<<<<< HEAD
+ *
+ * @author haokaiyang
+ * @date   2016-07-02 12:46:21
+=======
+>>>>>>> development
  */
 
-if ( ! function_exists('price_format')) {
+if (! function_exists('price_format')) {
     /**
      * price_format 格式化价格
      *
      * @param int $price
+     *
      * @return float 带两位小数点的价格
+     * @author haokaiyang
+     * @date   2016-07-02 12:49:24
      */
     function price_format($price = 0)
     {
@@ -17,20 +26,21 @@ if ( ! function_exists('price_format')) {
     }
 }
 
-if(! function_exists('random_number')) {
+if (! function_exists('random_number')) {
     /**
      * random_number 生成一个指定长度的随机数字串
      *
      * @param int $length 需要生成的长度
+     *
      * @return string
      */
     function random_number($length = 6)
     {
-        if(0 >= $length)
+        if (0 >= $length)
             return '';
 
         $number = '';
-        for($i = 0; $i < $length; $i++) {
+        for ($i = 0;$i < $length;$i++) {
             $number .= random_int(0, 9);
         }
 
@@ -38,22 +48,23 @@ if(! function_exists('random_number')) {
     }
 }
 
-if(! function_exists('random_characters')) {
+if (! function_exists('random_characters')) {
     /**
      * random_characters 生成一个指定长度的随机字符串(包含数字和字母)
      *
      * @param int $length 需要生成的长度
+     *
      * @return string
      */
     function random_characters($length = 6)
     {
-        if(0 >= $length)
+        if (0 >= $length)
             return '';
 
         $characters = '0123456789abcdefjhijklmnopqrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ';
         $max = strlen($characters) - 1;
         $generate_characters = '';
-        for($i = 0; $i < $length; $i++) {
+        for ($i = 0;$i < $length;$i++) {
             $generate_characters .= $characters[random_int(0, $max)];
         }
 
@@ -97,5 +108,14 @@ if (! function_exists('is_ip')) {
             }
         }
         return preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/', $str);
+    }
+}
+
+if (! function_exists('is_mobile')) {
+
+    function is_mobile()
+    {
+        $this->load->library('mobile_detect');
+        return $this->mobile_detect->isMobile();
     }
 }

@@ -1,2 +1,4 @@
 .idea/
 resources/uploads/*
+/application/libraries/alipay/alipay.wap/*
+/application/logs/*

@@ -42,7 +42,7 @@
 <div class="main-content">
     <div class="container">
         <div class="form-box col-sm-8 full-width">
-            <form class="simple_form card_form form-vertical form-validate" role="form" novalidate="novalidate" id="new_checkout" data-token="ewr1-L5rk4DlD3XFPZUZOVdErvh" action="" accept-charset="UTF-8" method="post">
+            <form class="simple_form card_form form-vertical form-validate" role="form" novalidate="novalidate" id="new_checkout" action="<?=base_url('order/upgradePay')?>" accept-charset="UTF-8" method="post">
                 <input name="order" type="hidden" value="<?=$order['id']?>">
                 <div class="panel-group " id="accordion">
                     <div class="panel-content">

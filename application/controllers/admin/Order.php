@@ -2,8 +2,6 @@
 
 /**
  * Order 订单管理控制器
- *
- * @property Order_model $_model
  */
 class Order extends Admin_Controller
 {
