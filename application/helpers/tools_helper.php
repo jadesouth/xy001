@@ -115,7 +115,7 @@ if (! function_exists('is_mobile')) {
 
     function is_mobile()
     {
-        $this->load->library('mobile_detect');
-        return $this->mobile_detect->isMobile();
+        get_instance()->load->library('mobile_detect');
+        return get_instance()->mobile_detect->isMobile();
     }
 }
