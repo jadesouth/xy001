@@ -37,20 +37,33 @@ class Order extends Home_Controller
                 show_404();
             }
 
-            // 将地址信息先暂时写入SESSION
-            $_SESSION['order_upgrade'][$orderId] = [
-                'post_name'  => $postName,
-                'post_phone' => $postPhone,
-                'post_addr'  => $postAddr,
-            ];
-
             // 计算出需要支付的价格
             $fee = $box['annually_price'] - $order['order_value'];
             if (0 >= $fee) {
                 show_404();
             }
 
-            var_dump($fee);die;
+            // 记录升级套餐信息
+            $update = [
+                'upgrade_before_order_value' => $order['order_value'],
+                'upgrade_order_value'        => $fee,
+                'upgrade_before_pay_value'   => $order['pay_value'],
+                'upgrade_pay_value'          => $fee,
+                'upgrade_before_plan_number' => $order['plan_number'],
+                'upgrade_plan_number'        => 12 - $order['plan_number'],
+                'upgrade_post_name'          => $postName,
+                'upgrade_post_phone'         => $postPhone,
+                'upgrade_post_addr'          => $postAddr,
+                'upgrade_status'             => 0, // 升级未完成
+                'upgrade_pay_status'         => 0, // 未支付
+            ];
+            $res = $this->order_model
+                ->setUpdateData($update)
+                ->setAndCond(['order_number' => $orderId, 'user_id' => $userId, 'status' => 1])
+                ->update();
+            if (! $res) {
+                show_404();
+            }
 
             // 构造请求支付宝支付参数
             $orderName = '升级计划'; // 订单名称
