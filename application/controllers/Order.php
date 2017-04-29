@@ -2,6 +2,8 @@
 
 /**
  * Class Order
+ *
+ * @property Order_model $_model
  */
 class Order extends Home_Controller
 {
@@ -20,7 +22,7 @@ class Order extends Home_Controller
 
             // 获取订单信息
             $this->load->model('order_model');
-            $fields = 'id,order_number,user_id,box_id,box_name,order_value,plan_number';
+            $fields = 'id,order_number,user_id,box_id,box_name,order_value,pay_value,plan_number';
             $order = $this->order_model
                 ->setSelectFields($fields)
                 ->setAndCond(['id' => $orderId, 'user_id' => $userId, 'status' => 2])
@@ -59,17 +61,19 @@ class Order extends Home_Controller
             ];
             $res = $this->order_model
                 ->setUpdateData($update)
-                ->setAndCond(['order_number' => $orderId, 'user_id' => $userId, 'status' => 1])
+                ->setAndCond(['id' => $orderId, 'user_id' => $userId, 'status' => 2])
                 ->update();
             if (! $res) {
                 show_404();
             }
 
+            $fee = 0.01; // TODO del.
             // 构造请求支付宝支付参数
+            $orderNumber = substr($order['order_number'], 0, 18) . '1';
             $orderName = '升级计划'; // 订单名称
             $orderDesc = '升级计划'; // 商品描述
             $orderFee = $fee;
-            $htmlText = $this->createAlipaySubmit($userId, $order['order_number'], $orderName, $orderFee, $orderDesc);
+            $htmlText = $this->createAlipaySubmit($userId, $orderNumber, $orderName, $orderFee, $orderDesc);
 
             echo $htmlText;
         } else {
@@ -78,64 +82,37 @@ class Order extends Home_Controller
     }
 
     /**
-     * upgradePaymentCompleted 升级支付完成,创建支付宝支付完成同步回调结果数据并将支付订单状态改为已支付
+     * upgradePaymentZfbReturn 升级计划支付宝支付完成后,支付宝支付完成同步回调结果数据处理
      */
-    public function upgradePaymentCompleted()
+    public function upgradePaymentZfbReturn()
     {
         $callbackData = $this->input->get();
         if (empty($callbackData)) {
-            show_error('支付宝支付延迟，支付结果大概5分钟到,请您稍后在个人订单中心查看订单升级详情。');
+            show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
         }
 
-        $insertData = [
-            'user_id'      => isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0,
-            'order_number' => isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0,
-            'pay_type'     => 0, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]
-            'http_method'  => 'GET',
-            'content'      => json_encode($callbackData, JSON_UNESCAPED_UNICODE),
-        ];
+        $user_id = isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0;
+        $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (0 >= $user_id || empty($order_number)) {
+            show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
+        }
 
-        // 存储callback data
-        $this->load->model('pay_callback_result_model');
-        $this->pay_callback_result_model
-            ->setInsertData($insertData)
-            ->create();
+        // 记录支付完成
+        $res = $this->_model->upgradePaymentCompleted($user_id, $order_number, $callbackData);
+        if($res) {
+            redirect('member/order');
+        } else {
+            show_error('第三方处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
+        }
     }
 
     /**
-     * prepaid_deposit_complete 创建支付宝支付完成同步回调结果数据并将支付订单状态改为已支付
+     * upgradePaymentZfbNotify 升级计划支付宝支付完成后,支付宝支付完成异步回调结果数据处理
      */
-    public function prepaid_deposit_complete()
+    public function upgradePaymentZfbNotify()
     {
-        $zfb_callback_result_data = $this->get_zfb_callback_result_data('get');
-        // 记录日志信息
-        $this->load->helper('logs');
-        if (empty($zfb_callback_result_data)) {
-            // 记录错误日志
-            seaslog_error("Log_Id: {$this->log_id}, " . 'Error: 支付宝 return_url $zfb_callback_result_data为空',
-                'prepaid_deposit_callback');
-            $this->load_view('public/error_info', ['error_msg' => '支付宝支付延迟，充值资金大概5分钟后到账,请您稍后在个人中心查看押金余额。']);
-            return;
-        }
-
-        // 日志信息
-        $log_msg['post'] = $this->input->get();
-        $log_msg['zfb_callback_result_data'] = $zfb_callback_result_data;
-        // 创建支付宝支付完成同步回调结果数据并将支付订单状态改为已支付
-        $this->load->model('zfb_callback_result_model');
-        $create_res = $this->zfb_callback_result_model->create_zfb_return_info($zfb_callback_result_data);
-        if (false === $create_res) {
-            // 记录错误日志
-            seaslog_error("Log_Id: {$this->log_id}, " . 'Error: 支付宝 return_url 回调失败,create_zfb_return_info执行失败,参数信息: ' . json_encode($log_msg,
-                    JSON_UNESCAPED_UNICODE), 'prepaid_deposit_callback');
-            $this->load_view('public/error_info', ['error_msg' => '支付宝支付延迟，充值资金大概5分钟后到账,请您稍后在个人中心查看押金余额。']);
-            return;
-        }
-
-        seaslog_error("Log_Id: {$this->log_id}, " . 'Success: 支付宝 return_url 回调成功,参数信息: ' . json_encode($log_msg,
-                JSON_UNESCAPED_UNICODE), 'prepaid_deposit_callback');
-        $this->load_view('public/success_info', ['success_msg' => '支付宝支付成功，充值资金大概5分钟后到您的押金,请您稍后在个人中心查看押金余额。']);
     }
+
 
     /**
      * createAlipaySubmit 创建提交支付宝支付

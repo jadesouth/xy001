@@ -24,7 +24,7 @@ class Home_Controller extends MY_Controller
             $this->_loginUser = $this->session->home_login_user;
         }
 
-        $this->_loginUser['id'] = 1;
+        $this->_loginUser['id'] = 1; // TODO del.
     }
 
     /**

@@ -60,6 +60,7 @@ class Order_model extends MY_Model
         $nextMonth = (int)date('m', $nextTimestamp);
 
         $fields = 'order.id AS order_id,order_plan.id AS order_plan_id,order_number,post_name,post_phone,post_addr,plan_year,plan_month,plan_date,sign';
+
         return $this->db->select($fields)
             ->from('order_plan')
             ->group_start()
@@ -82,6 +83,98 @@ class Order_model extends MY_Model
     }
 
     /**
+     * upgradePaymentCompleted 支付完成后的数据处理
+     *
+     * @param $userId
+     * @param $orderNumber
+     * @param $callbackData
+     * @return bool
+     */
+    public function upgradePaymentCompleted($userId, $orderNumber, $callbackData)
+    {
+        // 获取当前订单信息
+        $fields = 'id,box_id,upgrade_before_order_value,upgrade_order_value'
+            . 'upgrade_before_pay_value,upgrade_pay_value,'
+            . 'upgrade_before_plan_number,upgrade_plan_number,'
+            . 'post_name,post_phone,post_addr,'
+            . 'upgrade_post_name,upgrade_post_phone,upgrade_post_addr';
+        $order = $this->setTable('order')
+            ->setSelectFields($fields)
+            ->setAndCond(['order_number' => $orderNumber, 'user_id' => $userId, 'status' => 2])
+            ->get();
+        if (empty($order)) {
+            return false;
+        }
+        // 获取最大一期的计划
+        $fields = 'plan_date';
+        $maxOrderPlan = $this->setTable('order_plan')
+            ->setSelectFields($fields)
+            ->setAndCond(['order_id' => $order['id'], 'user_id' => $userId, 'status' => 0])
+            ->get();
+        if (empty($maxOrderPlan)) {
+            return false;
+        }
+        // 订单修改数据
+        $updateOrderDate = [
+            'order_value'        => $order['upgrade_before_order_value'] + $order['upgrade_order_value'],
+            'pay_value'          => $order['upgrade_before_pay_value'] + $order['upgrade_pay_value'],
+            'plan_number'        => $order['upgrade_before_plan_number'] + $order['upgrade_plan_number'],
+            'post_name'          => $order['upgrade_post_name'],
+            'post_phone'         => $order['upgrade_post_phone'],
+            'post_addr'          => $order['upgrade_post_addr'],
+            'upgrade_post_name'  => $order['post_name'],
+            'upgrade_post_phone' => $order['post_phone'],
+            'upgrade_post_addr'  => $order['post_addr'],
+            'upgrade_status'     => 1, // 1:升级已确认
+            'upgrade_pay_status' => 1, // 1:已支付
+        ];
+        // 订单计划数据
+        $orderPlansDate = [];
+        for ($i = 1; $i <= $order['upgrade_plan_number']; $i++) {
+            $addMonthTimestamp = strtotime($maxOrderPlan['plan_date'] . " +{$i} month");
+            $planYear = date('Y', $addMonthTimestamp);
+            $planMonth = date('m', $addMonthTimestamp);
+            $planDate = date('Y-m-d', $addMonthTimestamp);
+            $orderPlansDate[] = [
+                'order_id'       => $order['id'],
+                'user_id'        => $userId,
+                'box_id'         => $order['box_id'],
+                'plan_year'      => $planYear,
+                'plan_month'     => $planMonth,
+                'plan_date'      => $planDate,
+                'is_upgrade'     => 1, // 是否是升级的计划,1:是
+                'upgrade_status' => 1, // 升级计划状态,1:升级已确认,
+            ];
+        }
+        // 支付日志数据
+        $insertCallbackData = [
+            'user_id'      => $userId,
+            'order_number' => $orderNumber,
+            'pay_type'     => 0, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]
+            'http_method'  => 'GET',
+            'content'      => json_encode($callbackData, JSON_UNESCAPED_UNICODE),
+        ];
+
+        $this->db->trans_start();
+        // 修改order订单信息
+        $this->setTable('order')
+            ->setUpdateData($updateOrderDate)
+            ->setAndCond(['id' => $order['id'], 'user_id' => $userId, 'status' => 2])
+            ->update();
+        // 存储支付计划order_plan
+        $this->setTable('order_plan')
+            ->setInsertData($orderPlansDate)
+            ->createBatch();
+        // 存储callback data
+        $this->setTable('pay_callback_result')
+            ->setInsertData($insertCallbackData)
+            ->create();
+        $this->db->trans_complete();
+
+        return $this->db->trans_status();
+    }
+
+    /**
      * generateOrderNumber 生成订单编号
      *
      * @return string
@@ -89,7 +182,7 @@ class Order_model extends MY_Model
     public function generateOrderNumber()
     {
         do {
-            $orderNumber = date('YmdHis') . random_number(4);
+            $orderNumber = date('YmdHis') . random_number(4) . '0';
             $existed = (bool)$this->setAndCond(['order_number' => $orderNumber])
                 ->count();
         } while ($existed);
