@@ -2,12 +2,6 @@
 
 /**
  * 通用辅助函数
-<<<<<<< HEAD
- *
- * @author haokaiyang
- * @date   2016-07-02 12:46:21
-=======
->>>>>>> development
  */
 
 if (! function_exists('price_format')) {
@@ -17,8 +11,6 @@ if (! function_exists('price_format')) {
      * @param int $price
      *
      * @return float 带两位小数点的价格
-     * @author haokaiyang
-     * @date   2016-07-02 12:49:24
      */
     function price_format($price = 0)
     {

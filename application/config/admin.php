@@ -3,9 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * 后台相关配置文件
- *
- * @author wangnan <wangnanphp@163.com>
- * @date   2016-11-13 20:17:30
  */
 $config = [
     // 管理员管理

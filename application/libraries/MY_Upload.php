@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: wangnan
- * Date: 16-5-12
- * Time: 下午23:09
- */
-defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Class MY_Upload 扩展上传类库
@@ -19,8 +12,6 @@ class MY_Upload extends CI_Upload
      * Verifies that it is a valid upload path with proper permissions.
      *
      * @return  bool
-     * @author wangann
-     * @date 2016-05-12 23:08:02
      */
     public function validate_upload_path()
     {
