@@ -99,10 +99,18 @@ class Order extends Home_Controller
 
         // 记录支付完成
         $res = $this->_model->upgradePaymentCompleted($user_id, $order_number, $callbackData);
-        if($res) {
-            redirect('member/order');
+        if ($res) {
+            if ('TRADE_FINISHED' != strtoupper($callbackData['trade_status']) || 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
+                show_error('支付宝支付失败,请重试！');
+            } else {
+                redirect('member/order');
+            }
         } else {
-            show_error('第三方处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
+            if ('TRADE_FINISHED' != strtoupper($callbackData['trade_status']) || 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
+                show_error('支付宝支付失败,请重试！');
+            } else {
+                show_error('第三方处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
+            }
         }
     }
 
@@ -111,6 +119,28 @@ class Order extends Home_Controller
      */
     public function upgradePaymentZfbNotify()
     {
+        $callbackData = $this->input->post();
+        if (empty($callbackData)) {
+            echo 'fail';
+
+            return;
+        }
+
+        $user_id = isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0;
+        $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (0 >= $user_id || empty($order_number)) {
+            echo 'fail';
+
+            return;
+        }
+
+        // 记录支付完成
+        $res = $this->_model->upgradePaymentSuccess($user_id, $order_number, $callbackData);
+        if ($res) {
+            echo 'fail';
+        } else {
+            echo 'success';
+        }
     }
 
 
@@ -122,6 +152,7 @@ class Order extends Home_Controller
      * @param string $orderName   订单名称,一般为商品名称
      * @param float  $orderFee    订单费用
      * @param string $orderDesc   订单描述,一般为商品描述
+     *
      * @return string 请求支付宝支付的表单html
      */
     private function createAlipaySubmit($userID, $orderNumber, $orderName, $orderFee, $orderDesc)
@@ -134,7 +165,7 @@ class Order extends Home_Controller
         require_once PATH_LIBRARY . 'alipay' . DS . 'create_direct_pay_by_user' . DS . 'lib/alipay_submit.class.php';
 
         // 构造要请求的参数数组
-        $parameter = array(
+        $parameter = [
             'service'            => $alipay_config['service'],                         // 接口名称
             'partner'            => $alipay_config['partner'],                         // 合作者身份ID
             'seller_id'          => $alipay_config['seller_id'],                       // 卖家支付宝用户号
@@ -149,11 +180,12 @@ class Order extends Home_Controller
             'body'               => $orderDesc,                                        // 商品描述
             '_input_charset'     => trim(strtolower($alipay_config['input_charset'])), // 参数编码字符集
             'extra_common_param' => $userID                                            // 公用回传参数,此处为发起订单的用户ID
-        );
+        ];
 
         // 建立请求
         $alipaySubmit = new AlipaySubmit($alipay_config);
         $html_text = $alipaySubmit->buildRequestForm($parameter, "post", "确认");
+
         return $html_text;
     }
 }
