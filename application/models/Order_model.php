@@ -225,7 +225,7 @@ class Order_model extends MY_Model
         }
 
         // 判断支付是否成功在进行业务处理
-        if (in_array($callbackData[], ['TRADE_SUCCESS', 'TRADE_PENDING', 'TRADE_FINISHED'])) {
+        if (in_array($callbackData['trade_status'], ['TRADE_SUCCESS', 'TRADE_PENDING', 'TRADE_FINISHED'])) {
             // 订单修改数据
             $updateOrderDate = [
                 'upgrade_status'     => 2, // 2:升级已完成
