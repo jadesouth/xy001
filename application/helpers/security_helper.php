@@ -13,7 +13,7 @@ if ( ! function_exists('generate_home_password')) {
      *
      * @return string 生成的密码字符串
      */
-    function generate_home_password(string $password, string $salt): string
+    function generate_home_password($password, $salt)
     {
         if(empty($password) || empty($salt)) {
             return false;
@@ -32,7 +32,7 @@ if ( ! function_exists('generate_admin_password')) {
      *
      * @return string 生成的密码字符串
      */
-    function generate_admin_password(string $password, string $salt): string
+    function generate_admin_password($password, $salt)
     {
         if(empty($password) || empty($salt)) {
             return false;
