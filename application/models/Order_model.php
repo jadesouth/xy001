@@ -106,7 +106,7 @@ class Order_model extends MY_Model
             return true;
         }
         // 获取当前订单信息
-        $fields = 'id,box_id,upgrade_before_order_value,upgrade_order_value'
+        $fields = 'id,box_id,upgrade_before_order_value,upgrade_order_value,'
             . 'upgrade_before_pay_value,upgrade_pay_value,'
             . 'upgrade_before_plan_number,upgrade_plan_number,'
             . 'post_name,post_phone,post_addr,'
@@ -211,7 +211,7 @@ class Order_model extends MY_Model
             return true;
         }
         // 获取当前订单信息
-        $fields = 'id,box_id,upgrade_before_order_value,upgrade_order_value'
+        $fields = 'id,box_id,upgrade_before_order_value,upgrade_order_value,'
             . 'upgrade_before_pay_value,upgrade_pay_value,'
             . 'upgrade_before_plan_number,upgrade_plan_number,'
             . 'post_name,post_phone,post_addr,'
