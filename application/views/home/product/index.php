@@ -89,20 +89,20 @@
                     </h2>
                     <select class="plan-select" id="size-select-1">
                         <option value="">T恤衫号码</option>
-                        <option value="33" data-option-type="shirt">男 - S</option>
-                        <option value="34" data-option-type="shirt">男 - M</option>
-                        <option value="35" data-option-type="shirt">男 - L</option>
-                        <option value="36" data-option-type="shirt">男 - XL</option>
-                        <option value="37" data-option-type="shirt">男 - 2XL</option>
-                        <option value="38" data-option-type="shirt">男 - 3XL</option>
-                        <option value="348" data-option-type="shirt">男 - 4XL</option>
-                        <option value="349" data-option-type="shirt">男 - 5XL</option>
-                        <option value="39" data-option-type="shirt">女 - S</option>
-                        <option value="40" data-option-type="shirt">女 - M</option>
-                        <option value="41" data-option-type="shirt">女 - L</option>
-                        <option value="42" data-option-type="shirt">女 - XL</option>
-                        <option value="43" data-option-type="shirt">女 - 2XL</option>
-                        <option value="44" data-option-type="shirt">女 - 3XL</option>
+                        <option value="1-S" data-option-type="shirt">男 - S</option>
+                        <option value="1-M" data-option-type="shirt">男 - M</option>
+                        <option value="1-L" data-option-type="shirt">男 - L</option>
+                        <option value="1-XL" data-option-type="shirt">男 - XL</option>
+                        <option value="1-2XL" data-option-type="shirt">男 - 2XL</option>
+                        <option value="1-3XL" data-option-type="shirt">男 - 3XL</option>
+                        <option value="1-4XL" data-option-type="shirt">男 - 4XL</option>
+                        <option value="1-5XL" data-option-type="shirt">男 - 5XL</option>
+                        <option value="2-S" data-option-type="shirt">女 - S</option>
+                        <option value="2-M" data-option-type="shirt">女 - M</option>
+                        <option value="2-L" data-option-type="shirt">女 - L</option>
+                        <option value="2-XL" data-option-type="shirt">女 - XL</option>
+                        <option value="2-2XL" data-option-type="shirt">女 - 2XL</option>
+                        <option value="2-3XL" data-option-type="shirt">女 - 3XL</option>
                     </select> <input type="hidden" class="option-value" id="shirt" value="">
                 </div>
                 <p class="pricing">

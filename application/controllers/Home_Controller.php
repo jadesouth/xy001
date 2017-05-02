@@ -23,8 +23,6 @@ class Home_Controller extends MY_Controller
         if (! empty($this->session->home_login_user)) {
             $this->_loginUser = $this->session->home_login_user;
         }
-
-        $this->_loginUser['id'] = 1; // TODO del.
     }
 
     /**

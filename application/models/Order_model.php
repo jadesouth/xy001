@@ -323,4 +323,44 @@ class Order_model extends MY_Model
 
         return $orderNumber;
     }
+
+    public function createOrder($user_info,$box_info,$coupon_info,$post_data)
+    {
+        $this->db->trans_start();
+
+        if(!empty($coupon_info)){
+            $insert_order_data['coupon_id'] = $coupon_info['id'];
+            $insert_order_data['coupon_value'] = $coupon_info['value'];
+        }
+        // 订单
+        $insert_order['order_number'] = $this->generateOrderNumber();
+        $insert_order['user_id'] = $user_info['id'];
+        $insert_order['box_id'] = $box_info['id'];
+        $insert_order['box_name'] = $box_info['id'];
+        $insert_order['order_value'] = $this->generateOrderNumber();
+        $insert_order['pay_value'] = $this->generateOrderNumber();
+        $insert_order['plan_number'] = $this->generateOrderNumber();
+        $insert_order['shirt_sex'] = $this->generateOrderNumber();
+        $insert_order['shirt_size'] = $this->generateOrderNumber();
+        $insert_order['post_name'] = $this->generateOrderNumber();
+        $insert_order['post_phone'] = $this->generateOrderNumber();
+        $insert_order['post_addr'] = $this->generateOrderNumber();
+        // 订单计划
+        $insert_order_plan['order'] = 1;
+//        $order_id;
+        $insert_order_plan['user_id'] = $user_info['id'];
+        $insert_order_plan['box_id'] = $box_info['id'];
+        for($i=1;$i<$post_data['plan']+1;$i++){
+        //todo
+        }
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+        }
+        else
+        {
+            $this->db->trans_commit();
+        }
+    }
 }

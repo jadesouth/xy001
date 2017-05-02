@@ -33,3 +33,55 @@ if ( ! function_exists('http_json_response'))
             ->set_output(json_encode($data, JSON_UNESCAPED_UNICODE));
     }
 }
+
+if ( ! function_exists('layer_success_response'))
+{
+    /**
+     * layer_success_response layer成功响应
+     *
+     * @param string $message
+     */
+    function layer_success_response($message)
+    {
+        echo <<<SCRIPT
+<script src="/resources/assets/js/home/jquery.min.js"></script>
+<script src="/resources/assets/libs/layui/layui.js"></script>
+<script>
+// 加载layer
+layui.use('layer', function () {
+var layer = layui.layer;
+layer.msg('{$message}', {icon: 6, time:2000}, function () {
+history.go(-1);
+})
+});
+</script>
+SCRIPT;
+        exit;
+    }
+}
+
+if ( ! function_exists('layer_fail_response'))
+{
+    /**
+     * layer_fail_response layer失败响应
+     *
+     * @param string $message
+     */
+    function layer_fail_response($message)
+    {
+        echo <<<SCRIPT
+<script src="/resources/assets/js/home/jquery.min.js"></script>
+<script src="/resources/assets/libs/layui/layui.js"></script>
+<script>
+// 加载layer
+layui.use('layer', function () {
+var layer = layui.layer;
+layer.msg('{$message}', {icon: 2, time:2000}, function () {
+history.go(-1);
+})
+});
+</script>
+SCRIPT;
+        exit;
+    }
+}

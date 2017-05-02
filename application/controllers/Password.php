@@ -54,11 +54,11 @@ class Password extends Home_Controller
                 $user_name = empty($user_info['name']) ? '': ($user_info['name'].',');
                 $message = "<div class=\"\" style=\"display:block;padding:0;margin:0;height:100%;max-height:none;min-height:none;line-height:normal;overflow:visible;\">
     <span style=\"font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;\">
-".$user_name."你好 :<br><br>
+" .$user_name. "你好 :<br><br>
         您最近提出了重设 AmazingFun ID 密码的请求。要完成此过程，请点按下方链接。
 
         <br/><br/>
-        <a target=\"_blank\" href=\"".$find_pwd_url."\">立即重设</a>
+        <a target=\"_blank\" href=\"" .$find_pwd_url. "\">立即重设</a>
         <br/><br/>
         如果您未做过此更改并认为有人未经授权访问了您的帐户，您应尽快前往 <a target=\"_blank\" href=\"http://www.amazingfun.cn\">www.amazingfun.cn</a> 重设您的密码。
         <br><br>

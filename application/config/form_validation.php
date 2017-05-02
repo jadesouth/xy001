@@ -134,46 +134,24 @@ $config = [
         ['field' => 'password', 'label' => '新密码', 'rules' => 'trim|required'],
         ['field' => 'password_confirmation', 'label' => '新密码确认', 'rules' => 'trim|required|matches[password]'],
     ],
-    'admin/keywords/add' => [ // 添加关键字
-        ['field' => 'type', 'label' => '关键字类型', 'rules' => 'trim|required|in_list[1,2,3,4]'],
-        ['field' => 'word', 'label' => '关键字', 'rules' => 'trim|required'],
+    'product/nologin_pay'         =>[  // 购物支付
+        ['field' => 'plan', 'label' => '计划期数', 'rules' => 'trim|required|integer|in_list[1,3,6,12]'],
+        ['field' => 'tsize', 'label' => 'T-shirt尺寸', 'rules' => 'trim'],
+        ['field' => 'post_email', 'label' => '邮箱', 'rules' => 'trim|required|valid_email|is_unique[user.login_email]'],
+        ['field' => 'password', 'label' => '密码', 'rules' => 'trim|required'],
+        ['field' => 'post_name', 'label' => '姓名', 'rules' => 'trim|required'],
+        ['field' => 'post_phone', 'label' => '电话', 'rules' => 'trim|required|integer'],
+        ['field' => 'post_addr', 'label' => '送货地址', 'rules' => 'trim|required'],
+        ['field' => 'payway', 'label' => '支付方式', 'rules' => 'trim|required|in_list[alipay]'],
     ],
-    'admin/keywords/search' => [ // 搜索关键字
-        ['field' => 'type', 'label' => '关键字类型', 'rules' => 'trim|required|in_list[1,2,3,4]'],
-        ['field' => 'word', 'label' => '关键字', 'rules' => 'trim|required'],
-    ],
-    'admin/banner/add' => [ // 添加 Banner
-        ['field' => 'banner', 'label' => 'Banner 图片', 'rules' => 'trim|required'],
-    ],
-    'admin/banner/delete' => [ // 删除 Banner
-        ['field' => 'banner', 'label' => 'Banner 图片', 'rules' => 'trim|required'],
-    ],
-    'keywords/addAddress' => [ // 添加地址关键字
-        ['field' => 'province', 'label' => '省份', 'rules' => 'trim|required'],
-        ['field' => 'city', 'label' => '市区', 'rules' => 'trim|required'],
-        ['field' => 'county', 'label' => '县城', 'rules' => 'trim|required'],
-        ['field' => 'address', 'label' => '详细地址', 'rules' => 'trim|required'],
-    ],
-    'keywords/advertising' => [ // 广告法关键字查询
-        ['field' => 'contents', 'label' => '内容', 'rules' => 'trim|required'],
-    ],
-    'keywords/address' => [ // 地址关键字查询
-        ['field' => 'province', 'label' => '省份', 'rules' => 'trim|required'],
-        ['field' => 'city', 'label' => '市', 'rules' => 'trim|required'],
-        ['field' => 'county', 'label' => '区/县', 'rules' => 'trim|required'],
-        ['field' => 'address', 'label' => '详细地址', 'rules' => 'trim|required'],
-    ],
-    'keywords/apply' => [ // 关键字查询申请
-        ['field' => 'phone', 'label' => '手机号码', 'rules' => 'trim|required|is_natural_no_zero|integer'],
-        ['field' => 'email', 'label' => '电子邮件', 'rules' => 'trim|required|valid_email'],
-        ['field' => 'qq', 'label' => 'QQ号码', 'rules' => 'trim|required|is_natural_no_zero|integer|greater_than_equal_to[10000]'],
-    ],
-    'user/detail' => [ // 个人设置
-        ['field' => 'real_name', 'label' => '真实姓名', 'rules'=> 'trim'],
-        ['field' => 'sex', 'label' => '性别', 'rules'=> 'trim|in_list[1,2]'],
-        ['field' => 'phone', 'label' => '手机', 'rules'=> 'trim|integer'],
-        ['field' => 'email', 'label' => '邮箱', 'rules'=> 'trim|valid_email'],
-        ['field' => 'qq', 'label' => 'QQ', 'rules'=> 'trim|integer|min_length[6]|max_length[11]'],
-        ['field' => 'idcard', 'label' => '身份证', 'rules'=> 'trim|min_length[16]|max_length[18]'],
+    'product/pay'         =>[  // 登录购物支付
+        ['field' => 'user_id', 'label' => '', 'rules' => 'trim|required|integer'],
+        ['field' => 'box_id', 'label' => '盒子', 'rules' => 'trim|required|integer'],
+        ['field' => 'plan', 'label' => '计划期数', 'rules' => 'trim|required|integer|in_list[1,3,6,12]'],
+        ['field' => 'tsize', 'label' => 'T-shirt尺寸', 'rules' => 'trim'],
+        ['field' => 'post_name', 'label' => '姓名', 'rules' => 'trim|required'],
+        ['field' => 'post_phone', 'label' => '电话', 'rules' => 'trim|required|integer'],
+        ['field' => 'post_addr', 'label' => '送货地址', 'rules' => 'trim|required'],
+        ['field' => 'payway', 'label' => '支付方式', 'rules' => 'trim|required|in_list[alipay]'],
     ],
 ];

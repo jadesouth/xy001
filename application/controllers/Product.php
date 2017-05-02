@@ -65,24 +65,7 @@ class Product extends Home_Controller
             $this->_viewVar['price'] = $box_info['semiannually_price'];
         } elseif (12 == $plan) {
             $this->_viewVar['price'] = $box_info['annually_price'];
-            // 临时方案
-            $t_shirt_array = [
-                "33"  => '男 - S',
-                "34"  => '男 - M',
-                "35"  => '男 - L',
-                "36"  => '男 - XL',
-                "37"  => '男 - 2XL',
-                "38"  => '男 - 3XL',
-                "348" => '男 - 4XL',
-                "349" => '男 - 5XL',
-                "39"  => '女 - S',
-                "40"  => '女 - M',
-                "41"  => '女 - L',
-                "42"  => '女 - XL',
-                "43"  => '女 - 2XL',
-                "44"  => '女 - 3XL',
-            ];
-            $this->_viewVar['t_shirt_size'] = $t_shirt_array[$_GET['tsize']];
+            $this->_viewVar['t_shirt_size'] = str_replace(array('1-','2-'),array('男 - ','女 - '),$_GET['tsize']);
         } else {
             show_404();
         }
@@ -93,8 +76,12 @@ class Product extends Home_Controller
         } else {
             $user_id = $this->_loginUser['id'];
             $this->load->model('user_model');
-            $this->_viewVar['user_info'] = $this->user_model->setSelectFields('id,post_name,post_phone,post_addr')
-                                                            ->find($user_id);
+            $this->load->model('coupon_model');
+            $this->_viewVar['user_info'] = $this->user_model->setSelectFields('id,post_name,post_phone,post_addr')->find($user_id);
+            $this->_viewVar['coupons'] = $this->coupon_model
+                ->setSelectFields('id,value,status,use_time,expiration_time,created_at')
+                ->setAndCond(['user_id' => $this->_loginUser['id'], 'status' => 0, 'expiration_time>' => date('Y-m-d')])
+                ->read();
             $this->load_view('product/checkout.php');
         }
     }
@@ -120,4 +107,152 @@ class Product extends Home_Controller
         }
         http_ajax_response(1, '非法请求', []);
     }
+
+    public function nologin_pay()
+    {
+        if ('post' == $this->input->method()) {
+            $this->load->helper('http');
+            $this->load->helper('tools');
+            $this->load->library('form_validation');
+            if (false === $this->form_validation->run()) {
+                http_ajax_response(1, $this->form_validation->error_string());
+                return;
+            }else{
+                $this->load->model('user_model');
+                $user_id = (int)$this->input->post('user_id');
+                $payway = $this->input->post('payway');
+                $plan = (int)$this->input->post('plan');
+                $tsize = (string)$this->input->post('tsize');
+                $post_name = $this->input->post('post_name');
+                $post_phone = (int)$this->input->post('post_phone');
+                $post_addr = (int)$this->input->post('post_addr');
+                $user_info['login_email'] = $this->input->post('post_email');
+                $user_info['password'] = $this->input->post('password');
+                $user_info['post_name'] = $post_name;
+                $user_info['post_phone'] = $post_phone;
+                $user_info['post_addr'] = $post_addr;
+//                    $user_id = $this->user_model->add_user($user_info);
+
+                // 事务
+                // 生成订单
+                // 生成订单计划
+                $return = true;
+                if($return){
+                    //判断是手机还是电脑
+                    if(is_mobile()){ //手机wap
+                        require APPPATH.'libraries/alipay/alipay.wap/wappay/service/AlipayTradeService.php';
+                        require APPPATH.'libraries/alipay/alipay.wap/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
+                        require APPPATH.'libraries/alipay/alipay.wap/config.php';
+                        //商户订单号，商户网站订单系统中唯一订单号，必填
+                        $out_trade_no = '111111';
+
+                        //订单名称，必填
+                        $subject = '名称';
+
+                        //付款金额，必填
+                        $total_amount = '0.01';
+
+                        //商品描述，可空
+                        $body = '';
+
+                        //超时时间
+                        $timeout_express="1m";
+
+                        $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
+                        $payRequestBuilder->setBody($body);
+                        $payRequestBuilder->setSubject($subject);
+                        $payRequestBuilder->setOutTradeNo($out_trade_no);
+                        $payRequestBuilder->setTotalAmount($total_amount);
+                        $payRequestBuilder->setTimeExpress($timeout_express);
+
+                        $payResponse = new AlipayTradeService($config);
+                        $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+                        return;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    public function pay()
+    {
+        if ('post' == $this->input->method()) {
+            $this->load->helper('http');
+            $this->load->helper('tools');
+            $this->load->library('form_validation');
+            if (false === $this->form_validation->run()) {
+                layer_fail_response(trim(strip_tags($this->form_validation->error_string())));
+            }else{
+                $this->load->model('user_model');
+                $this->load->model('coupon_model');
+                $this->load->model('box_model');
+                $this->load->model('order_model');
+                $user_id = (int)$this->input->post('user_id');
+                $box_id = (int)$this->input->post('box_id');
+                $payway = $this->input->post('payway');
+                $coupon_id = (int)$this->input->post('coupon');
+                $plan = (int)$this->input->post('plan');
+                $tsize = (string)$this->input->post('tsize');
+                $post_name = $this->input->post('post_name');
+                $post_phone = (int)$this->input->post('post_phone');
+                $post_addr = (int)$this->input->post('post_addr');
+                if($this->_loginUser['id'] != $user_id){
+                    layer_fail_response('非法参数');
+                }
+                $user_info = $this->user_model->setSelectFields('*')->find($user_id);
+                $box_info = $this->box_model->setSelectFields('*')->find($box_id);
+                $coupon_info = $this->coupon_model->setSelectFields('*')->setAndCond(['user_id' => $this->_loginUser['id'], 'status' => 0, 'expiration_time>' => date('Y-m-d'),'id'=>$coupon_id])->get();
+                if(empty($user_info) || empty($box_info) || (!empty($coupon_id) && empty($coupon_info))){
+                    layer_fail_response('非法参数');
+                }
+                $update_data['post_name'] = $post_name;
+                $update_data['post_phone'] = $post_phone;
+                $update_data['post_addr'] = $post_addr;
+                $return = $this->user_model->modify($user_id, $update_data);
+                // 事务 todo
+                // 生成订单
+                // 生成订单计划
+                $return = true;
+                if($return){
+                    //判断是手机还是电脑
+                    if(is_mobile()){ //手机wap
+                        require APPPATH.'libraries/alipay/alipay.wap/wappay/service/AlipayTradeService.php';
+                        require APPPATH.'libraries/alipay/alipay.wap/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
+                        require APPPATH.'libraries/alipay/alipay.wap/config.php';
+                        //商户订单号，商户网站订单系统中唯一订单号，必填
+                        $out_trade_no = '111111';
+
+                        //订单名称，必填
+                        $subject = '名称';
+
+                        //付款金额，必填
+                        $total_amount = '0.01';
+
+                        //商品描述，可空
+                        $body = '';
+
+                        //超时时间
+                        $timeout_express="1m";
+
+                        $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
+                        $payRequestBuilder->setBody($body);
+                        $payRequestBuilder->setSubject($subject);
+                        $payRequestBuilder->setOutTradeNo($out_trade_no);
+                        $payRequestBuilder->setTotalAmount($total_amount);
+                        $payRequestBuilder->setTimeExpress($timeout_express);
+
+                        $payResponse = new AlipayTradeService($config);
+                        $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+                        return;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+
 }
