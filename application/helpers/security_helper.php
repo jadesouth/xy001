@@ -2,9 +2,6 @@
 
 /**
  * Security_helper.php 安全函数帮助文件
- *
- * @author wangnan <wangnanphp@163.com>
- * @date 16-8-16 20:05
  */
 
 if ( ! function_exists('generate_home_password')) {
@@ -15,8 +12,6 @@ if ( ! function_exists('generate_home_password')) {
      * @param string $salt 加密盐值
      *
      * @return string 生成的密码字符串
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-11-13 20:28:26
      */
     function generate_home_password(string $password, string $salt): string
     {
@@ -36,8 +31,6 @@ if ( ! function_exists('generate_admin_password')) {
      * @param string $salt 加密盐值
      *
      * @return string 生成的密码字符串
-     * @author wangnan <wangnanphp@163.com>
-     * @date 2016-08-16 20:08:51
      */
     function generate_admin_password(string $password, string $salt): string
     {

@@ -11,8 +11,8 @@ class Member extends Home_Controller
     public function order()
     {
         $condition['AND'] = [
-            'user_id' => $this->_loginUser['id'],
-            'status'  => 1,
+            'user_id'   => $this->_loginUser['id'],
+            'status []' => [1, 2],
         ];
         $fields = 'id,order_number,box_id,box_name,plan_number,shirt_sex,shirt_size,post_name,post_phone,post_addr,created_at';
         $this->load->model('order_model');
@@ -64,7 +64,7 @@ class Member extends Home_Controller
             ->setAndCond([
                 'user_id'        => $this->_loginUser['id'],
                 'plan_number !=' => 12,
-                'status'         => 1,
+                'status []'      => [1, 2],
             ])
             ->read();
 
@@ -182,6 +182,7 @@ class Member extends Home_Controller
         $this->load->helper('http');
         if (0 >= $order_id) {
             http_ajax_response(1, '订单信息有误');
+
             return false;
         }
 
@@ -196,6 +197,7 @@ class Member extends Home_Controller
             ->update();
 
         http_ajax_response(0, 'OK');
+
         return true;
     }
 
@@ -210,6 +212,7 @@ class Member extends Home_Controller
         $this->load->helper('http');
         if (0 >= $order_id) {
             http_ajax_response(1, '订单信息有误');
+
             return false;
         }
 
@@ -224,6 +227,7 @@ class Member extends Home_Controller
             ->update();
 
         http_ajax_response(0, 'OK');
+
         return true;
     }
 }

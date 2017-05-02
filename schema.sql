@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `box` (
 -- Table: `order` 订单表
 CREATE TABLE IF NOT EXISTS `order` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
-  `order_number` CHAR(18) NOT NULL DEFAULT '' COMMENT '订单编号',
+  `order_number` CHAR(19) NOT NULL DEFAULT '' COMMENT '订单编号',
   `user_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id(FK:user id)',
   `box_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '盒子id(FK:box id)',
   `coupon_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '优惠券id(FK:coupon id)',
@@ -98,9 +98,9 @@ CREATE TABLE IF NOT EXISTS `order` (
   `upgrade_before_pay_value` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '升级前支付价格',
   `upgrade_pay_value` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '升级支付价格',
   `pay_value` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '支付总价格',
-  `upgrade_before_plan_number` TINYINT NOT NULL DEFAULT 1 COMMENT '升级前盒子几期',
-  `upgrade_plan_number` TINYINT NOT NULL DEFAULT 1 COMMENT '升级了盒子几期',
-  `plan_number` TINYINT NOT NULL DEFAULT 1 COMMENT '订购盒子总几期',
+  `upgrade_before_plan_number` TINYINT NOT NULL DEFAULT 0 COMMENT '升级前盒子几期',
+  `upgrade_plan_number` TINYINT NOT NULL DEFAULT 0 COMMENT '升级了盒子几期',
+  `plan_number` TINYINT NOT NULL DEFAULT 0 COMMENT '订购盒子总几期',
   `shirt_sex` TINYINT NOT NULL DEFAULT 1 COMMENT '衬衫性别[1:男,2:女]',
   `shirt_size` ENUM('S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL') NOT NULL DEFAULT 'S' COMMENT '衬衫尺寸',
   `post_name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT '邮寄姓名',
@@ -130,6 +130,8 @@ CREATE TABLE IF NOT EXISTS `order_plan` (
   `plan_month` TINYINT NOT NULL DEFAULT 0 COMMENT '计划月份',
   `plan_date` DATE NOT NULL DEFAULT '0000-00-00' COMMENT '计划日期',
   `sign` TINYINT NOT NULL DEFAULT 0 COMMENT '标记[0:未标记,1:已标记]',
+  `is_upgrade` TINYINT NOT NULL DEFAULT 0 COMMENT '是否是升级的计划[0:否,1:是]',
+  `upgrade_status` TINYINT NOT NULL DEFAULT 0 COMMENT '升级计划状态[0:升级未完成,1:升级已确认,2:升级已完成,3:升级失败]',
   `status` TINYINT NOT NULL DEFAULT 0 COMMENT '状态[0:正常邮寄,1:暂停邮寄]',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -182,7 +184,8 @@ CREATE TABLE `coupon` (
 CREATE TABLE IF NOT EXISTS `pay_callback_result` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `user_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK: user id',
-  `order_number` CHAR(18) NOT NULL DEFAULT '' COMMENT '支付的订单编号,商户网站唯一订单号',
+  `order_number` CHAR(19) NOT NULL DEFAULT '' COMMENT '支付的订单编号,商户网站唯一订单号(末位为0时是首次购买,末位为1是升级购买)',
+  `notify_type` TINYINT NOT NULL DEFAULT 0 COMMENT '通知类型[0:支付宝同步通知,1:支付宝异步通知]',
   `pay_type` TINYINT NOT NULL DEFAULT 0 COMMENT '支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]',
   `http_method` ENUM('UNKNOWN', 'GET', 'POST') NOT NULL DEFAULT 'UNKNOWN' COMMENT '回调请求的方法',
   `content` VARCHAR(8192) NOT NULL DEFAULT '' COMMENT '回调传回的内容,JSON格式',
@@ -190,6 +193,6 @@ CREATE TABLE IF NOT EXISTS `pay_callback_result` (
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_order_number` (`order_number`),
+  UNIQUE KEY `uk_order_number_notify_type` (`order_number`, `notify_type`),
   KEY `fk_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='支付回调结果表';
