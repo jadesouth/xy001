@@ -15,7 +15,7 @@ class Menu_model extends MY_Model
      */
     public function add($menu_info)
     {
-        if (empty($menu_info['name']) || empty($menu_info['url'] || empty($menu_info['list_order']))) {
+        if (empty($menu_info['name']) || empty($menu_info['url']) || empty($menu_info['list_order'])) {
             return false;
         }
 
