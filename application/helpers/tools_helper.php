@@ -56,8 +56,8 @@ if (! function_exists('random_characters')) {
         $characters = '0123456789abcdefjhijklmnopqrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ';
         $max = strlen($characters) - 1;
         $generate_characters = '';
-        for ($i = 0;$i < $length;$i++) {
-            $generate_characters .= $characters[random_int(0, $max)];
+        for ($i = 0; $i < $length;$i++) {
+            $generate_characters .= $characters[rand(0, $max)];
         }
 
         return $generate_characters;
