@@ -65,7 +65,7 @@ class Product extends Home_Controller
             $this->_viewVar['price'] = $box_info['semiannually_price'];
         } elseif (12 == $plan) {
             $this->_viewVar['price'] = $box_info['annually_price'];
-            $this->_viewVar['t_shirt_size'] = str_replace(array('1-','2-'),array('男 - ','女 - '),$_GET['tsize']);
+            $this->_viewVar['t_shirt_size'] = str_replace(['1-', '2-'], ['男 - ', '女 - '], $_GET['tsize']);
         } else {
             show_404();
         }
@@ -77,7 +77,8 @@ class Product extends Home_Controller
             $user_id = $this->_loginUser['id'];
             $this->load->model('user_model');
             $this->load->model('coupon_model');
-            $this->_viewVar['user_info'] = $this->user_model->setSelectFields('id,post_name,post_phone,post_addr')->find($user_id);
+            $this->_viewVar['user_info'] = $this->user_model->setSelectFields('id,post_name,post_phone,post_addr')
+                                                            ->find($user_id);
             $this->_viewVar['coupons'] = $this->coupon_model
                 ->setSelectFields('id,value,status,use_time,expiration_time,created_at')
                 ->setAndCond(['user_id' => $this->_loginUser['id'], 'status' => 0, 'expiration_time>' => date('Y-m-d')])
@@ -115,60 +116,63 @@ class Product extends Home_Controller
             $this->load->helper('tools');
             $this->load->library('form_validation');
             if (false === $this->form_validation->run()) {
-                http_ajax_response(1, $this->form_validation->error_string());
-                return;
-            }else{
+                layer_fail_response(trim(strip_tags($this->form_validation->error_string())));
+            } else {
                 $this->load->model('user_model');
-                $user_id = (int)$this->input->post('user_id');
-                $payway = $this->input->post('payway');
-                $plan = (int)$this->input->post('plan');
-                $tsize = (string)$this->input->post('tsize');
-                $post_name = $this->input->post('post_name');
-                $post_phone = (int)$this->input->post('post_phone');
-                $post_addr = (int)$this->input->post('post_addr');
-                $user_info['login_email'] = $this->input->post('post_email');
-                $user_info['password'] = $this->input->post('password');
+                $this->load->model('coupon_model');
+                $this->load->model('box_model');
+                $this->load->model('order_model');
+                $user_id = (int)$this->input->post('user_id', true);
+                $box_id = (int)$this->input->post('box_id', true);
+                $payway = $this->input->post('payway', true);
+                $plan = (int)$this->input->post('plan', true);
+                $tsize = (string)$this->input->post('tsize', true);
+                $post_name = $this->input->post('post_name', true);
+                $post_phone = $this->input->post('post_phone', true);
+                $post_addr = $this->input->post('post_addr', true);
+                $user_info['login_email'] = $this->input->post('post_email',true);
+                $user_info['password'] = $this->input->post('password',true);
                 $user_info['post_name'] = $post_name;
                 $user_info['post_phone'] = $post_phone;
                 $user_info['post_addr'] = $post_addr;
-//                    $user_id = $this->user_model->add_user($user_info);
-
-                // 事务
-                // 生成订单
-                // 生成订单计划
-                $return = true;
-                if($return){
-                    //判断是手机还是电脑
-                    if(is_mobile()){ //手机wap
-                        require APPPATH.'libraries/alipay/alipay.wap/wappay/service/AlipayTradeService.php';
-                        require APPPATH.'libraries/alipay/alipay.wap/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
-                        require APPPATH.'libraries/alipay/alipay.wap/config.php';
-                        //商户订单号，商户网站订单系统中唯一订单号，必填
-                        $out_trade_no = '111111';
-
-                        //订单名称，必填
-                        $subject = '名称';
-
-                        //付款金额，必填
-                        $total_amount = '0.01';
-
-                        //商品描述，可空
-                        $body = '';
-
-                        //超时时间
-                        $timeout_express="1m";
-
-                        $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
-                        $payRequestBuilder->setBody($body);
-                        $payRequestBuilder->setSubject($subject);
-                        $payRequestBuilder->setOutTradeNo($out_trade_no);
-                        $payRequestBuilder->setTotalAmount($total_amount);
-                        $payRequestBuilder->setTimeExpress($timeout_express);
-
-                        $payResponse = new AlipayTradeService($config);
-                        $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
-                        return;
+                $user_id = $this->user_model->add_user($user_info);
+                $user_info = $this->user_model->setSelectFields('*')->find($user_id);
+                $box_info = $this->box_model->setSelectFields('*')->find($box_id);
+                $coupon_info = [];
+                if (empty($user_info) || empty($box_info)) {
+                    layer_fail_response('非法参数');
+                }
+                $shirt_size = $shirt_sex = '';
+                if (1 == $plan) {
+                    $order_value = $box_info['monthly_price'];
+                } elseif (3 == $plan) {
+                    $order_value = $box_info['quarterly_price'];
+                } elseif (6 == $plan) {
+                    $order_value = $box_info['semiannually_price'];
+                } elseif (12 == $plan) {
+                    $order_value = $box_info['annually_price'];
+                    list($shirt_sex, $shirt_size) = explode('-', $tsize);
+                    if (! in_array($shirt_sex, [1, 2])) {
+                        layer_fail_response('非法参数');
                     }
+                    if (! in_array($shirt_size, ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'])) {
+                        layer_fail_response('非法参数');
+                    }
+                } else {
+                    show_404();
+                }
+                $extra_data = [
+                    'plan'        => $plan,
+                    'post_name'   => $post_name,
+                    'post_phone'  => $post_phone,
+                    'post_addr'   => $post_addr,
+                    'order_value' => $order_value,
+                    'shirt_sex'   => $shirt_sex,
+                    'shirt_size'  => $shirt_size,
+                ];
+                $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
+                if (! $create_return) {
+                    layer_fail_response('创建订单失败');
                 }
             }
 
@@ -184,7 +188,7 @@ class Product extends Home_Controller
             $this->load->library('form_validation');
             if (false === $this->form_validation->run()) {
                 layer_fail_response(trim(strip_tags($this->form_validation->error_string())));
-            }else{
+            } else {
                 $this->load->model('user_model');
                 $this->load->model('coupon_model');
                 $this->load->model('box_model');
@@ -198,19 +202,22 @@ class Product extends Home_Controller
                 $post_name = $this->input->post('post_name');
                 $post_phone = $this->input->post('post_phone');
                 $post_addr = $this->input->post('post_addr');
-                if($this->_loginUser['id'] != $user_id){
+                if ($this->_loginUser['id'] != $user_id) {
                     layer_fail_response('非法参数');
                 }
                 $user_info = $this->user_model->setSelectFields('*')->find($user_id);
                 $box_info = $this->box_model->setSelectFields('*')->find($box_id);
-                $coupon_info = $this->coupon_model->setSelectFields('*')->setAndCond(['user_id' => $this->_loginUser['id'], 'status' => 0, 'expiration_time>' => date('Y-m-d'),'id'=>$coupon_id])->get();
-                if(empty($user_info) || empty($box_info) || (!empty($coupon_id) && empty($coupon_info))){
+                $coupon_info = $this->coupon_model->setSelectFields('*')
+                                                  ->setAndCond(['user_id' => $this->_loginUser['id'], 'status' => 0, 'expiration_time>' => date('Y-m-d'), 'id' => $coupon_id])
+                                                  ->get();
+                if (empty($user_info) || empty($box_info) || (! empty($coupon_id) && empty($coupon_info))) {
                     layer_fail_response('非法参数');
                 }
                 $update_data['post_name'] = $post_name;
                 $update_data['post_phone'] = $post_phone;
                 $update_data['post_addr'] = $post_addr;
                 $return = $this->user_model->modify($user_id, $update_data);
+                $shirt_size = $shirt_sex = '';
                 if (1 == $plan) {
                     $order_value = $box_info['monthly_price'];
                 } elseif (3 == $plan) {
@@ -219,29 +226,36 @@ class Product extends Home_Controller
                     $order_value = $box_info['semiannually_price'];
                 } elseif (12 == $plan) {
                     $order_value = $box_info['annually_price'];
-                    $t_shirt_size = list();
+                    list($shirt_sex, $shirt_size) = explode('-', $tsize);
+                    if (! in_array($shirt_sex, [1, 2])) {
+                        layer_fail_response('非法');
+                    }
+                    if (! in_array($shirt_size, ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'])) {
+                        layer_fail_response('非法');
+                    }
                 } else {
                     show_404();
                 }
                 $extra_data = [
-                    'plan'=>$plan,
-                    'post_name'=>$post_name,
-                    'post_phone'=>$post_phone,
-                    'post_addr'=>$post_addr,
-                    'order_value'=>$order_value,
-                    ''
+                    'plan'        => $plan,
+                    'post_name'   => $post_name,
+                    'post_phone'  => $post_phone,
+                    'post_addr'   => $post_addr,
+                    'order_value' => $order_value,
+                    'shirt_sex'   => $shirt_sex,
+                    'shirt_size'  => $shirt_size,
                 ];
-                $this->order_model->createOrder($user_info,$box_info,$coupon_info,$extra_data);
-                // 事务 todo
-                // 生成订单
-                // 生成订单计划
+                $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
+                if (! $create_return) {
+                    layer_fail_response('创建订单失败');
+                }
                 $return = true;
-                if($return){
+                if ($return) {
                     //判断是手机还是电脑
-                    if(is_mobile()){ //手机wap
-                        require APPPATH.'libraries/alipay/alipay.wap/wappay/service/AlipayTradeService.php';
-                        require APPPATH.'libraries/alipay/alipay.wap/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
-                        require APPPATH.'libraries/alipay/alipay.wap/config.php';
+                    if (is_mobile()) { //手机wap
+                        require APPPATH . 'libraries/alipay/alipay.wap/wappay/service/AlipayTradeService.php';
+                        require APPPATH . 'libraries/alipay/alipay.wap/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
+                        require APPPATH . 'libraries/alipay/alipay.wap/config.php';
                         //商户订单号，商户网站订单系统中唯一订单号，必填
                         $out_trade_no = '111111';
 
@@ -255,7 +269,7 @@ class Product extends Home_Controller
                         $body = '';
 
                         //超时时间
-                        $timeout_express="1m";
+                        $timeout_express = "1m";
 
                         $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
                         $payRequestBuilder->setBody($body);
@@ -265,7 +279,7 @@ class Product extends Home_Controller
                         $payRequestBuilder->setTimeExpress($timeout_express);
 
                         $payResponse = new AlipayTradeService($config);
-                        $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+                        $result = $payResponse->wapPay($payRequestBuilder, $config['return_url'], $config['notify_url']);
                         return;
                     }
                 }

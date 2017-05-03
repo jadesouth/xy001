@@ -222,7 +222,7 @@
                                                     <div class="form-group string optional checkout_shipping_pay">
                                                         <span>选择支付方式：</span>
                                                         <input type="radio" class="" id="pay1-btn" name="payway"
-                                                               value="alipay">
+                                                               value="alipay" checked>
                                                         <label for="pay1-btn">
                                                             <img src="/resources/assets/images/alipay.png" alt=""/>
                                                         </label>

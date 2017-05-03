@@ -105,6 +105,8 @@
             </div>
             <form class="simple_form card_form form-vertical form-validate" role="form" novalidate="novalidate"
                   id="new_checkout" data-token="ewr1-L5rk4DlD3XFPZUZOVdErvh" accept-charset="UTF-8" action="/product/nologin_pay" method="post">
+                <input type="hidden" name="user_id" value="<?= $user_info['id'] ?>">
+                <input type="hidden" name="box_id" value="<?= $_GET['id'] ?>">
                 <input type="hidden" name="plan" id="plan" value="<?=$_GET['plan']?>">
                 <input type="hidden" name="tsize" id="option_type_shirt" value="<?=$_GET['tsize']?>">
                 <div class="form-group hidden checkout_recurly_token">
@@ -260,33 +262,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-<!--                                                <div class="row">-->
-<!--                                                    <div class="col-md-12 short-width">-->
-<!--                                                        <span>选择优惠券：</span>-->
-<!--                                                        <div class="form-group string optional checkout_shipping_pay">-->
-<!---->
-<!--                                                            <input type="checkbox" class="" id="coupon" name="payway"-->
-<!--                                                                   checked>-->
-<!--                                                            <label for="coupon" class="coupon">-->
-<!--                                                                <div class="coupon-item ">-->
-<!--                                                                    <div class="coupon-up">-->
-<!--                                                                        <p class="coupon-left">-->
-<!--                                                                            <span class="coupon-a">¥</span>-->
-<!--                                                                            <span class="coupon-price">5</span>-->
-<!--                                                                            <span class="coupon-title">优惠券</span>-->
-<!--                                                                        </p>-->
-                                                                        <!--<p class="text-center coupon-time">2017.01.01-2017.12.31</p>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                            </label>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
                                                 <div class="row">
                                                     <div class="col-md-12 short-width">
                                                         <div class="form-group string optional checkout_shipping_pay">
                                                             <span>选择支付方式：</span>
-                                                            <input type="radio" class="" id="pay1-btn" name="payway" value="alipay">
+                                                            <input type="radio" class="" id="pay1-btn" name="payway" value="alipay" checked>
                                                             <label for="pay1-btn">
                                                                 <img src="/resources/assets/images/alipay.png" alt=""/>
                                                             </label>
