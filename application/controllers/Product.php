@@ -196,8 +196,8 @@ class Product extends Home_Controller
                 $plan = (int)$this->input->post('plan');
                 $tsize = (string)$this->input->post('tsize');
                 $post_name = $this->input->post('post_name');
-                $post_phone = (int)$this->input->post('post_phone');
-                $post_addr = (int)$this->input->post('post_addr');
+                $post_phone = $this->input->post('post_phone');
+                $post_addr = $this->input->post('post_addr');
                 if($this->_loginUser['id'] != $user_id){
                     layer_fail_response('非法参数');
                 }
@@ -211,6 +211,27 @@ class Product extends Home_Controller
                 $update_data['post_phone'] = $post_phone;
                 $update_data['post_addr'] = $post_addr;
                 $return = $this->user_model->modify($user_id, $update_data);
+                if (1 == $plan) {
+                    $order_value = $box_info['monthly_price'];
+                } elseif (3 == $plan) {
+                    $order_value = $box_info['quarterly_price'];
+                } elseif (6 == $plan) {
+                    $order_value = $box_info['semiannually_price'];
+                } elseif (12 == $plan) {
+                    $order_value = $box_info['annually_price'];
+                    $t_shirt_size = list();
+                } else {
+                    show_404();
+                }
+                $extra_data = [
+                    'plan'=>$plan,
+                    'post_name'=>$post_name,
+                    'post_phone'=>$post_phone,
+                    'post_addr'=>$post_addr,
+                    'order_value'=>$order_value,
+                    ''
+                ];
+                $this->order_model->createOrder($user_info,$box_info,$coupon_info,$extra_data);
                 // 事务 todo
                 // 生成订单
                 // 生成订单计划

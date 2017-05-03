@@ -431,8 +431,9 @@ class Order_model extends MY_Model
         return $orderNumber;
     }
 
-    public function createOrder($user_info,$box_info,$coupon_info,$post_data)
+    public function createOrder($user_info,$box_info,$coupon_info,$extra_data)
     {
+        var_dump($user_info,$box_info,$coupon_info,$post_data);
         $this->db->trans_start();
 
         if(!empty($coupon_info)){
@@ -444,7 +445,7 @@ class Order_model extends MY_Model
         $insert_order['user_id'] = $user_info['id'];
         $insert_order['box_id'] = $box_info['id'];
         $insert_order['box_name'] = $box_info['id'];
-        $insert_order['order_value'] = $this->generateOrderNumber();
+        $insert_order['order_value'] = $extra_data['order_value'];
         $insert_order['pay_value'] = $this->generateOrderNumber();
         $insert_order['plan_number'] = $this->generateOrderNumber();
         $insert_order['shirt_sex'] = $this->generateOrderNumber();
