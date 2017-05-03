@@ -229,9 +229,10 @@ class Order_model extends MY_Model
             . 'upgrade_before_plan_number,upgrade_plan_number,'
             . 'post_name,post_phone,post_addr,upgrade_post_name,'
             . 'upgrade_post_phone,upgrade_post_addr,upgrade_status';
+        $realOrderNumber = substr($orderNumber, 0 ,18) . 0;
         $order = $this->setTable('order')
             ->setSelectFields($fields)
-            ->setAndCond(['order_number' => $orderNumber, 'user_id' => $userId, 'status' => 2])
+            ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 2])
             ->get();
         if (empty($order)) {
             log_message('debug', 'POST: 3');
