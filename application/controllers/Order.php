@@ -87,7 +87,6 @@ class Order extends Home_Controller
     public function upgradePaymentZfbReturn()
     {
         $callbackData = $this->input->get();
-        log_message('debug', 'GET:' . json_encode($callbackData, JSON_UNESCAPED_UNICODE));
         if (empty($callbackData)) {
             show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
         }
@@ -121,7 +120,6 @@ class Order extends Home_Controller
     public function upgradePaymentZfbNotify()
     {
         $callbackData = $this->input->post();
-        log_message('debug', 'POST: ' . json_encode($callbackData, JSON_UNESCAPED_UNICODE));
         if (empty($callbackData)) {
             echo 'fail';
 
