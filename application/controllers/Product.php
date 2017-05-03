@@ -74,11 +74,13 @@ class Product extends Home_Controller
         if (empty($this->_loginUser)) {
             $this->load_view('product/nologin_checkout.php');
         } else {
+            $form_code = mt_rand(0,1000000);
+            $this->session->set_userdata('checkout_code', $form_code);
             $user_id = $this->_loginUser['id'];
             $this->load->model('user_model');
             $this->load->model('coupon_model');
-            $this->_viewVar['user_info'] = $this->user_model->setSelectFields('id,post_name,post_phone,post_addr')
-                                                            ->find($user_id);
+            $this->_viewVar['form_code'] = $form_code;
+            $this->_viewVar['user_info'] = $this->user_model->setSelectFields('id,post_name,post_phone,post_addr')->find($user_id);
             $this->_viewVar['coupons'] = $this->coupon_model
                 ->setSelectFields('id,value,status,use_time,expiration_time,created_at')
                 ->setAndCond(['user_id' => $this->_loginUser['id'], 'status' => 0, 'expiration_time>' => date('Y-m-d')])
@@ -193,7 +195,18 @@ class Product extends Home_Controller
                 $this->load->model('coupon_model');
                 $this->load->model('box_model');
                 $this->load->model('order_model');
-                $user_id = (int)$this->input->post('user_id');
+                $code = (int)$this->input->post('code');
+                if (empty($code)) {
+                    layer_fail_response('请求失败');
+                }
+                if (empty($_SESSION['checkout_code']) || $code != $_SESSION['checkout_code']) {
+                    layer_fail_response('请求失败');
+                }
+                unset($_SESSION['checkout_code']);
+                $user_id = (int)$this->_loginUser['id'];
+                if(empty($user_id)){
+                    layer_fail_response('请重新再试');
+                }
                 $box_id = (int)$this->input->post('box_id');
                 $payway = $this->input->post('payway');
                 $coupon_id = (int)$this->input->post('coupon');
@@ -202,9 +215,6 @@ class Product extends Home_Controller
                 $post_name = $this->input->post('post_name');
                 $post_phone = $this->input->post('post_phone');
                 $post_addr = $this->input->post('post_addr');
-                if ($this->_loginUser['id'] != $user_id) {
-                    layer_fail_response('非法参数');
-                }
                 $user_info = $this->user_model->setSelectFields('*')->find($user_id);
                 $box_info = $this->box_model->setSelectFields('*')->find($box_id);
                 $coupon_info = $this->coupon_model->setSelectFields('*')
@@ -237,32 +247,31 @@ class Product extends Home_Controller
                     show_404();
                 }
                 $extra_data = [
-                    'plan'        => $plan,
-                    'post_name'   => $post_name,
-                    'post_phone'  => $post_phone,
-                    'post_addr'   => $post_addr,
-                    'order_value' => $order_value,
-                    'shirt_sex'   => $shirt_sex,
-                    'shirt_size'  => $shirt_size,
+                    'order_number' => $this->order_model->generateOrderNumber(),
+                    'plan'         => $plan,
+                    'post_name'    => $post_name,
+                    'post_phone'   => $post_phone,
+                    'post_addr'    => $post_addr,
+                    'order_value'  => $order_value,
+                    'pay_value'    => empty($coupon_info) ? $order_value : $order_value - $coupon_info['value'],
+                    'shirt_sex'    => $shirt_sex,
+                    'shirt_size'   => $shirt_size,
                 ];
-//                $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
-//                if (! $create_return) {
-//                    layer_fail_response('创建订单失败');
-//                }
-                $return = true;
-                if ($return) {
-                    //判断是手机还是电脑
-                    if (true) { //手机wap
-                        $fee = 0.01; // TODO del.
-                        // 构造请求支付宝支付参数
-                        $orderNumber = '123456789000';
-                        $orderName = '升级计划'; // 订单名称
-                        $orderDesc = '升级计划'; // 商品描述
-                        $orderFee = $fee;
-                        $this->load->library('Alipay');
-                        $this->alipay->createWapSubmit(1, $orderNumber, $orderName, $orderFee, $orderDesc);
-                    }
+                $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
+                if (! $create_return) {
+                    layer_fail_response('创建订单失败');
                 }
+                if (true) { //手机wap
+                    $orderFee = $extra_data['pay_value'];
+                    $orderFee = '0.01';//deleteme
+                    $orderNumber = $extra_data['order_number'];
+                    $orderName = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
+                    $orderDesc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
+                    $this->load->library('Alipay');
+                    $htmlText = $this->alipay->createWapSubmit($user_id, $orderNumber, $orderName, $orderFee, $orderDesc);
+                    echo $htmlText;
+                }
+
             }
 
         }

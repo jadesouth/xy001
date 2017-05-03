@@ -10,7 +10,7 @@ $config = array (
 		'notify_url' => "http://工程公网访问地址/alipay.trade.wap.pay-PHP-UTF-8/notify_url.php",
 		
 		//同步跳转
-		'return_url' => "http://mitsein.com/alipay.trade.wap.pay-PHP-UTF-8/return_url.php",
+		'return_url' => base_url('order/productPaymentZfbReturn'),
 
 		//编码格式
 		'charset' => "UTF-8",

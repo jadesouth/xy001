@@ -62,7 +62,7 @@
             <form class="simple_form card_form form-vertical form-validate" role="form" novalidate="novalidate"
                   id="new_checkout" data-token="ewr1-L5rk4DlD3XFPZUZOVdErvh"
                   action="/product/pay" accept-charset="UTF-8" method="post">
-                <input type="hidden" name="user_id" value="<?= $user_info['id'] ?>">
+                <input type="hidden" name="code" value="<?= $form_code?>">
                 <input type="hidden" name="box_id" value="<?= $_GET['id'] ?>">
                 <input type="hidden" name="plan" id="plan" value="<?= $_GET['plan'] ?>">
                 <input type="hidden" name="tsize" id="option_type_shirt" value="<?= $_GET['tsize'] ?>">
@@ -199,7 +199,7 @@
                                                     <div class="form-group string optional checkout_shipping_pay coupon_list radio">
 
                                                         <input type="radio" class="" name="coupon" value="<?=$coupon['id']?>" id="coupon-<?=$coupon['id']?>">
-                                                        <label for="coupon-<?=$coupon['id']?>" class="coupon">
+                                                        <label for="coupon-<?=$coupon['id']?>" class="coupon coupon-<?=$coupon['id']?>">
                                                             <div class="coupon-item ">
                                                                 <div class="coupon-up">
                                                                     <p class="coupon-left">
@@ -323,7 +323,13 @@
 
 <script>
     $(function () {
-
+        var coupon_id = $("input[name='coupon']:checked").attr('id');
+        if(coupon_id != null){
+            var coupon_price = $('.'+coupon_id).find('.coupon-price').html();
+            $('#coupon-discount-amount').text('¥'+coupon_price);
+            var total_price = $('#price').text() - coupon_price;
+            $('#subscription-today-total').text('¥'+total_price);
+        }
         $('#checkout-continue-link').click(function () {
             $('.checkout-login-box').hide();
             $('#accordion').removeClass('hide');

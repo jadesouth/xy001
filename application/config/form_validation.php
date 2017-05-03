@@ -134,7 +134,7 @@ $config = [
         ['field' => 'password', 'label' => '新密码', 'rules' => 'trim|required'],
         ['field' => 'password_confirmation', 'label' => '新密码确认', 'rules' => 'trim|required|matches[password]'],
     ],
-    'product/nologin_pay'         =>[  // 购物支付
+    'product/nologin_pay'         =>[  // 未登录购物支付
         ['field' => 'plan', 'label' => '计划期数', 'rules' => 'trim|required|integer|in_list[1,3,6,12]'],
         ['field' => 'tsize', 'label' => 'T-shirt尺寸', 'rules' => 'trim'],
         ['field' => 'post_email', 'label' => '邮箱', 'rules' => 'trim|required|valid_email|is_unique[user.login_email]'],
@@ -145,7 +145,6 @@ $config = [
         ['field' => 'payway', 'label' => '支付方式', 'rules' => 'trim|required|in_list[alipay]'],
     ],
     'product/pay'         =>[  // 登录购物支付
-        ['field' => 'user_id', 'label' => '', 'rules' => 'trim|required|integer'],
         ['field' => 'box_id', 'label' => '盒子', 'rules' => 'trim|required|integer'],
         ['field' => 'plan', 'label' => '计划期数', 'rules' => 'trim|required|integer|in_list[1,3,6,12]'],
         ['field' => 'tsize', 'label' => 'T-shirt尺寸', 'rules' => 'trim'],

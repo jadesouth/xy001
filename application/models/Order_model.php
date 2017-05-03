@@ -414,6 +414,75 @@ class Order_model extends MY_Model
             }
         }
     }
+    /**
+     * productPaymentCompleted 购买盒子支付完成后的数据同步处理
+     *
+     * @param $userId
+     * @param $orderNumber
+     * @param $callbackData
+     *
+     * @return bool
+     */
+    public function productPaymentCompleted($userId, $orderNumber, $callbackData)
+    {
+        // 判断当前pay_callback_result记录是否已经存在
+        $exists = $this->setTable('pay_callback_result')
+                       ->setAndCond([
+                           'user_id'      => $userId,
+                           'order_number' => $orderNumber,
+                           'notify_type'  => 0, // 0:支付宝同步通知
+                       ])
+                       ->count();
+        if ($exists) {
+            return true;
+        }
+        // 获取当前订单信息
+        $realOrderNumber = substr($orderNumber, 0 ,18) . 0;
+        $order = $this->setTable('order')
+                      ->setSelectFields('*')
+                      ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 0])
+                      ->get();
+        if (empty($order)) {
+            return false;
+        }
+
+        // 支付日志数据
+        $insertCallbackData = [
+            'user_id'      => $userId,
+            'order_number' => $orderNumber,
+            'notify_type'  => 0, // 0:支付宝同步通知
+            'pay_type'     => 1, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]
+            'http_method'  => 'GET',
+            'content'      => json_encode($callbackData, JSON_UNESCAPED_UNICODE),
+        ];
+
+        // 判断是否已经异步调用
+        if (1 == $order['status']) { // 已经异步调用,只写入同步回调记录
+            // 存储callback data
+            return (bool)$this->setTable('pay_callback_result')
+                              ->setInsertData($insertCallbackData)
+                              ->create();
+        }
+
+        // 订单修改数据
+        $updateOrderDate = [
+            'status'        => 2,
+        ];
+
+        $this->db->trans_start();
+        // 修改order订单信息
+        $this->setTable('order')
+             ->setUpdateData($updateOrderDate)
+             ->setAndCond(['id' => $order['id'], 'user_id' => $userId, 'status' => 0])
+             ->update();
+        // 存储callback data
+        $this->setTable('pay_callback_result')
+             ->setInsertData($insertCallbackData)
+             ->create();
+        $this->db->trans_complete();
+
+        return $this->db->trans_status();
+    }
 
     /**
      * generateOrderNumber 生成订单编号
@@ -449,9 +518,10 @@ class Order_model extends MY_Model
             $insert_order_data['coupon_value'] = $coupon_info['value'];
         }
         // 订单
-        $insert_order['order_number'] = $this->generateOrderNumber();
+        $insert_order['order_number'] = empty($extra_data['order_number']) ? $this->generateOrderNumber() : $extra_data['order_number'];
         $insert_order['user_id'] = $user_info['id'];
         $insert_order['box_id'] = $box_info['id'];
+        $insert_order['coupon_id'] = $coupon_info['id'];
         $insert_order['box_name'] = $box_info['name'];
         $insert_order['order_value'] = $extra_data['order_value'];
         $insert_order['pay_value'] = empty($coupon_info) ? $extra_data['order_value'] : $extra_data['order_value'] - $coupon_info['value'];

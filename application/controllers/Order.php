@@ -115,6 +115,31 @@ class Order extends Home_Controller
     }
 
     /**
+     * productPaymentZfbReturn 购买盒子支付宝支付完成后,支付宝支付完成同步回调结果数据处理
+     */
+    public function productPaymentZfbReturn()
+    {
+        $callbackData = $this->input->get();
+        if (empty($callbackData)) {
+            show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
+        }
+
+        $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (empty($order_number)) {
+            show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
+        }
+
+        // 记录支付完成
+        $user_id = $this->_loginUser['id'];
+        $res = $this->_model->productPaymentCompleted($user_id, $order_number, $callbackData);
+        if (!$res) {
+            redirect('member/order');
+        } else {
+            show_error('第三方处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
+        }
+    }
+
+    /**
      * upgradePaymentZfbNotify 升级计划支付宝支付完成后,支付宝支付完成异步回调结果数据处理
      */
     public function upgradePaymentZfbNotify()
