@@ -210,6 +210,7 @@ class Order_model extends MY_Model
      */
     public function upgradePaymentSuccess($userId, $orderNumber, $callbackData)
     {
+        log_message('debug', 'POST: 1');
         // 判断当前pay_callback_result记录是否已经存在
         $exists = $this->setTable('pay_callback_result')
             ->setAndCond([
@@ -219,6 +220,7 @@ class Order_model extends MY_Model
             ])
             ->count();
         if ($exists) {
+            log_message('debug', 'POST: 2');
             return true;
         }
         // 获取当前订单信息
@@ -232,6 +234,7 @@ class Order_model extends MY_Model
             ->setAndCond(['order_number' => $orderNumber, 'user_id' => $userId, 'status' => 2])
             ->get();
         if (empty($order)) {
+            log_message('debug', 'POST: 3');
             return false;
         }
 
@@ -246,9 +249,11 @@ class Order_model extends MY_Model
         ];
 
         // 判断是否已经同步调用
-        if (1 == $order['upgrade_status']) { // 已经同步步调用,修改订单相关状态数据
+        if (1 == $order['upgrade_status']) { // 已经同步调用,修改订单相关状态数据
+            log_message('debug', 'POST: 4');
             // 判断支付是否成功在进行业务处理
             if (in_array($callbackData['trade_status'], ['TRADE_SUCCESS', 'TRADE_PENDING', 'TRADE_FINISHED'])) {
+                log_message('debug', 'POST: 5');
                 // 订单修改数据
                 $updateOrderDate = [
                     'upgrade_status'     => 2, // 2:升级已完成
@@ -270,6 +275,7 @@ class Order_model extends MY_Model
                     'is_upgrade' => 1, // 1. 是升级的计划
                 ];
             } else { // 支付失败
+                log_message('debug', 'POST: 6');
                 // 订单修改数据
                 $updateOrderDate = [
                     'order_value'        => $order['order_value'] - $order['upgrade_order_value'],
@@ -302,12 +308,13 @@ class Order_model extends MY_Model
             }
 
             $this->db->trans_start();
+            log_message('debug', 'POST: 7');
             // 修改order订单信息
             $this->setTable('order')
                 ->setUpdateData($updateOrderDate)
                 ->setAndCond($updateOrderCondition)
                 ->update();
-            // 存储支付计划order_plan
+            // 修改订单计划order_plan
             $this->setTable('order_plan')
                 ->setUpdateData($updateOrderPlansDate)
                 ->setAndCond($updateOrderPlanCondition)
@@ -316,12 +323,15 @@ class Order_model extends MY_Model
             $this->setTable('pay_callback_result')
                 ->setInsertData($insertCallbackData)
                 ->create();
+            log_message('debug', 'POST: 8');
             $this->db->trans_complete();
-
+            log_message('debug', 'POST: 9');
             return $this->db->trans_status();
         } else { // 还没有调用同步,直接写入支付成功的订单状态数据
+            log_message('debug', 'POST: 10');
             // 判断支付是否成功在进行业务处理
             if (in_array($callbackData['trade_status'], ['TRADE_SUCCESS', 'TRADE_PENDING', 'TRADE_FINISHED'])) { // 成功
+                log_message('debug', 'POST: 11');
                 // 获取最大一期的计划
                 $fields = 'plan_date';
                 $maxOrderPlan = $this->setTable('order_plan')
@@ -329,6 +339,7 @@ class Order_model extends MY_Model
                     ->setAndCond(['order_id' => $order['id'], 'user_id' => $userId, 'status' => 0])
                     ->get();
                 if (empty($maxOrderPlan)) {
+                    log_message('debug', 'POST: 12');
                     return false;
                 }
                 // 订单修改数据
@@ -370,12 +381,13 @@ class Order_model extends MY_Model
                 }
 
                 $this->db->trans_start();
+                log_message('debug', 'POST: 13');
                 // 修改order订单信息
                 $this->setTable('order')
                     ->setUpdateData($updateOrderDate)
                     ->setAndCond($updateOrderCondition)
                     ->update();
-                // 存储支付计划order_plan
+                // 存储订单计划order_plan
                 $this->setTable('order_plan')
                     ->setInsertData($orderPlansDate)
                     ->createBatch();
@@ -383,10 +395,13 @@ class Order_model extends MY_Model
                 $this->setTable('pay_callback_result')
                     ->setInsertData($insertCallbackData)
                     ->create();
+                log_message('debug', 'POST: 14');
                 $this->db->trans_complete();
+                log_message('debug', 'POST: 15');
 
                 return $this->db->trans_status();
             } else { // 支付失败
+                log_message('debug', 'POST: 16');
                 // 订单修改数据
                 $updateOrderDate = [
                     'upgrade_status'     => 3, // 3:升级失败
@@ -399,6 +414,7 @@ class Order_model extends MY_Model
                 ];
 
                 $this->db->trans_start();
+                log_message('debug', 'POST: 17');
                 // 修改order订单信息
                 $this->setTable('order')
                     ->setUpdateData($updateOrderDate)
@@ -408,7 +424,9 @@ class Order_model extends MY_Model
                 $this->setTable('pay_callback_result')
                     ->setInsertData($insertCallbackData)
                     ->create();
+                log_message('debug', 'POST: 18');
                 $this->db->trans_complete();
+                log_message('debug', 'POST: 19');
 
                 return $this->db->trans_status();
             }
