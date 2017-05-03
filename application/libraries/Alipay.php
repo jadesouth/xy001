@@ -49,4 +49,35 @@ class Alipay
 
         return $html_text;
     }
+
+    /**
+     * createWapSubmit 创建WAP端提交支付宝支付
+     *
+     * @param int $userID         创建订单者ID
+     * @param string $orderNumber 订单编号
+     * @param string $orderName   订单名称,一般为商品名称
+     * @param float $orderFee     订单费用
+     * @param string $orderDesc   订单描述,一般为商品描述
+     *
+     * @return string 请求支付宝支付的表单html
+     */
+    public function createWapSubmit($userID, $orderNumber, $orderName, $orderFee, $orderDesc)
+    {
+        if (0 >= $userID || empty($orderNumber) || empty($orderName) || 0 >= $orderFee || empty($orderDesc)) {
+            return false;
+        }
+
+        require_once PATH_LIBRARY . 'alipay' . DS . 'alipay.wap' . DS . 'config.php';
+        require_once PATH_LIBRARY . 'alipay' . DS . 'alipay.wap' . DS . 'wappay/service/AlipayTradeService.php';
+        require_once PATH_LIBRARY . 'alipay' . DS . 'alipay.wap' . DS . 'wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
+        $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
+        $payRequestBuilder->setBody($orderDesc);
+        $payRequestBuilder->setSubject($orderName);
+        $payRequestBuilder->setOutTradeNo($orderNumber);
+        $payRequestBuilder->setTotalAmount($orderFee);
+        $payRequestBuilder->setTimeExpress('2m');
+        $payResponse = new AlipayTradeService($config);
+        $html_text = $payResponse->wapPay($payRequestBuilder, $config['return_url'], $config['notify_url']);
+        return $html_text;
+    }
 }

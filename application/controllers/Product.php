@@ -245,42 +245,22 @@ class Product extends Home_Controller
                     'shirt_sex'   => $shirt_sex,
                     'shirt_size'  => $shirt_size,
                 ];
-                $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
-                if (! $create_return) {
-                    layer_fail_response('创建订单失败');
-                }
+//                $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
+//                if (! $create_return) {
+//                    layer_fail_response('创建订单失败');
+//                }
                 $return = true;
                 if ($return) {
                     //判断是手机还是电脑
-                    if (is_mobile()) { //手机wap
-                        require APPPATH . 'libraries/alipay/alipay.wap/wappay/service/AlipayTradeService.php';
-                        require APPPATH . 'libraries/alipay/alipay.wap/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
-                        require APPPATH . 'libraries/alipay/alipay.wap/config.php';
-                        //商户订单号，商户网站订单系统中唯一订单号，必填
-                        $out_trade_no = '111111';
-
-                        //订单名称，必填
-                        $subject = '名称';
-
-                        //付款金额，必填
-                        $total_amount = '0.01';
-
-                        //商品描述，可空
-                        $body = '';
-
-                        //超时时间
-                        $timeout_express = "1m";
-
-                        $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
-                        $payRequestBuilder->setBody($body);
-                        $payRequestBuilder->setSubject($subject);
-                        $payRequestBuilder->setOutTradeNo($out_trade_no);
-                        $payRequestBuilder->setTotalAmount($total_amount);
-                        $payRequestBuilder->setTimeExpress($timeout_express);
-
-                        $payResponse = new AlipayTradeService($config);
-                        $result = $payResponse->wapPay($payRequestBuilder, $config['return_url'], $config['notify_url']);
-                        return;
+                    if (true) { //手机wap
+                        $fee = 0.01; // TODO del.
+                        // 构造请求支付宝支付参数
+                        $orderNumber = '123456789000';
+                        $orderName = '升级计划'; // 订单名称
+                        $orderDesc = '升级计划'; // 商品描述
+                        $orderFee = $fee;
+                        $this->load->library('Alipay');
+                        $this->alipay->createWapSubmit(1, $orderNumber, $orderName, $orderFee, $orderDesc);
                     }
                 }
             }
