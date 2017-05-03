@@ -8,6 +8,7 @@
  * @property CI_Pagination                 $pagination
  * @property CI_Session                    $session
  * @property Admin_model                   $admin_model
+ * @property Alipay                        $alipay
  * @property Box_model                     $box_model
  * @property Coupon_model                  $coupon_model
  * @property Menu_model                    $menu_model
