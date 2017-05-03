@@ -6,6 +6,15 @@
 class Member extends Home_Controller
 {
     /**
+     * Member constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->checkLogin();
+    }
+
+    /**
      * order 订单列表
      */
     public function order()

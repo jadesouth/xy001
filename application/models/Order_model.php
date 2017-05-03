@@ -227,9 +227,10 @@ class Order_model extends MY_Model
             . 'upgrade_before_plan_number,upgrade_plan_number,'
             . 'post_name,post_phone,post_addr,upgrade_post_name,'
             . 'upgrade_post_phone,upgrade_post_addr,upgrade_status';
+        $realOrderNumber = substr($orderNumber, 0 ,18) . 0;
         $order = $this->setTable('order')
             ->setSelectFields($fields)
-            ->setAndCond(['order_number' => $orderNumber, 'user_id' => $userId, 'status' => 2])
+            ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 2])
             ->get();
         if (empty($order)) {
             return false;
@@ -246,7 +247,7 @@ class Order_model extends MY_Model
         ];
 
         // 判断是否已经同步调用
-        if (1 == $order['upgrade_status']) { // 已经同步步调用,修改订单相关状态数据
+        if (1 == $order['upgrade_status']) { // 已经同步调用,修改订单相关状态数据
             // 判断支付是否成功在进行业务处理
             if (in_array($callbackData['trade_status'], ['TRADE_SUCCESS', 'TRADE_PENDING', 'TRADE_FINISHED'])) {
                 // 订单修改数据
@@ -307,7 +308,7 @@ class Order_model extends MY_Model
                 ->setUpdateData($updateOrderDate)
                 ->setAndCond($updateOrderCondition)
                 ->update();
-            // 存储支付计划order_plan
+            // 修改订单计划order_plan
             $this->setTable('order_plan')
                 ->setUpdateData($updateOrderPlansDate)
                 ->setAndCond($updateOrderPlanCondition)
@@ -317,7 +318,6 @@ class Order_model extends MY_Model
                 ->setInsertData($insertCallbackData)
                 ->create();
             $this->db->trans_complete();
-
             return $this->db->trans_status();
         } else { // 还没有调用同步,直接写入支付成功的订单状态数据
             // 判断支付是否成功在进行业务处理
@@ -375,7 +375,7 @@ class Order_model extends MY_Model
                     ->setUpdateData($updateOrderDate)
                     ->setAndCond($updateOrderCondition)
                     ->update();
-                // 存储支付计划order_plan
+                // 存储订单计划order_plan
                 $this->setTable('order_plan')
                     ->setInsertData($orderPlansDate)
                     ->createBatch();
