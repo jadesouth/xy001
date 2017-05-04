@@ -105,7 +105,6 @@
             </div>
             <form class="simple_form card_form form-vertical form-validate" role="form" novalidate="novalidate"
                   id="new_checkout" data-token="ewr1-L5rk4DlD3XFPZUZOVdErvh" accept-charset="UTF-8" action="/product/nologin_pay" method="post">
-                <input type="hidden" name="user_id" value="<?= $user_info['id'] ?>">
                 <input type="hidden" name="box_id" value="<?= $_GET['id'] ?>">
                 <input type="hidden" name="plan" id="plan" value="<?=$_GET['plan']?>">
                 <input type="hidden" name="tsize" id="option_type_shirt" value="<?=$_GET['tsize']?>">

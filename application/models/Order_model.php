@@ -466,7 +466,7 @@ class Order_model extends MY_Model
 
         // 订单修改数据
         $updateOrderDate = [
-            'status'        => 2,
+            'status'        => 1,
         ];
 
         $this->db->trans_start();
@@ -481,6 +481,98 @@ class Order_model extends MY_Model
              ->create();
         $this->db->trans_complete();
 
+        return $this->db->trans_status();
+    }
+
+    /**
+     * productPaymentSuccess 购买盒子支付完成后的数据异步处理
+     *
+     * @param $orderNumber
+     * @param $callbackData
+     *
+     * @return bool
+     */
+    public function productPaymentSuccess($orderNumber, $callbackData)
+    {
+        // 判断当前pay_callback_result记录是否已经存在
+        $callback_result = $this->setTable('pay_callback_result')
+                                ->setSelectFields('user_id,notify_type')
+                                ->setAndCond([
+                                    'order_number' => $orderNumber,
+                                ])
+                                ->get();
+        if (empty($callback_result) || 1 == $callbackData['notify_type']) {
+            return false;
+        }
+        $userId = $callbackData['user_id'];
+        // 获取当前订单信息
+        $realOrderNumber = substr($orderNumber, 0, 18) . 0;
+        $order = $this->setTable('order')
+                      ->setSelectFields('*')
+                      ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId])
+                      ->get();
+        if (empty($order)) {
+            return false;
+        }
+
+        // 支付日志数据
+        $insertCallbackData = [
+            'user_id'      => $userId,
+            'order_number' => $orderNumber,
+            'notify_type'  => 1, // 0:支付宝同步通知 1:支付宝异步通知
+            'pay_type'     => 1, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]
+            'http_method'  => 'POST',
+            'content'      => json_encode($callbackData, JSON_UNESCAPED_UNICODE),
+        ];
+
+        // 判断是否已经同步调用
+        if (1 == $order['status']) { // 已经同步调用,修改订单相关状态数据
+            // 判断支付是否成功在进行业务处理
+            if (in_array($callbackData['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
+                $updateOrderData = [
+                    'status' => 2,
+                ];
+
+            } else { // 支付失败
+                // 订单修改数据
+                $updateOrderData = [
+                    'status' => 4, // 3:支付失败
+                ];
+            }
+            $updateOrderCondition = [
+                'id'      => $order['id'],
+                'user_id' => $userId,
+                'status'  => 1,
+            ];
+        } else { // 还没有调用同步,直接写入支付成功的订单状态数据
+            // 判断支付是否成功再进行业务处理
+            if (in_array($callbackData['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) { // 成功
+                $updateOrderData = [
+                    'status' => 2,
+                ];
+            } else { // 支付失败
+                // 订单修改数据
+                $updateOrderData = [
+                    'status' => 4, //支付失败
+                ];
+            }
+            $updateOrderCondition = [
+                'id'      => $order['id'],
+                'user_id' => $userId,
+                'status'  => 0,
+            ];
+        }
+        $this->db->trans_start();
+        // 修改order订单信息
+        $this->setTable('order')
+             ->setUpdateData($updateOrderData)
+             ->setAndCond($updateOrderCondition)
+             ->update();
+        // 存储callback data
+        $this->setTable('pay_callback_result')
+             ->setInsertData($insertCallbackData)
+             ->create();
+        $this->db->trans_complete();
         return $this->db->trans_status();
     }
 

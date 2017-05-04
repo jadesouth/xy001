@@ -167,4 +167,30 @@ class Order extends Home_Controller
             echo 'success';
         }
     }
+
+    /**
+     * productPaymentZfbNotify 购买盒子支付宝支付完成后,支付宝支付完成异步回调结果数据处理
+     */
+    public function productPaymentZfbNotify()
+    {
+        $callbackData = $this->input->get();
+        if (empty($callbackData)) {
+            echo 'fail';
+            return;
+        }
+
+        $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (empty($order_number)) {
+            echo 'fail';
+            return;
+        }
+
+        // 记录支付完成
+        $res = $this->_model->productPaymentSuccess($order_number, $callbackData);
+        if ($res) {
+            echo 'fail';
+        } else {
+            echo 'success';
+        }
+    }
 }
