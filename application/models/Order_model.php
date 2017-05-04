@@ -457,7 +457,7 @@ class Order_model extends MY_Model
         ];
 
         // 判断是否已经异步调用
-        if (1 == $order['status']) { // 已经异步调用,只写入同步回调记录
+        if (2 == $order['status']) { // 已经异步调用,只写入同步回调记录
             // 存储callback data
             return (bool)$this->setTable('pay_callback_result')
                               ->setInsertData($insertCallbackData)
@@ -494,15 +494,15 @@ class Order_model extends MY_Model
      */
     public function productPaymentSuccess($orderNumber, $callbackData)
     {
-        // 判断当前pay_callback_result记录是否已经存在
         $callback_result = $this->setTable('pay_callback_result')
-                                ->setSelectFields('user_id,notify_type')
+                                ->setSelectFields('user_id')
                                 ->setAndCond([
                                     'order_number' => $orderNumber,
+                                    'notify_type'  => 1,
                                 ])
                                 ->get();
-        if (empty($callback_result) || 1 == $callbackData['notify_type']) {
-            return false;
+        if (! empty($callback_result)) {
+            return true;
         }
         $userId = $callbackData['user_id'];
         // 获取当前订单信息
@@ -529,15 +529,9 @@ class Order_model extends MY_Model
         if (1 == $order['status']) { // 已经同步调用,修改订单相关状态数据
             // 判断支付是否成功在进行业务处理
             if (in_array($callbackData['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
-                $updateOrderData = [
-                    'status' => 2,
-                ];
-
+                $updateOrderData = ['status' => 2];
             } else { // 支付失败
-                // 订单修改数据
-                $updateOrderData = [
-                    'status' => 4, // 3:支付失败
-                ];
+                $updateOrderData = ['status' => 4];
             }
             $updateOrderCondition = [
                 'id'      => $order['id'],
@@ -547,14 +541,9 @@ class Order_model extends MY_Model
         } else { // 还没有调用同步,直接写入支付成功的订单状态数据
             // 判断支付是否成功再进行业务处理
             if (in_array($callbackData['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) { // 成功
-                $updateOrderData = [
-                    'status' => 2,
-                ];
+                $updateOrderData = ['status' => 2,];
             } else { // 支付失败
-                // 订单修改数据
-                $updateOrderData = [
-                    'status' => 4, //支付失败
-                ];
+                $updateOrderData = ['status' => 4,];
             }
             $updateOrderCondition = [
                 'id'      => $order['id'],
@@ -616,7 +605,7 @@ class Order_model extends MY_Model
         $insert_order['coupon_id'] = $coupon_info['id'];
         $insert_order['box_name'] = $box_info['name'];
         $insert_order['order_value'] = $extra_data['order_value'];
-        $insert_order['pay_value'] = empty($coupon_info) ? $extra_data['order_value'] : $extra_data['order_value'] - $coupon_info['value'];
+        $insert_order['pay_value'] = $extra_data['pay_value'];
         $insert_order['plan_number'] = $extra_data['plan'];
         $insert_order['shirt_sex'] = $extra_data['shirt_sex'];
         $insert_order['shirt_size'] = $extra_data['shirt_size'];

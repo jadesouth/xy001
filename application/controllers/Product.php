@@ -124,7 +124,14 @@ class Product extends Home_Controller
                 $this->load->model('coupon_model');
                 $this->load->model('box_model');
                 $this->load->model('order_model');
-                $user_id = (int)$this->input->post('user_id', true);
+                $code = (int)$this->input->post('code');
+                if (empty($code)) {
+                    layer_fail_response('请求失败');
+                }
+                if (empty($_SESSION['checkout_code']) || $code != $_SESSION['checkout_code']) {
+                    layer_fail_response('请求失败');
+                }
+                unset($_SESSION['checkout_code']);
                 $box_id = (int)$this->input->post('box_id', true);
                 $payway = $this->input->post('payway', true);
                 $plan = (int)$this->input->post('plan', true);
@@ -164,17 +171,29 @@ class Product extends Home_Controller
                     show_404();
                 }
                 $extra_data = [
-                    'plan'        => $plan,
-                    'post_name'   => $post_name,
-                    'post_phone'  => $post_phone,
-                    'post_addr'   => $post_addr,
-                    'order_value' => $order_value,
-                    'shirt_sex'   => $shirt_sex,
-                    'shirt_size'  => $shirt_size,
+                    'order_number' => $this->order_model->generateOrderNumber(),
+                    'plan'         => $plan,
+                    'post_name'    => $post_name,
+                    'post_phone'   => $post_phone,
+                    'post_addr'    => $post_addr,
+                    'order_value'  => $order_value,
+                    'pay_value'    => empty($coupon_info) ? $order_value : $order_value - $coupon_info['value'],
+                    'shirt_sex'    => $shirt_sex,
+                    'shirt_size'   => $shirt_size,
                 ];
                 $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
                 if (! $create_return) {
                     layer_fail_response('创建订单失败');
+                }
+                if (is_mobile()) { //手机wap
+                    $orderFee = $extra_data['pay_value'];
+                    $orderFee = '0.01';//deleteme
+                    $orderNumber = $extra_data['order_number'];
+                    $orderName = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
+                    $orderDesc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
+                    $this->load->library('Alipay');
+                    $htmlText = $this->alipay->createWapSubmit($user_id, $orderNumber, $orderName, $orderFee, $orderDesc);
+                    echo $htmlText;
                 }
             }
 
@@ -207,14 +226,14 @@ class Product extends Home_Controller
                 if(empty($user_id)){
                     layer_fail_response('请重新再试');
                 }
-                $box_id = (int)$this->input->post('box_id');
-                $payway = $this->input->post('payway');
-                $coupon_id = (int)$this->input->post('coupon');
-                $plan = (int)$this->input->post('plan');
-                $tsize = (string)$this->input->post('tsize');
-                $post_name = $this->input->post('post_name');
-                $post_phone = $this->input->post('post_phone');
-                $post_addr = $this->input->post('post_addr');
+                $box_id = (int)$this->input->post('box_id',true);
+                $payway = $this->input->post('payway',true);
+                $coupon_id = (int)$this->input->post('coupon',true);
+                $plan = (int)$this->input->post('plan',true);
+                $tsize = (string)$this->input->post('tsize',true);
+                $post_name = $this->input->post('post_name',true);
+                $post_phone = $this->input->post('post_phone',true);
+                $post_addr = $this->input->post('post_addr',true);
                 $user_info = $this->user_model->setSelectFields('*')->find($user_id);
                 $box_info = $this->box_model->setSelectFields('*')->find($box_id);
                 $coupon_info = $this->coupon_model->setSelectFields('*')
@@ -238,10 +257,10 @@ class Product extends Home_Controller
                     $order_value = $box_info['annually_price'];
                     list($shirt_sex, $shirt_size) = explode('-', $tsize);
                     if (! in_array($shirt_sex, [1, 2])) {
-                        layer_fail_response('非法');
+                        layer_fail_response('非法参数');
                     }
                     if (! in_array($shirt_size, ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'])) {
-                        layer_fail_response('非法');
+                        layer_fail_response('非法参数');
                     }
                 } else {
                     show_404();
@@ -261,7 +280,7 @@ class Product extends Home_Controller
                 if (! $create_return) {
                     layer_fail_response('创建订单失败');
                 }
-                if (true) { //手机wap
+                if (is_mobile()) { //手机wap
                     $orderFee = $extra_data['pay_value'];
                     $orderFee = '0.01';//deleteme
                     $orderNumber = $extra_data['order_number'];
