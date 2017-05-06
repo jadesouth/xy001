@@ -72,7 +72,11 @@
         </section>
     </div>
     <div id="gifts-blocks" class="container">
-        <form id="checkouts-steps" data-token="">
+        <form id="checkouts-steps" data-token="" action="post" method="/gift/pay">
+            <input type="hidden" name="box_id">
+            <input type="hidden" name="plan">
+            <input type="hidden" name="shirt_sex">
+            <input type="hidden" name="shirt_size">
             <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel">
                     <div class="panel-heading" id="headingOne">
@@ -95,7 +99,7 @@
                          aria-expanded="true">
                         <div class="crate-container row">
                             <?php if(!empty($gift_list) && is_array($gift_list)): ?>
-                            <?php foreach ($gift_list as $gift_info){?>
+                                <?php foreach ($gift_list as $gift_info){?>
                                     <div id="product-core-crate" class="crate-product-node col-xs-12 col-sm-6 col-md-3">
                                         <img src="<?=$gift_info['gift_image']?>"
                                              alt="<?=$gift_info['theme_name']?>" class="crate-img">
@@ -111,7 +115,7 @@
                                         <div class="product-description-mobile"><p class="description"><?=$gift_info['gift_introduction']?></p>
                                         </div>
                                     </div>
-                            <?php }?>
+                                <?php }?>
                             <?php endif;?>
                         </div>
                     </div>
@@ -172,27 +176,27 @@
                             <section class="variant_headers">
                                 <div class="variant-filters col-sm-12 col-md-5">
                                     <ul class="gender-filter-list">
-                                        <li class="btn-reset btn-gender " id="sizes-btn-mens">男士</li>
-                                        <li class="btn-reset btn-gender " id="sizes-btn-womens">女士</li>
+                                        <li class="btn-reset btn-gender " id="sizes-btn-mens" data-sex="1">男士</li>
+                                        <li class="btn-reset btn-gender " id="sizes-btn-womens" data-sex="2">女士</li>
                                     </ul>
                                 </div>
                                 <div class="variant-options col-sm-12 col-md-7">
                                     <!--<div>-->
                                     <ul class="show-variants">
-                                        <li class="mens"><span> S</span></li>
-                                        <li class="mens"><span> M</span></li>
-                                        <li class="mens"><span> L</span></li>
-                                        <li class="mens"><span> XL</span></li>
-                                        <li class="mens"><span> XXL</span></li>
-                                        <li class="mens"><span> XXXL</span></li>
-                                        <li class="mens"><span> 4XL</span></li>
-                                        <li class="mens"><span> 5XL</span></li>
-                                        <li class="womens"><span> S</span></li>
-                                        <li class="womens"><span> M</span></li>
-                                        <li class="womens"><span> L</span></li>
-                                        <li class="womens"><span> XL</span></li>
-                                        <li class="womens"><span> XXL</span></li>
-                                        <li class="womens"><span> XXXL</span></li>
+                                        <li class="mens" data-size="S"><span> S</span></li>
+                                        <li class="mens" data-size="M"><span> M</span></li>
+                                        <li class="mens" data-size="L"><span> L</span></li>
+                                        <li class="mens" data-size="XL"><span> XL</span></li>
+                                        <li class="mens" data-size="2XL"><span> XXL</span></li>
+                                        <li class="mens" data-size="3XL"><span> XXXL</span></li>
+                                        <li class="mens" data-size="4XL"><span> 4XL</span></li>
+                                        <li class="mens" data-size="5XL"><span> 5XL</span></li>
+                                        <li class="womens" data-size="S"><span> S</span></li>
+                                        <li class="womens" data-size="M"><span> M</span></li>
+                                        <li class="womens" data-size="L"><span> L</span></li>
+                                        <li class="womens" data-size="XL"><span> XL</span></li>
+                                        <li class="womens" data-size="2XL"><span> XXL</span></li>
+                                        <li class="womens" data-size="3XL"><span> XXXL</span></li>
                                     </ul>
                                     <!--</div>-->
                                 </div>
@@ -211,8 +215,7 @@
                 <div class="panel">
                     <div class="panel-heading" role="tab" id="headingThree"><p class="step-number">3</p><h4
                                 class="panel-title"><a id="add-recipient-link" data-toggle="collapse"
-                                                       data-parent="#accordion" href="#collapseThree"
-                                                       aria-expanded="false"
+                                                       data-parent="#accordion" href="#collapseThree" aria-expanded="false"
                                                        aria-controls="collapseThree" class="collapsed">添加收件人</a>
                         </h4>
 
@@ -231,15 +234,16 @@
                                         <div class="col-sm-12 full-width">
                                             <div class="form-group string required checkout_shipping_address_first_name">
                                                 <label class="string required control-label"
-                                                       for="checkout_shipping_address_first_name" style="opacity: 0;">
+                                                       for="checkout_shipping_address_name" style="opacity: 0;">
                                                     <!-- react-text: 96 -->姓名<!-- /react-text --><abbr
                                                             title="required">*</abbr></label>
 
-                                                <div class="controls"><input type="text" class="string fix required"
-                                                                             placeholder="姓名*"
-                                                                             name="checkout[shipping_address_first_name]"
-                                                                             id="checkout_shipping_address_first_name"
-                                                                             style="width: 100%;"></div>
+                                                <div class="controls">
+                                                    <input type="text" class="string fix required"
+                                                           placeholder="姓名*"
+                                                           name="checkout[shipping_address_first_name]"
+                                                           id="checkout_shipping_address_name" style="width: 100%;">
+                                                </div>
                                             </div>
                                         </div>
 
@@ -259,45 +263,6 @@
                                                                              style="width: 100%;"></div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 full-width">
-                                            <div class="form-group select required checkout_shipping_address_country">
-                                                <label class="select required control-label"
-                                                       for="checkout_shipping_address_country" style="opacity: 0;">
-                                                    <!-- react-text: 135 -->Country<!-- /react-text --><abbr
-                                                            title="required">*</abbr></label>
-
-                                                <div class="controls">
-                                                    <select class="select required" data-recurly="city"
-                                                            placeholder="城市*"
-                                                            name="billing-address-country"
-                                                            id="checkout_shipping_address_country"
-                                                            style="width: 100%;">
-                                                        <option value="BJ">北京</option>
-                                                        <option value="SH">上海</option>
-                                                        <option value="TJ">天津</option>
-                                                        <option value="HB">河北</option>
-
-                                                    </select></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 full-width">
-                                            <div class="form-group string required checkout_shipping_address_zip"><label
-                                                        class="string required control-label"
-                                                        for="checkout_shipping_address_zip" style="opacity: 0;">
-                                                    <!-- react-text: 128 -->邮政编码<!-- /react-text --><abbr
-                                                            title="required">*</abbr></label>
-
-                                                <div class="controls"><input type="text"
-                                                                             class="string valid required populated"
-                                                                             placeholder="邮政编码*"
-                                                                             name="checkout[shipping_address_zip]"
-                                                                             id="checkout_shipping_address_zip"
-                                                                             style="width: 100%;"></div>
-                                            </div>
-                                        </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 full-width">
@@ -324,8 +289,7 @@
                                         <div class="full-width">
                                             <div class="form-group string required checkout_gift_email">
                                                 <label class="string required control-label" for="checkout_gift_email"
-                                                       style="opacity: 0;"><abbr title="required">*</abbr>
-                                                    <!-- react-text: 160 -->
+                                                       style="opacity: 0;"><abbr title="required">*</abbr><!-- react-text: 160 -->
                                                     收件人的电子邮件<!-- /react-text --></label>
 
                                                 <div class="controls">
@@ -390,12 +354,15 @@
                     </div>
                 </div>
                 <div class="panel">
-                    <div class="panel-heading" role="tab" id="headingFour"><p class="step-number">4</p><h4
-                                class="panel-title">支付信息</h4>
+                    <div class="panel-heading" role="tab" id="headingFour">
+                        <p class="step-number">4</p>
+                        <h4 class="panel-title">支付信息</h4>
 
-                        <div class="edit-box"><a id="add-billing-link" data-toggle="collapse" data-parent="#accordion"
-                                                 href="#collapseFour" aria-expanded="true" aria-controls="collapseFour"
-                                                 class="hide">Step 4</a><!-- react-text: 184 --><!-- /react-text -->
+                        <div class="edit-box">
+                            <a id="add-billing-link" data-toggle="collapse" data-parent="#accordion"
+                               href="#collapseFour" aria-expanded="true" aria-controls="collapseFour"
+                               class="hide">Step 4
+                            </a><!-- react-text: 184 --><!-- /react-text -->
                         </div>
                     </div>
                     <div class="quick-summary"></div>
@@ -407,7 +374,7 @@
                                     <div class="row create-login">
                                         <div class="col-xs-4"><h4>登录</h4></div>
                                         <div class="col-xs-8 right-selection"><!-- react-text: 195 -->没有账号 ?
-                                            <!-- /react-text --><a class="login-register-link">创建帐号</a></div>
+                                            <!-- /react-text --><a class="login-register-link" data-target="#loginmodal" data-toggle="modal">创建帐号</a></div>
                                     </div>
                                 </div>
                                 <div id="create-login-container" class="row ">
@@ -417,19 +384,16 @@
                                                     style="opacity: 0;"><!-- react-text: 201 -->Email 地址
                                                 <!-- /react-text --><abbr title="required">*</abbr></label>
 
-                                            <div class="controls"><input type="text"
-                                                                         class="string valid required populated"
-                                                                         placeholder="Email Address*"
-                                                                         name="checkout[user_email]"
-                                                                         id="checkout_user_email" style="width: 100%;">
+                                            <div class="controls">
+                                                <input type="text" class="string valid required populated" placeholder="Email Address*"
+                                                       name="checkout[user_email]" id="checkout_user_email" style="width: 100%;">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group string required checkout_user_password"><label
                                                     class="string required control-label" for="checkout_user_password"
-                                                    style="opacity: 0;"><!-- react-text: 208 -->密码
-                                                <!-- /react-text --><abbr
+                                                    style="opacity: 0;"><!-- react-text: 208 -->密码<!-- /react-text --><abbr
                                                         title="required">*</abbr></label>
 
                                             <div class="controls"><input type="password"
@@ -444,9 +408,7 @@
                             </div>
 
 
-                        </div>
-                        <div class="col-sm-4">
-                            <img src="/resources/assets/images/tshirt-gift.png" alt="" style="width:60%;"/>
+
                         </div>
                         <div class="row">
 
@@ -462,23 +424,22 @@
                                                     <table class="table table-bordered">
                                                         <tbody>
                                                         <tr>
-                                                            <td id="gift_plan_text">1个月礼物计划</td>
-                                                            <td class="align-right" id="gift_plan_price">$199</td>
+                                                            <td>1个月礼物计划</td>
+                                                            <td class="align-right">¥199</td>
                                                         </tr>
                                                         <!-- react-empty: 572 --></tbody>
                                                     </table>
                                                 </div>
                                                 <div>
                                                     <div class="row">
-                                                        <div class="col-xs-12 no-right-padding coupon-text">优惠码
-                                                        </div>
+                                                        <div class="col-xs-12 no-right-padding coupon-text">优惠码</div>
+                                                        <!--<div class="col-xs-12 no-right-padding coupon-text">优惠券</div>-->
                                                     </div>
                                                     <div class="row coupon-row">
                                                         <div class="col-xs-7 no-right-padding">
-                                                            <input type="text" class="form-control input-lg" value=""
-                                                                   name="checkout[coupon_code]"
-                                                                   id="checkout_coupon_code"
-                                                                   placeholder="">
+                                                            <input type="text" class="form-control input-lg" value="" name="checkout[coupon_code]"
+                                                                   id="checkout_coupon_code" placeholder="">
+                                                            <!--<img src="img/youhui.png" alt=""/>-->
                                                         </div>
                                                         <div class="col-xs-5">
                                                             <button id="validate-coupon" type="submit"
@@ -495,34 +456,30 @@
                                                 </div>
                                                 <div class="row ">
                                                     <div class="col-xs-12">
-                                                        <input type="radio" name="pay" id="alipay"/><label for="alipay">支付宝</label>
-                                                        <input type="radio" name="pay" id="wepay"/><label for="wepay">微信支付</label>
+                                                        <input type="radio" name="pay" id="alipay" class="pay"/><label for="alipay"><img
+                                                                    src="/resources/assets/images/alipay.png" alt="" style="width:40px;"/></label>
+                                                        <input type="radio" name="pay" id="wepay" class="pay"/><label for="wepay"><img
+                                                                    src="/resources/assets/images/wechatpay.png" alt=""style="width:40px;" /></label>
                                                     </div>
-                                                    此处支付文字我会换成图片，但应该是选择一个单旋钮然后
-                                                </div>
-                                                <div class="row no-left-right-margin total-text">
+                                                </div> <div class="row no-left-right-margin total-text">
                                                     <div class="col-xs-12 text-right no-right-padding">
                                                         <!-- react-text: 584 -->总计: <!-- /react-text -->
-                                                        <!-- react-text: 585 --><div id="total">¥199</div><!-- /react-text -->
+                                                        <!-- react-text: 585 -->¥199<!-- /react-text -->
                                                     </div>
                                                 </div>
                                                 <hr class="checkout-hr">
                                                 <div class="row">
                                                     <div class="col-xs-2 text-center">
-                                                        <input type="checkbox" id="legal-checkbox" value="false"
-                                                               placeholder="" class="populated"></div>
-                                                    <div class="col-xs-10 legal-text"><!-- react-text: 591 -->
-                                                        我已经阅读并同意AmazingFun协议 <!-- /react-text --><a
+                                                        <input type="checkbox" id="legal-checkbox" value="false" placeholder="" class="populated"></div>
+                                                    <div class="col-xs-10 legal-text"><!-- react-text: 591 --> 我已经阅读并同意AmazingFun协议 <!-- /react-text --><a
                                                                 target="_blank"
-                                                                href="">服务条款</a><!-- react-text: 593 -->.
-                                                        <!-- /react-text -->
+                                                                href="">服务条款</a><!-- react-text: 593 -->.<!-- /react-text -->
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-xs-12 no-right-padding total-amount">
                                                         <button id="gift-submit" type="submit"
-                                                                class="btn-primary btn-block" data-plan="" data-tree=""
-                                                                disabled="">完成订单
+                                                                class="btn-primary btn-block" data-plan="" data-tree="" disabled="disabled">完成订单
                                                         </button>
                                                     </div>
                                                 </div>
@@ -544,6 +501,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm-4">
+                                <img src="/resources/assets/images/tshirt-gift.png" alt="" style="width:60%;"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -553,15 +513,6 @@
 </div>
 
 <div class="limited-box"></div>
-<div id="footer-email-capture"><h4>想要获取AmazingFun吗？</h4>
-    <form method="post" role="form" action="" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
-          class="validate form-search newsletter" target="_blank">
-        <input type="email" required="" name="email" placeholder="Email" id="footer-mce-email">
-        <input type="hidden" value="footer" name="collection_source" class="" id="collection_source">
-        <input type="hidden" value="website footer" name="col-source" class="" id="mce-col-source">
-        <button type="submit" class="btn btn-primary" id="footer-mc-embedded-subscribe">加入</button>
-    </form>
-</div>
 <script src="/resources/assets/js/home/jquery.min.js"></script>
 <script src="/resources/assets/js/home/swiper-3.4.0.jquery.min.js"></script>
 <script src="/resources/assets/js/home/bootstrap.min.js"></script>
@@ -595,18 +546,22 @@
                 case 'monthly':
                     gift_plan = '1个月礼物计划';
                     gift_price = '¥ '+ $('#monthly_price').attr('data-price');
+                    $("input[name=plan]").val(1)
                     break;
                 case 'quarterly':
                     gift_plan = '3个月礼物计划';
                     gift_price = '¥ '+ $('#quarterly_price').attr('data-price');
+                    $("input[name=plan]").val(3)
                     break;
                 case 'semiannually':
                     gift_plan = '6个月礼物计划';
                     gift_price = '¥ '+ $('#semiannually_price').attr('data-price');
+                    $("input[name=plan]").val(6)
                     break;
                 case 'annually':
                     gift_plan = '12个月礼物计划';
                     gift_price = '¥ '+ $('#annually_price').attr('data-price');
+                    $("input[name=plan]").val(12)
                     break;
             }
             $("#gift_plan_text").html(gift_plan);
@@ -620,12 +575,14 @@
 
         });
         $('#sizes-btn-mens').click(function () {
+            $("input[name=shirt_sex]").val($(this).data('sex'));
             $('.variant-options').show();
             $('.variant-options').children('ul').removeClass('show-womens').addClass('show-mens');
             $('.show-variants .womens').hide();
             $('.show-variants .mens').show();
         });
         $('#sizes-btn-womens').click(function () {
+            $("input[name=shirt_sex]").val($(this).data('sex'));
             $('.variant-options').show();
             $('.variant-options').children('ul').removeClass('show-mens').addClass('show-womens');
             $('.show-variants .mens').hide();
@@ -635,6 +592,7 @@
         $('.crate-product-node').on('click', function () {
             $(this).parents('.panel').children('.quick-summary').html($(this).children('.crate-title').text());
             var box_id = $(this).children('.crate-title').data('id');
+            $("input[name=box_id]").val(box_id);
             $.ajax({
                 type: "POST",
                 url: "<?=base_url('/product/ajaxGetBoxInfo')?>",
@@ -671,9 +629,20 @@
             $('#collapseTwo').collapse('toggle');
         });
         $('.mens,.womens').on('click', function () {
-
+            $("input[name=shirt_size]").val($(this).data('size'));
             $('#collapseTwo').collapse('toggle');
             $('#collapseThree').collapse('toggle');
+        });
+        $('#legal-checkbox').on('click',function(){
+            var value = $(this).val();
+            console.log(value);
+            if(value == 'false'){
+                $(this).val('true')
+                $("#gift-submit").attr("disabled", false);
+            }else{
+                $(this).val('false')
+                $("#gift-submit").attr("disabled", true);
+            }
         });
         $('.btn-next').on('click', function () {
 
