@@ -423,19 +423,19 @@ class Order_model extends MY_Model
      *
      * @return bool
      */
-    public function productPaymentCompleted($userId, $orderNumber, $callbackData)
+    public function productPaymentCompleted($orderNumber, $callbackData)
     {
-        // 判断当前pay_callback_result记录是否已经存在
-        $exists = $this->setTable('pay_callback_result')
-                       ->setAndCond([
-                           'user_id'      => $userId,
-                           'order_number' => $orderNumber,
-                           'notify_type'  => 0, // 0:支付宝同步通知
-                       ])
-                       ->count();
-        if ($exists) {
+        $callback_result = $this->setTable('pay_callback_result')
+                                ->setSelectFields('user_id')
+                                ->setAndCond([
+                                    'order_number' => $orderNumber,
+                                    'notify_type'  => 0,
+                                ])
+                                ->get();
+        if (! empty($callback_result)) {
             return true;
         }
+        $userId = $callbackData['user_id'];
         // 获取当前订单信息
         $realOrderNumber = substr($orderNumber, 0 ,18) . 0;
         $order = $this->setTable('order')
@@ -480,8 +480,15 @@ class Order_model extends MY_Model
              ->setInsertData($insertCallbackData)
              ->create();
         $this->db->trans_complete();
-
-        return $this->db->trans_status();
+        $trans_status = $this->db->trans_status();
+        if ($trans_status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
+            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name']);
+            $this->setTable('order')
+                 ->setUpdateData(['is_send_gift_email' => 1])
+                 ->setAndCond(['id' => $order['id']])
+                 ->update();
+        }
+        return $trans_status;
     }
 
     /**
@@ -561,8 +568,15 @@ class Order_model extends MY_Model
         $this->setTable('pay_callback_result')
              ->setInsertData($insertCallbackData)
              ->create();
-        $this->db->trans_complete();
-        return $this->db->trans_status();
+        $trans_status = $this->db->trans_status();
+        if ($trans_status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
+            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name']);
+            $this->setTable('order')
+                 ->setUpdateData(['is_send_gift_email' => 1])
+                 ->setAndCond(['id' => $order['id']])
+                 ->update();
+        }
+        return $trans_status;
     }
 
     /**
@@ -644,5 +658,138 @@ class Order_model extends MY_Model
         }
         $this->db->trans_complete();
         return $this->db->trans_status();
+    }
+
+    public function sendReceipt($email,$mz_email,$order_number,$user_name,$user_addr,$coupon,$total,$plan,$theme_name){
+        $this->load->library('email');
+        //以下设置Email参数
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'smtp.163.com';
+        $config['smtp_user'] = 'wangnanphp@163.com';
+        $config['smtp_pass'] = 'mail.php.wangnan';
+        $config['smtp_port'] = '25';
+        $config['charset'] = 'utf-8';
+        $config['wordwrap'] = true;
+        $config['mailtype'] = 'html';
+        $this->email->initialize($config);
+
+        $this->email->from('wangnanphp@163.com', 'WN');
+        $this->email->to($email);
+
+        $this->email->subject('AmazingFun-收据');
+        $date = date("Y年m月d日");
+        $message = "<div class=\"\" style=\"display:block;padding:0;margin:0;height:100%;max-height:none;min-height:none;line-height:normal;overflow:visible;\">
+    <table class=\"\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" align=\"center\" style=\"border-collapse:collapse;border-spacing:0;width:742px;\">
+        <tbody><tr>
+            <td align=\"left\" style=\"font-size:32px; font-weight:300; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(153,153,153)\">订阅收据</td>
+            <td class=\"\" style=\"width:40px;\"></td>
+        </tr>
+        <tr height=\"20\"><td colspan=\"4\"></td></tr><tr>
+
+        </tr><tr>
+            <td colspan=\"4\" align=\" center\">
+                <table class=\"\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"660\" style=\"border-collapse:collapse;border-spacing:0;\">
+                    <tbody><tr>
+                        <td>
+                            <table class=\"\" border=\"0\" bordercolor=\"#ffffff\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border-spacing:0;color:rgb(51,51,51);background-color: rgb(245,245,245);border-radius:3px;font-size:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;\">
+                                <tbody><tr height=\"46\">
+                                    <td width=\"320\" colspan=\"2\" style=\"padding-left:20px;border-style: solid;border-color: white;border-left-width: 0px;border-right-width: 1px;border-bottom-width: 1px;border-top-width: 0px;\"><span style=\"color:rgb(153,153,153);font-size:10px;\">AmazingFun ID</span><br>{$mz_email}</td>
+                                    <td width=\"220\" rowspan=\"3\" style=\"padding-left:20px;border-style:solid;border-color:white;border-left-width:0px;border-right-width:0px;border-bottom-width:0px;border-top-width:0px;\">
+                                        <span style=\"color:rgb(153,153,153);font-size:10px;\">付款信息</span><br>
+                                                   {$user_name}<br>
+                                        {$user_addr}                                                       </td>
+                                    <td width=\"120\" rowspan=\"3\" align=\"right\" style=\"padding-right: 20px;border-style:solid;border-color:white; border-left-width:1px;border-right-width:0px;border-bottom-width:0px;border-top-width:0px;\"><span style=\"color:rgb(153,153,153);font-size:10px;\">总计</span><br><span style=\"font-size:16px;font-weight:bold;\">¥{$total}</span></td>
+                                </tr>
+                                <tr height=\"46\">
+                                    <td colspan=\"2\" style=\"padding-left:20px;border-style:solid; border-color:white;border-left-width:0px;border-right-width:1px;border-bottom-width:1px;border-top-width:0px;\"><span style=\"color:rgb(153,153,153);font-size:10px;\">日期</span><br>{$date}</td>
+                                </tr>
+                                <tr height=\"46\">
+                                    <td style=\"padding-left:20px;border-style:solid;border-color:white;border-left-width:0px;border-right-width:1px;border-bottom-width:0px;border-top-width:0px;\"><span style=\"color:rgb(153,153,153);font-size:10px;\">订单号</span><br><span style=\"color:#0073ff;\"><a target=\"_blank\" href=\"http://www.amazingfun.cn/\" _act=\"check_domail\">{$order_number}</a></span></td>
+                                </tr>
+                                </tbody></table>
+                        </td>
+                    </tr>
+
+                    <tr height=\"30\"><td></td></tr>
+                    <tr>
+                        <td>
+                            <table class=\"\" width=\"660\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border-spacing:0;width:660px;color:rgb(51,51,51);font-size:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;\">
+                                <tbody><tr height=\"24\" style=\"background-color: rgb(245,245,245);\" class=\"\">
+                                    <td colspan=\"2\" width=\"350\" style=\"width:350px;padding-left:10px;border-top-left-radius:3px;border-bottom-left-radius:3px;\"><span style=\"font-size:14px;font-weight:500;\">盒子类型</span></td>
+                                    <td width=\"100\" style=\"width:100px;padding-left:20px;\"><span style=\"color:rgb(153,153,153);font-size:10px;position:relative;top:1;\">订阅期限</span></td>
+                                    <td width=\"120\" style=\"width:120px;padding-left:20px;\"><span style=\"color:rgb(153,153,153);font-size:10px;position:relative;top:1;\">优惠信息</span></td>
+                                    <td width=\"90\" align=\"right\" style=\"width:100px;padding-right: 20px;position:relative;top:1;border-top-right-radius:3px;border-bottom-right-radius:3px;\"><span style=\"color:rgb(153,153,153);font-size:10px;white-space:nowrap;\">价格</span></td>
+                                </tr>
+
+                                <tr height=\"90\">
+                                    <td width=\"60\" class=\"\" align=\"center\" style=\"padding:0 0 0 20px;margin:0;height:60px;width:60px;\">
+                                        <img src=\"http://www.amazingfun.cn/img/box.png\" width=\"100\" height=\"60\" border=\"0\" alt=\"AmazingFunDx\" style=\"padding:0;margin:0;-ms-interpolation-mode: bicubic;border-radius:14px;border:1px solid rgba(128,128,128,0.2);\">
+                                    </td>
+                                    <td width=\"260\" style=\"padding:0 0 0 20px;width:260px;line-height:15px;\" class=\"\">
+                                        <span class=\"\" style=\"font-weight:600;\">{$theme_name}</span><br>
+                                    </td>
+                                    <td width=\"100\" class=\"\" style=\"padding:0 0 0 20px;width:100px;\"><span style=\"color:rgb(153,153,153)\">{$plan}个月</span></td>
+                                    <td width=\"120\" class=\"\" style=\"padding:0 0 0 20px;width:120px;\"><span style=\"color:rgb(153,153,153);\">¥{$coupon}</span></td>
+                                    <td width=\"90\" class=\"\" align=\"right\" style=\"padding:0 20px 0 0;width:100px;\"><span style=\"font-weight:600;white-space:nowrap;\">¥{$total}</span></td>
+                                </tr>
+
+                                </tbody></table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class=\"\" width=\"660\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border-spacing:0;width:660px;color:rgb(51,51,51);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;\">
+                                <tbody><tr height=\"1\"><td height=\"1\" colspan=\"3\" style=\"padding:0 10px 0 10px;\"><div style=\"line-height:1px;height:1px;background-color:rgb(238,238,238);\"></div></td></tr>
+                                <tr height=\"48\">
+                                    <td align=\"right\" style=\"color:rgb(153,153,153);font-size:10px;font-weight:600;padding:0 30px 0 0;border-width:1px;border-color:rgb(238,238,238);\">总计</td>
+                                    <td width=\"1\" style=\"background-color:rgb(238,238,238);width:1px;\"></td>
+                                    <td width=\"90\" align=\"right\" style=\"width:120px;padding:0 20px 0 0;font-size:16px;font-weight:600;white-space:nowrap;\">¥{$total}</td>
+                                </tr>
+                                <tr height=\"1\"><td height=\"1\" colspan=\"3\" style=\"padding:0 10px 0 10px;\"><div style=\"line-height:1px;height:1px;background-color:rgb(238,238,238);\"></div></td></tr>
+                                </tbody></table>
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </td>
+        </tr>
+        </tbody></table>
+</div>";
+        $this->email->message($message);
+
+        $this->email->send(false);
+    }
+
+    public function sendGiftEmail($email, $to_name, $sender_name)
+    {
+        $this->load->library('email');
+        //以下设置Email参数
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'smtp.163.com';
+        $config['smtp_user'] = 'wangnanphp@163.com';
+        $config['smtp_pass'] = 'mail.php.wangnan';
+        $config['smtp_port'] = '25';
+        $config['charset'] = 'utf-8';
+        $config['wordwrap'] = true;
+        $config['mailtype'] = 'html';
+        $this->email->initialize($config);
+
+        $this->email->from('wangnanphp@163.com', 'WN');
+        $this->email->to($email);
+
+        $this->email->subject('您的朋友给你送了一个礼物');
+        $message = "<div class=\"\" style=\"display:block;padding:0;margin:0;height:100%;max-height:none;min-height:none;line-height:normal;overflow:visible;\">
+    <span style=\"font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;\">
+{$to_name},你好 :<br><br>
+        &nbsp; &nbsp; &nbsp; &nbsp;您拥有一个爱您的家人和朋友{$sender_name}给你送了一份惊喜，我们很荣幸为您准备这份充满爱意的礼物，请您注意接收来自AmazingFun的快递。
+        <br><br>自收到本邮件7个工作日内未收到礼物,您可通过您的邮箱地址来<a href=\"http://www.amazingfun.cn\">此处</a>查询订单详情
+
+        <br/><br/>
+AmazinFun 团队,
+        <br><br>
+    </span>
+</div>";
+        $this->email->message($message);
+
+        $this->email->send(false);
     }
 }

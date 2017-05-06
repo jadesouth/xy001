@@ -129,9 +129,7 @@ class Order extends Home_Controller
             show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
         }
 
-        // 记录支付完成
-        $user_id = $this->_loginUser['id'];
-        $res = $this->_model->productPaymentCompleted($user_id, $order_number, $callbackData);
+        $res = $this->_model->productPaymentCompleted($order_number, $callbackData);
         if (!$res) {
             redirect('member/order');
         } else {
