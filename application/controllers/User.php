@@ -11,7 +11,7 @@ class User extends Home_Controller
     public function __construct()
     {
         parent::__construct();
-        if (! in_array($this->router->method, ['ajax_register', 'ajax_login']) && empty($this->_loginUser)) {
+        if (! in_array($this->router->method, ['ajax_register', 'ajax_login', 'ajax_check_user']) && empty($this->_loginUser)) {
             redirect('/');
         }
     }
@@ -152,20 +152,24 @@ class User extends Home_Controller
         }
     }
 
-    /**
-     * set_user_login
-     * 设置用户登录信息
-     *
-     * @param int $user_id             用户id
-     * @param string $user_login_email 用户登录邮箱
-     *
-     */
-    private function set_user_login($user_id, $user_login_email)
+
+    public function ajax_check_user()
     {
-        $this->session->home_login_user = [
-            'id'          => $user_id,
-            'login_email' => $user_login_email,
-        ];
+        $login_email = $this->input->post('email', true);;
+        $password = $this->input->post('password', true);
+        $this->_model->setConditions(['login_email' => $login_email, 'status' => 0]);
+        $this->_model->setSelectFields('id,login_email,password,salt');
+        $user_info = $this->_model->get();
+        if (empty($user_info)) {
+            http_ajax_response(1, '您的邮箱未注册');
+            return;
+        }
+        $this->load->helper('security');
+        if ($user_info['password'] !== generate_admin_password($password, $user_info['salt'])) {
+            http_ajax_response(1, '登录密码错误');
+            return;
+        }
+        http_ajax_response(0,'账号密码正确');
     }
 
     /**

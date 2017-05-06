@@ -34,15 +34,16 @@ if ( ! function_exists('http_json_response'))
     }
 }
 
-if ( ! function_exists('layer_success_response'))
-{
+if (! function_exists('layer_success_response')) {
     /**
      * layer_success_response layer成功响应
      *
      * @param string $message
+     * @param int $time
      */
-    function layer_success_response($message)
+    function layer_success_response($message, $time = 2000)
     {
+        $message = trim(strip_tags(str_replace(PHP_EOL, '', $message)));
         echo <<<SCRIPT
 <script src="/resources/assets/js/home/jquery.min.js"></script>
 <script src="/resources/assets/libs/layui/layui.js"></script>
@@ -50,7 +51,7 @@ if ( ! function_exists('layer_success_response'))
 // 加载layer
 layui.use('layer', function () {
 var layer = layui.layer;
-layer.msg('{$message}', {icon: 6, time:2000}, function () {
+layer.msg('{$message}', {icon: 6, time:{$time}}, function () {
 history.go(-1);
 })
 });
@@ -60,15 +61,17 @@ SCRIPT;
     }
 }
 
-if ( ! function_exists('layer_fail_response'))
-{
+if (! function_exists('layer_fail_response')) {
     /**
      * layer_fail_response layer失败响应
      *
      * @param string $message
+     * @param int $time
      */
-    function layer_fail_response($message)
+    function layer_fail_response($message, $time = 2000)
     {
+        $message = trim(strip_tags(str_replace(PHP_EOL, '', $message)));
+        echo $message;
         echo <<<SCRIPT
 <script src="/resources/assets/js/home/jquery.min.js"></script>
 <script src="/resources/assets/libs/layui/layui.js"></script>
@@ -76,7 +79,7 @@ if ( ! function_exists('layer_fail_response'))
 // 加载layer
 layui.use('layer', function () {
 var layer = layui.layer;
-layer.msg('{$message}', {icon: 2, time:2000}, function () {
+layer.msg('{$message}', {icon: 2, time:{$time}}, function () {
 history.go(-1);
 })
 });

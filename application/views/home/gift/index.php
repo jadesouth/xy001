@@ -72,11 +72,6 @@
         </section>
     </div>
     <div id="gifts-blocks" class="container">
-        <form id="checkouts-steps" data-token="" action="post" method="/gift/pay">
-            <input type="hidden" name="box_id">
-            <input type="hidden" name="plan">
-            <input type="hidden" name="shirt_sex">
-            <input type="hidden" name="shirt_size">
             <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel">
                     <div class="panel-heading" id="headingOne">
@@ -100,7 +95,7 @@
                         <div class="crate-container row">
                             <?php if(!empty($gift_list) && is_array($gift_list)): ?>
                                 <?php foreach ($gift_list as $gift_info){?>
-                                    <div id="product-core-crate" class="crate-product-node col-xs-12 col-sm-6 col-md-3">
+                                    <div id="product-core-crate" class="crate-product-node col-xs-12 col-sm-6 col-md-3 box-id-<?=$gift_info['id']?>">
                                         <img src="<?=$gift_info['gift_image']?>"
                                              alt="<?=$gift_info['theme_name']?>" class="crate-img">
 
@@ -212,6 +207,11 @@
                         </div>
                     </div>
                 </div>
+                <form id="checkouts-steps" action="/gift/pay" method="post">
+                    <input type="hidden" name="box_id">
+                    <input type="hidden" name="plan">
+                    <input type="hidden" name="shirt_sex">
+                    <input type="hidden" name="shirt_size">
                 <div class="panel">
                     <div class="panel-heading" role="tab" id="headingThree"><p class="step-number">3</p><h4
                                 class="panel-title"><a id="add-recipient-link" data-toggle="collapse"
@@ -241,7 +241,7 @@
                                                 <div class="controls">
                                                     <input type="text" class="string fix required"
                                                            placeholder="姓名*"
-                                                           name="checkout[shipping_address_first_name]"
+                                                           name="post_name"
                                                            id="checkout_shipping_address_name" style="width: 100%;">
                                                 </div>
                                             </div>
@@ -258,7 +258,7 @@
 
                                                 <div class="controls"><input type="text" class="string fix required"
                                                                              placeholder="电话*"
-                                                                             name="checkout[shipping_address_line_1]"
+                                                                             name="post_phone"
                                                                              id="checkout_shipping_address_line_1"
                                                                              style="width: 100%;"></div>
                                             </div>
@@ -273,9 +273,9 @@
 
                                                 <div class="controls"><input type="text" class="string required"
                                                                              placeholder="收货地址＊"
-                                                                             name="checkout[shipping_address_line_2]"
+                                                                             name="post_addr"
                                                                              id="checkout_shipping_address_line_2"
-                                                                             style="width: 100%;" required></div>
+                                                                             style="width: 100%;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -294,7 +294,7 @@
 
                                                 <div class="controls">
                                                     <input type="email" class="string fix required"
-                                                           placeholder="收件人的电子邮件*" name="checkout[gift_email]"
+                                                           placeholder="收件人的电子邮件*" name="gift_email"
                                                            id="checkout_gift_email"
                                                            style="width: 100%;"></div>
                                             </div>
@@ -311,7 +311,7 @@
                                                 <div class="controls">
                                                     <input type="email" class="string fix required"
                                                            placeholder="确认收件人的电子邮件*"
-                                                           name="checkout[checkout_email_confirm]"
+                                                           name="gift_email_confirm"
                                                            id="checkout_gift_email_confirm" style="width: 100%;">
 
                                                     <p class="hide error" id="email_check_error_msg">电子邮件地址不匹配</p></div>
@@ -326,20 +326,12 @@
                                     <div class="row">
                                         <div class="full-width">
                                             <h5 class="top-label">我们会给您的朋友发送电子邮件</h5>
-
-                                            <!--<div class="form-group select required checkout_when_send_email">-->
-                                            <!--<div class="controls">-->
-                                            <!--<select class="select2 required" name="checkout[gift_notify_date]" id="checkout_when_send_email">-->
-                                            <!--<option value="Fri Dec 23 2016 12:29:36 GMT+0800 (CST)">今天</option>-->
-                                            <!--<option value="Fri Jan 20 2017 12:59:59 GMT+0800 (CST)">预计送货日期1月20日</option>-->
-                                            <!--</select></div>-->
-                                            <!--</div>-->
                                             <h5 class="top-label">我们应该说来自谁?</h5>
 
                                             <div class="form-group select required checkout_sender_name">
                                                 <div class="controls">
                                                     <input type="text" class="string required" placeholder="发件人姓名*"
-                                                           name="checkout[sender_name]" id="checkout_sender_name"
+                                                           name="sender_name" id="checkout_sender_name"
                                                            style="width: 100%;">
                                                 </div>
                                             </div>
@@ -368,6 +360,7 @@
                     <div class="quick-summary"></div>
                     <div id="collapseFour" class="panel-collapse row collapse in" role="tabpanel"
                          aria-labelledby="headingFour" aria-expanded="true" style="position: relative;">
+                        <?php if(empty($_SESSION['home_login_user'])){?>
                         <div id="section-billing-method" class="  col-sm-8">
                             <div>
                                 <div>
@@ -386,7 +379,7 @@
 
                                             <div class="controls">
                                                 <input type="text" class="string valid required populated" placeholder="Email Address*"
-                                                       name="checkout[user_email]" id="checkout_user_email" style="width: 100%;">
+                                                       name="user_email" id="checkout_user_email" style="width: 100%;">
                                             </div>
                                         </div>
                                     </div>
@@ -399,17 +392,15 @@
                                             <div class="controls"><input type="password"
                                                                          class="string valid required populated"
                                                                          placeholder="Password*"
-                                                                         name="checkout[user_password]"
+                                                                         name="user_password"
                                                                          id="checkout_user_password"
                                                                          style="width: 100%;"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
+                        <?php }?>
                         <div class="row">
 
                             <div class="col-sm-8 is_stuck" id="sticky">
@@ -420,51 +411,56 @@
                                         <div class="form-group ">
                                             <div class="summary-receipt" id="order-summary">
                                                 <div class="row no-left-right-margin"><p
-                                                            class="order-summary-crate-display">AmazingFun</p>
+                                                            class="order-summary-crate-display">盒子主题</p>
                                                     <table class="table table-bordered">
                                                         <tbody>
                                                         <tr>
-                                                            <td>1个月礼物计划</td>
-                                                            <td class="align-right">¥199</td>
+                                                            <td id="gift_plan_text">礼物计划</td>
+                                                            <td class="align-right" id="gift_plan_price">金额</td>
                                                         </tr>
                                                         <!-- react-empty: 572 --></tbody>
                                                     </table>
                                                 </div>
-                                                <div>
+                                                <?php if(!empty($coupons)) :?>
                                                     <div class="row">
-                                                        <div class="col-xs-12 no-right-padding coupon-text">优惠码</div>
-                                                        <!--<div class="col-xs-12 no-right-padding coupon-text">优惠券</div>-->
-                                                    </div>
-                                                    <div class="row coupon-row">
-                                                        <div class="col-xs-7 no-right-padding">
-                                                            <input type="text" class="form-control input-lg" value="" name="checkout[coupon_code]"
-                                                                   id="checkout_coupon_code" placeholder="">
-                                                            <!--<img src="img/youhui.png" alt=""/>-->
+                                                        <div class="col-md-12 short-width">
+                                                            <span>选择优惠券：</span>
+                                                            <?php foreach($coupons as $coupon) :?>
+                                                                <div class="form-group string optional checkout_shipping_pay coupon_list radio">
+
+                                                                    <input type="radio" class="" name="coupon" value="<?=$coupon['id']?>" id="coupon-<?=$coupon['id']?>">
+                                                                    <label for="coupon-<?=$coupon['id']?>" class="coupon coupon-<?=$coupon['id']?>">
+                                                                        <div class="coupon-item ">
+                                                                            <div class="coupon-up">
+                                                                                <p class="coupon-left">
+                                                                                    <span class="coupon-a">¥</span>
+                                                                                    <span class="coupon-price"><?=$coupon['value']?></span>
+                                                                                    <span class="coupon-title">优惠券</span>
+                                                                                </p>
+                                                                                <p class="text-center coupon-time">
+                                                                                    <?=date('Y-m-d',strtotime($coupon['created_at']))?>-<?=$coupon['expiration_time']?></p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            <?php endforeach;?>
                                                         </div>
-                                                        <div class="col-xs-5">
-                                                            <button id="validate-coupon" type="submit"
-                                                                    class="btn-default btn btn-primary btn-block"
-                                                                    data-plan="" data-tree="">使用
-                                                            </button>
-                                                        </div>
                                                     </div>
-                                                    <div class="coupon-amount red hide">无效优惠券</div>
-                                                </div>
+                                                <?php endif;?>
                                                 <div class="row">
                                                     <div class="col-xs-12 no-right-padding coupon-text">支付方式
                                                     </div>
                                                 </div>
                                                 <div class="row ">
                                                     <div class="col-xs-12">
-                                                        <input type="radio" name="pay" id="alipay" class="pay"/><label for="alipay"><img
+                                                        <input type="radio" name="pay" id="alipay" class="pay" value="alipay" checked/><label for="alipay"><img
                                                                     src="/resources/assets/images/alipay.png" alt="" style="width:40px;"/></label>
-                                                        <input type="radio" name="pay" id="wepay" class="pay"/><label for="wepay"><img
+                                                        <input type="radio" name="pay" id="wepay" class="pay" value="wechat"/><label for="wepay"><img
                                                                     src="/resources/assets/images/wechatpay.png" alt=""style="width:40px;" /></label>
                                                     </div>
                                                 </div> <div class="row no-left-right-margin total-text">
                                                     <div class="col-xs-12 text-right no-right-padding">
-                                                        <!-- react-text: 584 -->总计: <!-- /react-text -->
-                                                        <!-- react-text: 585 -->¥199<!-- /react-text -->
+                                                        总计:<span id="total">金额</span>
                                                     </div>
                                                 </div>
                                                 <hr class="checkout-hr">
@@ -479,23 +475,11 @@
                                                 <div class="row">
                                                     <div class="col-xs-12 no-right-padding total-amount">
                                                         <button id="gift-submit" type="submit"
-                                                                class="btn-primary btn-block" data-plan="" data-tree="" disabled="disabled">完成订单
+                                                                class="btn-primary btn-block" disabled="disabled">完成订单
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <hr class="hide checkout-hr">
-                                                <img src=""
-                                                     id="or-icon" class="hide img-responsive center-block">
-
-                                                <div class="hide row paypal-row">
-                                                    <div class="col-xs-12 no-right-padding">
-                                                        <button id="paypal-submit" type="submit"
-                                                                class="btn-primary btn-block"><img
-                                                                    src=""
-                                                                    class="img-responsive center-block"
-                                                                    alt="Buy now with PayPal"></button>
-                                                    </div>
-                                                </div>
+        </form>
                                             </div>
                                         </div>
                                     </div>
@@ -508,7 +492,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+
     </div>
 </div>
 
@@ -591,6 +575,7 @@
 
         $('.crate-product-node').on('click', function () {
             $(this).parents('.panel').children('.quick-summary').html($(this).children('.crate-title').text());
+            $('.order-summary-crate-display').html($(this).children('.crate-title').text());
             var box_id = $(this).children('.crate-title').data('id');
             $("input[name=box_id]").val(box_id);
             $.ajax({
@@ -631,11 +616,10 @@
         $('.mens,.womens').on('click', function () {
             $("input[name=shirt_size]").val($(this).data('size'));
             $('#collapseTwo').collapse('toggle');
-            $('#collapseThree').collapse('toggle');
+            $('#collapseThree').collapse('show');
         });
         $('#legal-checkbox').on('click',function(){
             var value = $(this).val();
-            console.log(value);
             if(value == 'false'){
                 $(this).val('true')
                 $("#gift-submit").attr("disabled", false);
@@ -644,18 +628,40 @@
                 $("#gift-submit").attr("disabled", true);
             }
         });
+        $('#checkout_user_email,#checkout_user_password').on('blur',function(){
+            var user_email = $('#checkout_user_email').val();
+            var user_password = $('#checkout_user_password').val();
+            $.ajax({
+                type: "POST",
+                url: "/user/ajax_check_user",
+                data: {"email": user_email,"password": user_password},
+                dataType: "json",
+                success: function(response){
+                    if (1 == response.status) {
+                        layer.alert(response.msg, {icon: 2});
+                        return false;
+                    }else if(0 == response.status) {
+
+                    }
+                }
+            });
+        });
+        var box_id = $('input[name=box_id]').val();
+        if (box_id) {
+            $('#headingOne').next().html($('.box-id-' + box_id).find('.crate-title').text());
+            $('.order-summary-crate-display').html($('.box-id-' + box_id).find('.crate-title').text());
+        }
         $('.btn-next').on('click', function () {
 
             $('#collapseThree').collapse('toggle');
-            $('#collapseFour').collapse('toggle');
+            $('#collapseFour').collapse('show');
         });
-        $('#collapseOne').collapse('hide');
-        $('#collapseFour').collapse('show')
+        if($('#legal-checkbox').is(':checked')){
+            $("#gift-submit").attr("disabled", false);
+        }else{
+            $("#gift-submit").attr("disabled", true);
+        }
+        $('#collapseOne').collapse('show');
     });
-    //    $(function() {
-    //        $('#my-sticky').sticky({
-    //            top: 150
-    //        })
-    //    })
 
 </script>

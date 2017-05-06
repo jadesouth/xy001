@@ -153,4 +153,16 @@ $config = [
         ['field' => 'post_addr', 'label' => '送货地址', 'rules' => 'trim|required'],
         ['field' => 'payway', 'label' => '支付方式', 'rules' => 'trim|required|in_list[alipay]'],
     ],
+    'gift/pay'         =>[  // 订购礼物支付
+        ['field' => 'box_id', 'label' => '盒子', 'rules' => 'trim|required|integer'],
+        ['field' => 'plan', 'label' => '计划期数', 'rules' => 'trim|required|in_list[1,3,6,12]'],
+        ['field' => 'shirt_sex', 'label' => 'T-shirt性别', 'rules' => 'trim|in_list[1, 2]'],
+        ['field' => 'shirt_size', 'label' => 'T-shirt尺寸', 'rules' => "trim|in_list[S,M,L, XL, 2XL, 3XL, 4XL, 5XL]"],
+        ['field' => 'post_name', 'label' => '姓名', 'rules' => 'trim|required'],
+        ['field' => 'post_phone', 'label' => '电话', 'rules' => 'trim|required|integer'],
+        ['field' => 'post_addr', 'label' => '送货地址', 'rules' => 'trim|required'],
+        ['field' => 'gift_email', 'label' => '收件人的电子邮件', 'rules' => 'trim|required'],
+        ['field' => 'gift_email_confirm', 'label' => '确认收件人的电子邮件', 'rules' => 'trim|required|matches[gift_email]'],
+        ['field' => 'pay', 'label' => '支付方式', 'rules' => 'trim|required|in_list[alipay]'],
+    ],
 ];

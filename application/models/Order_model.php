@@ -595,14 +595,13 @@ class Order_model extends MY_Model
         $this->db->trans_start();
 
         if (! empty($coupon_info)) {
-            $insert_order_data['coupon_id'] = $coupon_info['id'];
-            $insert_order_data['coupon_value'] = $coupon_info['value'];
+            $insert_order['coupon_id'] = $coupon_info['id'];
+            $insert_order['coupon_value'] = $coupon_info['value'];
         }
         // 订单
         $insert_order['order_number'] = empty($extra_data['order_number']) ? $this->generateOrderNumber() : $extra_data['order_number'];
         $insert_order['user_id'] = $user_info['id'];
         $insert_order['box_id'] = $box_info['id'];
-        $insert_order['coupon_id'] = $coupon_info['id'];
         $insert_order['box_name'] = $box_info['name'];
         $insert_order['order_value'] = $extra_data['order_value'];
         $insert_order['pay_value'] = $extra_data['pay_value'];
@@ -612,6 +611,11 @@ class Order_model extends MY_Model
         $insert_order['post_name'] = $extra_data['post_name'];
         $insert_order['post_phone'] = $extra_data['post_phone'];
         $insert_order['post_addr'] = $extra_data['post_addr'];
+        if(!empty($extra_data['is_gift'])){
+            $insert_order['is_gift'] = 1;
+            $insert_order['gift_email'] = $extra_data['gift_email'];
+            $insert_order['gift_sender_name'] = $extra_data['gift_sender_name'];
+        }
         $order_id = $this->setTable('order')->setInsertData($insert_order)->create();
         // 订单计划数据
         $insert_order_plan = [];

@@ -60,4 +60,20 @@ class Home_Controller extends MY_Controller
             redirect(base_url($redirect));
         }
     }
+
+    /**
+     * set_user_login
+     * 设置用户登录信息
+     *
+     * @param int $user_id             用户id
+     * @param string $user_login_email 用户登录邮箱
+     *
+     */
+    protected function set_user_login($user_id, $user_login_email)
+    {
+        $this->session->home_login_user = [
+            'id'          => $user_id,
+            'login_email' => $user_login_email,
+        ];
+    }
 }
