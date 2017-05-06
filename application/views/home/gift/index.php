@@ -646,10 +646,21 @@
                 }
             });
         });
+        $('.coupon_list').click(function () {
+            var coupon_price = $(this).find('.coupon-price').html();
+            var total_price = $('#total').text() - coupon_price;
+            $('#total').text('¥'+total_price);
+        })
         var box_id = $('input[name=box_id]').val();
         if (box_id) {
             $('#headingOne').next().html($('.box-id-' + box_id).find('.crate-title').text());
             $('.order-summary-crate-display').html($('.box-id-' + box_id).find('.crate-title').text());
+        }
+        var coupon_id = $("input[name='coupon']:checked").attr('id');
+        if(coupon_id != null){
+            var coupon_price = $('.'+coupon_id).find('.coupon-price').html();
+            var total_price = $('#price').text() - coupon_price;
+            $('#total').text('¥'+total_price);
         }
         $('.btn-next').on('click', function () {
 

@@ -636,6 +636,12 @@ class Order_model extends MY_Model
         $this->setTable('order_plan')
              ->setInsertData($insert_order_plan)
              ->createBatch();
+        // 优惠券
+        if (! empty($coupon_info)) {
+            $coupon_update['use_time'] = date('Y-m-d H:i:s');
+            $coupon_update['status'] = 1;
+            $this->setTable('coupon')->setUpdateData($coupon_update)->modify($coupon_info['id']);
+        }
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
