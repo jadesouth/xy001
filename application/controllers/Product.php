@@ -280,15 +280,22 @@ class Product extends Home_Controller
                 if (! $create_return) {
                     layer_fail_response('创建订单失败');
                 }
-                if (is_mobile()) { //手机wap
-                    $orderFee = $extra_data['pay_value'];
-                    $orderFee = '0.01';//deleteme
-                    $orderNumber = $extra_data['order_number'];
-                    $orderName = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
-                    $orderDesc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
+                if ('alipay' == $payway) {
                     $this->load->library('Alipay');
-                    $htmlText = $this->alipay->createWapSubmit($user_id, $orderNumber, $orderName, $orderFee, $orderDesc);
+                    $order_fee = $extra_data['pay_value'];
+                    $order_fee = '0.01';//deleteme
+                    $order_number = $extra_data['order_number'];
+                    $order_name = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
+                    $order_desc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
+                    if (is_mobile()) {
+                        $htmlText = $this->alipay->createWapSubmit($user_id, $order_number, $order_name, $order_fee, $order_desc);
+                        echo $htmlText;
+                    } else {
+                        $htmlText = $this->alipay->createWebSubmit($user_id, $order_number, $order_name, $order_fee, $order_desc);
+                    }
                     echo $htmlText;
+                } else { //微信支付
+
                 }
 
             }
