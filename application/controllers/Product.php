@@ -71,15 +71,15 @@ class Product extends Home_Controller
         }
 
         $this->_viewVar['body_attr'] = ' id="checkouts-steps"';
+        $form_code = mt_rand(0,1000000);
+        $this->session->set_userdata('checkout_code', $form_code);
+        $this->_viewVar['form_code'] = $form_code;
         if (empty($this->_loginUser)) {
             $this->load_view('product/nologin_checkout.php');
         } else {
-            $form_code = mt_rand(0,1000000);
-            $this->session->set_userdata('checkout_code', $form_code);
             $user_id = $this->_loginUser['id'];
             $this->load->model('user_model');
             $this->load->model('coupon_model');
-            $this->_viewVar['form_code'] = $form_code;
             $this->_viewVar['user_info'] = $this->user_model->setSelectFields('id,post_name,post_phone,post_addr')->find($user_id);
             $this->_viewVar['coupons'] = $this->coupon_model
                 ->setSelectFields('id,value,status,use_time,expiration_time,created_at')
@@ -185,15 +185,22 @@ class Product extends Home_Controller
                 if (! $create_return) {
                     layer_fail_response('创建订单失败');
                 }
-                if (is_mobile()) { //手机wap
-                    $orderFee = $extra_data['pay_value'];
-                    $orderFee = '0.01';//deleteme
-                    $orderNumber = $extra_data['order_number'];
-                    $orderName = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
-                    $orderDesc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
+                if ('alipay' == $payway) {
                     $this->load->library('Alipay');
-                    $htmlText = $this->alipay->createWapSubmit($user_id, $orderNumber, $orderName, $orderFee, $orderDesc);
+                    $order_fee = $extra_data['pay_value'];
+                    $order_fee = '0.01';//deleteme
+                    $order_number = $extra_data['order_number'];
+                    $order_name = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
+                    $order_desc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
+                    if (is_mobile()) {
+                        $htmlText = $this->alipay->createWapSubmit($user_id, $order_number, $order_name, $order_fee, $order_desc);
+                        echo $htmlText;
+                    } else {
+                        $htmlText = $this->alipay->createWebSubmit($user_id, $order_number, $order_name, $order_fee, $order_desc);
+                    }
                     echo $htmlText;
+                } else { //微信支付
+
                 }
             }
 
