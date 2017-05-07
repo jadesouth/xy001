@@ -111,7 +111,7 @@ class Order_model extends MY_Model
             . 'upgrade_before_plan_number,upgrade_plan_number,'
             . 'post_name,post_phone,post_addr,upgrade_post_name,'
             . 'upgrade_post_phone,upgrade_post_addr,upgrade_status';
-        $realOrderNumber = substr($orderNumber, 0 ,18) . 0;
+        $realOrderNumber = substr($orderNumber, 0, 18) . 0;
         $order = $this->setTable('order')
             ->setSelectFields($fields)
             ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 2])
@@ -200,7 +200,7 @@ class Order_model extends MY_Model
     }
 
     /**
-     * upgradePaymentSuccess 升级支付完成后的数据异步处理
+     * upgradePaymentZfbSuccess 升级,支付宝支付完成后的数据异步处理
      *
      * @param $userId
      * @param $orderNumber
@@ -208,7 +208,7 @@ class Order_model extends MY_Model
      *
      * @return bool
      */
-    public function upgradePaymentSuccess($userId, $orderNumber, $callbackData)
+    public function upgradePaymentZfbSuccess($userId, $orderNumber, $callbackData)
     {
         // 判断当前pay_callback_result记录是否已经存在
         $exists = $this->setTable('pay_callback_result')
@@ -227,7 +227,7 @@ class Order_model extends MY_Model
             . 'upgrade_before_plan_number,upgrade_plan_number,'
             . 'post_name,post_phone,post_addr,upgrade_post_name,'
             . 'upgrade_post_phone,upgrade_post_addr,upgrade_status';
-        $realOrderNumber = substr($orderNumber, 0 ,18) . 0;
+        $realOrderNumber = substr($orderNumber, 0, 18) . 0;
         $order = $this->setTable('order')
             ->setSelectFields($fields)
             ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 2])
@@ -318,6 +318,7 @@ class Order_model extends MY_Model
                 ->setInsertData($insertCallbackData)
                 ->create();
             $this->db->trans_complete();
+
             return $this->db->trans_status();
         } else { // 还没有调用同步,直接写入支付成功的订单状态数据
             // 判断支付是否成功在进行业务处理
@@ -414,6 +415,163 @@ class Order_model extends MY_Model
             }
         }
     }
+
+    /**
+     * upgradePaymentWxSuccess 升级,微信支付完成后的数据异步处理
+     *
+     * @param $callbackData
+     *
+     * @return array
+     */
+    public function upgradePaymentWxSuccess($callbackData)
+    {
+        if (empty($callbackData)) {
+            return ['status' => -1, 'msg' => '回调数据为空'];
+        }
+
+        if (empty($callbackData['out_trade_no']) || empty($callbackData['attach'])) {
+            return ['status' => -1, 'msg' => '订单编号错误'];
+        }
+
+        $userId = (int)$callbackData['attach'];
+        $orderNumber = (int)$callbackData['out_trade_no'];
+
+        // 判断当前pay_callback_result记录是否已经存在
+        $exists = $this->setTable('pay_callback_result')
+            ->setAndCond([
+                'user_id'      => $userId,
+                'order_number' => $orderNumber,
+                'notify_type'  => 3, // 3:微信同步通知
+            ])
+            ->count();
+        if ($exists) {
+            return ['status' => 0, 'msg' => '回调业务已处理'];
+        }
+        // 获取当前订单信息
+        $fields = 'id,box_id,upgrade_before_order_value,upgrade_order_value,'
+            . 'upgrade_before_pay_value,upgrade_pay_value,'
+            . 'upgrade_before_plan_number,upgrade_plan_number,'
+            . 'post_name,post_phone,post_addr,upgrade_post_name,'
+            . 'upgrade_post_phone,upgrade_post_addr,upgrade_status';
+        $realOrderNumber = substr($orderNumber, 0, 18) . 0;
+        $order = $this->setTable('order')
+            ->setSelectFields($fields)
+            ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 2])
+            ->get();
+        if (empty($order)) {
+            return ['status' => -1, 'msg' => '订单不存在'];
+        }
+
+        // 支付日志数据
+        $insertCallbackData = [
+            'user_id'      => $userId,
+            'order_number' => $orderNumber,
+            'notify_type'  => 1, // 0:支付宝同步通知 1:支付宝异步通知
+            'pay_type'     => 0, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]
+            'http_method'  => 'POST',
+            'content'      => json_encode($callbackData, JSON_UNESCAPED_UNICODE),
+        ];
+
+        // 判断支付是否成功在进行业务处理
+        if (! empty($callbackData['return_code']) && 'SUCCESS' == $callbackData['return_code'] && ! empty($callbackData['result_code']) && 'SUCCESS' == $callbackData['result_code']) { // 成功
+            // 获取最大一期的计划
+            $fields = 'plan_date';
+            $maxOrderPlan = $this->setTable('order_plan')
+                ->setSelectFields($fields)
+                ->setAndCond(['order_id' => $order['id'], 'user_id' => $userId, 'status' => 0])
+                ->get();
+            if (empty($maxOrderPlan)) {
+                return ['status' => -1, 'msg' => '订单计划不存在'];
+            }
+            // 订单修改数据
+            $updateOrderDate = [
+                'order_value'        => $order['upgrade_before_order_value'] + $order['upgrade_order_value'],
+                'pay_value'          => $order['upgrade_before_pay_value'] + $order['upgrade_pay_value'],
+                'plan_number'        => $order['upgrade_before_plan_number'] + $order['upgrade_plan_number'],
+                'post_name'          => $order['upgrade_post_name'],
+                'post_phone'         => $order['upgrade_post_phone'],
+                'post_addr'          => $order['upgrade_post_addr'],
+                'upgrade_post_name'  => $order['post_name'],
+                'upgrade_post_phone' => $order['post_phone'],
+                'upgrade_post_addr'  => $order['post_addr'],
+                'upgrade_status'     => 2, // 2:支付成功
+                'upgrade_pay_status' => 2, // 2:支付成功
+            ];
+            $updateOrderCondition = [
+                'id'      => $order['id'],
+                'user_id' => $userId,
+                'status'  => 2,
+            ];
+            // 订单计划数据
+            $orderPlansDate = [];
+            for ($i = 1; $i <= $order['upgrade_plan_number']; $i++) {
+                $addMonthTimestamp = strtotime($maxOrderPlan['plan_date'] . " +{$i} month");
+                $planYear = date('Y', $addMonthTimestamp);
+                $planMonth = date('m', $addMonthTimestamp);
+                $planDate = date('Y-m-d', $addMonthTimestamp);
+                $orderPlansDate[] = [
+                    'order_id'       => $order['id'],
+                    'user_id'        => $userId,
+                    'box_id'         => $order['box_id'],
+                    'plan_year'      => $planYear,
+                    'plan_month'     => $planMonth,
+                    'plan_date'      => $planDate,
+                    'is_upgrade'     => 1, // 是否是升级的计划,1:是
+                    'upgrade_status' => 2, // 升级计划状态,1:升级已确认,2:升级已完成,3:升级失败
+                ];
+            }
+
+            $this->db->trans_start();
+            // 修改order订单信息
+            $this->setTable('order')
+                ->setUpdateData($updateOrderDate)
+                ->setAndCond($updateOrderCondition)
+                ->update();
+            // 存储订单计划order_plan
+            $this->setTable('order_plan')
+                ->setInsertData($orderPlansDate)
+                ->createBatch();
+            // 存储callback data
+            $this->setTable('pay_callback_result')
+                ->setInsertData($insertCallbackData)
+                ->create();
+            $this->db->trans_complete();
+            $status = intval(! $this->db->trans_status());
+            $msg = 'OK';
+            0 !== $status && $msg = '业务处理失败';
+
+            return ['status' => $status, 'msg' => $msg];
+        } else { // 支付失败
+            // 订单修改数据
+            $updateOrderDate = [
+                'upgrade_status'     => 3, // 3:升级失败
+                'upgrade_pay_status' => 4, // 4:支付失败
+            ];
+            $updateOrderCondition = [
+                'id'      => $order['id'],
+                'user_id' => $userId,
+                'status'  => 2,
+            ];
+
+            $this->db->trans_start();
+            // 修改order订单信息
+            $this->setTable('order')
+                ->setUpdateData($updateOrderDate)
+                ->setAndCond($updateOrderCondition)
+                ->update();
+            // 存储callback data
+            $this->setTable('pay_callback_result')
+                ->setInsertData($insertCallbackData)
+                ->create();
+            $this->db->trans_complete();
+            $status = intval(! $this->db->trans_status());
+            $msg = 'OK';
+            0 !== $status && $msg = '业务处理失败';
+
+            return ['status' => $status, 'msg' => $msg];
+        }
+    }
+
     /**
      * productPaymentCompleted 购买盒子支付完成后的数据同步处理
      *
