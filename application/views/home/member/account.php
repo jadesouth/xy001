@@ -2,11 +2,9 @@
     <div data-hook="account_summary" class="account-summary">
         <div class="container"><h1 class="account-header">我的账户</h1>
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation"><a id="account-menu-subscriptions-lnk" href="/member/order">我的订阅</a>
-                </li>
-                <li role="presentation" class="active"><a id="account-menu-account-info-lnk" href="/member/order">账户信息
-                    </a></li>
-
+                <li role="presentation"><a id="account-menu-subscriptions-lnk" href="<?=base_url('member/order')?>">我的订阅</a></li>
+                <li role="presentation" class="active"><a id="account-menu-account-info-lnk" href="<?=base_url('member/account')?>">我的信息</a></li>
+                <li role="presentation"><a id="account-menu-coupon-info-lnk" href="<?=base_url('member/coupon')?>">我的账户</a></li>
             </ul>
             <br>
             <section><h2 class="account-header">账户信息</h2> <h4>个人资料</h4>
