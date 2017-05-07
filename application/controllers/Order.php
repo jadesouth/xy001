@@ -237,6 +237,13 @@ class Order extends Home_Controller
      */
     public function productPaymentWXNotify()
     {
+        $this->load->library('WeixinPay');
+        $this->weixinpay->notify([$this, 'productPaymentWXNotifyProcess']);
+    }
 
+    public function productPaymentWXNotifyProcess($callbackData)
+    {
+        // 记录支付完成
+        return $this->_model->productPaymentWxSuccess($callbackData);
     }
 }

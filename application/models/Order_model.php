@@ -573,6 +573,99 @@ class Order_model extends MY_Model
     }
 
     /**
+     * productPaymentWxSuccess 购买,微信支付完成后的数据异步处理
+     *
+     * @param $callbackData
+     *
+     * @return array
+     */
+    public function productPaymentWxSuccess($callbackData)
+    {
+        if (empty($callbackData)) {
+            return ['status' => -1, 'msg' => '回调数据为空'];
+        }
+
+        if (empty($callbackData['out_trade_no']) || empty($callbackData['attach'])) {
+            return ['status' => -1, 'msg' => '订单编号错误'];
+        }
+
+        $userId = (int)$callbackData['attach'];
+        $orderNumber = (int)$callbackData['out_trade_no'];
+
+        // 判断当前pay_callback_result记录是否已经存在
+        $exists = $this->setTable('pay_callback_result')
+                       ->setAndCond([
+                           'user_id'      => $userId,
+                           'order_number' => $orderNumber,
+                           'notify_type'  => 3, // 3:微信同步通知
+                       ])
+                       ->count();
+        if ($exists) {
+            return ['status' => 0, 'msg' => '回调业务已处理'];
+        }
+        // 获取当前订单信息
+        $fields = 'id,box_id,upgrade_before_order_value,upgrade_order_value,'
+            . 'upgrade_before_pay_value,upgrade_pay_value,'
+            . 'upgrade_before_plan_number,upgrade_plan_number,'
+            . 'post_name,post_phone,post_addr,upgrade_post_name,'
+            . 'upgrade_post_phone,upgrade_post_addr,upgrade_status';
+        $realOrderNumber = substr($orderNumber, 0, 18) . 0;
+        $order = $this->setTable('order')
+                      ->setSelectFields($fields)
+                      ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 0])
+                      ->get();
+        if (empty($order)) {
+            return ['status' => -1, 'msg' => '订单不存在'];
+        }
+
+        // 支付日志数据
+        $insertCallbackData = [
+            'user_id'      => $userId,
+            'order_number' => $orderNumber,
+            'notify_type'  => 3, // 0:支付宝同步通知 1:支付宝异步通知,3:微信异步通知
+            'pay_type'     => 2, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付,微信PC支付]
+            'http_method'  => 'POST',
+            'content'      => json_encode($callbackData, JSON_UNESCAPED_UNICODE),
+        ];
+
+        // 判断支付是否成功在进行业务处理
+        if (! empty($callbackData['return_code']) && 'SUCCESS' == $callbackData['return_code'] && ! empty($callbackData['result_code']) && 'SUCCESS' == $callbackData['result_code']) { // 成功
+            $updateOrderData = ['status' => 2];
+        } else { // 支付失败
+            // 订单修改数据
+            $updateOrderData = ['status' => 4];
+        }
+        $updateOrderCondition = [
+            'id'      => $order['id'],
+            'user_id' => $userId,
+            'status'  => 0,
+        ];
+        $this->db->trans_start();
+        // 修改order订单信息
+        $this->setTable('order')
+             ->setUpdateData($updateOrderData)
+             ->setAndCond($updateOrderCondition)
+             ->update();
+        // 存储callback data
+        $this->setTable('pay_callback_result')
+             ->setInsertData($insertCallbackData)
+             ->create();
+        $this->db->trans_complete();
+        $status = intval(! $this->db->trans_status());
+        if ($status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
+            $query_url = base_url('gift/info') . '?id=' . $order['id'] . '&k=' . md5($order['created_at'] . md5($order['id']));
+            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
+            $this->setTable('order')
+                 ->setUpdateData(['is_send_gift_email' => 1])
+                 ->setAndCond(['id' => $order['id']])
+                 ->update();
+        }
+        $msg = 'OK';
+        0 !== $status && $msg = '业务处理失败';
+
+        return ['status' => $status, 'msg' => $msg];
+    }
+    /**
      * productPaymentCompleted 购买盒子支付完成后的数据同步处理
      *
      * @param $userId
