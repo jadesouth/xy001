@@ -116,13 +116,13 @@ class Gift extends Home_Controller
                 if (! $create_return) {
                     layer_fail_response('创建订单失败');
                 }
+                $order_fee = $extra_data['pay_value'];
+                $order_fee = '0.01';//deleteme
+                $order_number = $extra_data['order_number'];
+                $order_name = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
+                $order_desc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
                 if ('alipay' == $payway) {
                     $this->load->library('Alipay');
-                    $order_fee = $extra_data['pay_value'];
-                    $order_fee = '0.01';//deleteme
-                    $order_number = $extra_data['order_number'];
-                    $order_name = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
-                    $order_desc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
                     if (is_mobile()) {
                         $htmlText = $this->alipay->createWapSubmit($user_info['id'], $order_number, $order_name, $order_fee, $order_desc);
                     } else {
@@ -130,9 +130,91 @@ class Gift extends Home_Controller
                     }
                     echo $htmlText;
                 } else { //微信支付
-
+                    try {
+                        $this->load->library('WeixinPay');
+                        $notify_url = base_url('order/productPaymentWXNotify');
+                        $order_create_info = $this->weixinpay->createOrder($user_id, $box_info['id'], $order_number, $order_name, $order_fee,$notify_url);
+                        if ('SUCCESS' == $order_create_info['return_code'] && 'SUCCESS' == $order_create_info['result_code'] && ! empty($order_create_info['code_url'])) {
+                            $this->_viewVar['order_number'] = $order_number;
+                            $this->_viewVar['order_name'] = $order_name;
+                            $this->_viewVar['order_fee'] = $order_fee;
+                            $this->_viewVar['qrcode'] = urlencode($order_create_info['code_url']);
+                            $this->load_view('order/wx');
+                        } else {
+                            show_error('微信支付错误', 500, '支付错误');
+                        }
+                    } catch (Exception $e) {
+                        show_error($e->getMessage(), 500, '支付错误');
+                    }
                 }
             }
         }
+    }
+
+    public function info()
+    {
+        $key = $this->input->get('k', true);
+        $order_id = $this->input->get('id', true);
+        if (0 >= $order_id) {
+            show_404();
+        }
+
+        $this->load->model('order_model');
+        $order = $this->order_model
+            ->setSelectFields('id,order_number,coupon_value,box_name,plan_number,post_name,post_phone,post_addr,created_at')
+            ->setAndCond(['id' => $order_id, 'status []' => [1, 2]])
+            ->get();
+        if (empty($order)) {
+            show_404();
+        }
+        $token = md5($order['created_at'] . md5($order['id']));
+        if ($key !== $token) {
+            show_404();
+        }
+        $this->_viewVar['order'] = $order;
+
+        $this->load->model('order_plan_model');
+        $order_plans = $this->order_plan_model
+            ->setSelectFields('plan_year,plan_month,plan_date,status')
+            ->setAndCond(['order_id' => $order_id])
+            ->read();
+        if (! empty($order_plans)) {
+            $current_date = date('Y-m-d');
+            $current_year = date('Y');
+            $current_month = date('m');
+            foreach ($order_plans as &$order_plan) {
+                if (1 == $order_plan['status']) {
+                    $order_plan['status_msg'] = '已暂停';
+                } else {
+                    if ($current_year == $order_plan['plan_year']) {
+                        if ($current_month > $order_plan['plan_month']) {
+                            $order_plan['status_msg'] = '已完成';
+                        } elseif ($current_month == $order_plan['plan_month']) {
+                            if ($current_date > $order_plan['plan_date']) {
+                                $order_plan['status_msg'] = '已完成';
+                            } else {
+                                $order_plan['status_msg'] = '未完成';
+                            }
+                        } else {
+                            $order_plan['status_msg'] = '未完成';
+                        }
+                    } elseif ($current_year < $order_plan['plan_year']) {
+                        $order_plan['status_msg'] = '未完成';
+                    }
+                }
+            }
+            $end_order_plan = end($order_plans);
+            if (! empty($end_order_plan)) {
+                if ($current_date > $end_order_plan['plan_date']) {
+                    $order_status_msg = '已完成';
+                }
+            }
+        }
+
+        $this->_viewVar['order_plans'] = $order_plans;
+        $this->_viewVar['body_attr'] = ' id="subscriptions-order_history" class="user_accounts subscriptions is-mobile"';
+        $this->_viewVar['order_status_msg'] = empty($order_status_msg) ? '未完成' : $order_status_msg;
+
+        $this->load_view();
     }
 }

@@ -455,7 +455,7 @@
                                                     <div class="col-xs-12">
                                                         <input type="radio" name="pay" id="alipay" class="pay" value="alipay" checked/><label for="alipay"><img
                                                                     src="/resources/assets/images/alipay.png" alt="" style="width:40px;"/></label>
-                                                        <input type="radio" name="pay" id="wepay" class="pay" value="wechat"/><label for="wepay"><img
+                                                        <input type="radio" name="pay" id="wepay" class="pay" value="wxpay"/><label for="wepay"><img
                                                                     src="/resources/assets/images/wechatpay.png" alt=""style="width:40px;" /></label>
                                                     </div>
                                                 </div> <div class="row no-left-right-margin total-text">
