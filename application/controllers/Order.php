@@ -112,8 +112,7 @@ class Order extends Home_Controller
     public function upgradePaymentWXNotify()
     {
         $this->load->library('WeixinPay');
-        $notifyUrl = base_url('Order/upgradePaymentWXNotify');
-        $orderCreateInfo = $this->weixinpay->notify([$this, 'upgradePaymentWXNotifyProcess']);
+        $this->weixinpay->notify([$this, 'upgradePaymentWXNotifyProcess']);
     }
 
     public function upgradePaymentWXNotifyProcess($callbackData)

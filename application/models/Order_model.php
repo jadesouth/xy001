@@ -466,8 +466,8 @@ class Order_model extends MY_Model
         $insertCallbackData = [
             'user_id'      => $userId,
             'order_number' => $orderNumber,
-            'notify_type'  => 1, // 0:支付宝同步通知 1:支付宝异步通知
-            'pay_type'     => 0, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]
+            'notify_type'  => 3, // 0:支付宝同步通知 1:支付宝异步通知,3:微信异步通知
+            'pay_type'     => 2, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付,微信PC支付]
             'http_method'  => 'POST',
             'content'      => json_encode($callbackData, JSON_UNESCAPED_UNICODE),
         ];
