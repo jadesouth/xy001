@@ -170,7 +170,7 @@ class Order extends Home_Controller
         }
 
         $res = $this->_model->productPaymentCompleted($order_number, $callbackData);
-        if (!$res) {
+        if ($res) {
             redirect('member/order');
         } else {
             show_error('第三方处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
@@ -225,7 +225,7 @@ class Order extends Home_Controller
 
         // 记录支付完成
         $res = $this->_model->productPaymentSuccess($order_number, $callbackData);
-        if ($res) {
+        if (!$res) {
             echo 'fail';
         } else {
             echo 'success';

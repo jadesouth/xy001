@@ -623,7 +623,7 @@ class Order_model extends MY_Model
             'user_id'      => $userId,
             'order_number' => $orderNumber,
             'notify_type'  => 3, // 0:支付宝同步通知 1:支付宝异步通知,3:微信异步通知
-            'pay_type'     => 2, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付,微信PC支付]
+            'pay_type'     => 2, // 支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付,2:微信PC支付]
             'http_method'  => 'POST',
             'content'      => json_encode($callbackData, JSON_UNESCAPED_UNICODE),
         ];
@@ -668,7 +668,6 @@ class Order_model extends MY_Model
     /**
      * productPaymentCompleted 购买盒子支付完成后的数据同步处理
      *
-     * @param $userId
      * @param $orderNumber
      * @param $callbackData
      *
@@ -691,7 +690,7 @@ class Order_model extends MY_Model
         $realOrderNumber = substr($orderNumber, 0 ,18) . 0;
         $order = $this->setTable('order')
                       ->setSelectFields('*')
-                      ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 0])
+                      ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId])
                       ->get();
         if (empty($order)) {
             return false;
