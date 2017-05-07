@@ -16,11 +16,11 @@ class WeixinPay
      * @param string $orderNumber 订单编号
      * @param string $orderName   订单名称,一般为商品名称
      * @param float  $orderFee    订单费用
-     * @throws \WxPayException
+     * @param string $notifyUrl   回调的URL
      *
      * @return array 返回结果数组
      */
-    public function createOrder($userID, $productId, $orderNumber, $orderName, $orderFee)
+    public function createOrder($userID, $productId, $orderNumber, $orderName, $orderFee, $notifyUrl)
     {
         include_once PATH_THIRD_PARTY . 'WxpayAPI_php_v3' . DS . 'lib' . DS . 'WxPay.Api.php';
 
@@ -35,7 +35,7 @@ class WeixinPay
         $unifiedOrder->SetTotal_fee($orderFee);
         $unifiedOrder->SetTime_start(date("YmdHis"));
         $unifiedOrder->SetTime_expire(date("YmdHis", time() + 1200));
-        $unifiedOrder->SetNotify_url("http://paysdk.weixin.qq.com/example/notify.php");
+        $unifiedOrder->SetNotify_url($notifyUrl);
         $unifiedOrder->SetTrade_type("NATIVE");
         $unifiedOrder->SetProduct_id($productId);
         $orderCreateInfo = WxPayApi::unifiedOrder($unifiedOrder);
