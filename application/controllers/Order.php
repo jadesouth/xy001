@@ -84,7 +84,8 @@ class Order extends Home_Controller
             } elseif ('wx' == $payMethod) {
                 try {
                     $this->load->library('WeixinPay');
-                    $orderCreateInfo = $this->weixinpay->createOrder($userId, $order['box_id'], $orderNumber, $orderName, $orderFee);
+                    $notifyUrl = base_url('Order/upgradePaymentWXNotify');
+                    $orderCreateInfo = $this->weixinpay->createOrder($userId, $order['box_id'], $orderNumber, $orderName, $orderFee, $notifyUrl);
                     if ('SUCCESS' == $orderCreateInfo['return_code'] && 'SUCCESS' == $orderCreateInfo['result_code'] && ! empty($orderCreateInfo['code_url'])) {
                         $this->_viewVar['order_number'] = $order['order_number'];
                         $this->_viewVar['order_name'] = '升级计划';
@@ -102,6 +103,35 @@ class Order extends Home_Controller
             }
         } else {
             show_404();
+        }
+    }
+
+    /**
+     * upgradePaymentWXCreateOrder 升级计划,微信支付,支付成功回调处理订单
+     */
+    private function upgradePaymentWXNotify()
+    {
+        $callbackData = $this->input->post();
+        if (empty($callbackData)) {
+            echo 'fail';
+
+            return;
+        }
+
+        $user_id = isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0;
+        $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (0 >= $user_id || empty($order_number)) {
+            echo 'fail';
+
+            return;
+        }
+
+        // 记录支付完成
+        $res = $this->_model->upgradePaymentSuccess($user_id, $order_number, $callbackData);
+        if ($res) {
+            echo 'fail';
+        } else {
+            echo 'success';
         }
     }
 
