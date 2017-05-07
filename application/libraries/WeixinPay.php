@@ -1,5 +1,7 @@
 <?php
 
+include_once PATH_THIRD_PARTY . 'WxpayAPI_php_v3' . DS . 'lib' . DS . 'WxPay.Api.php';
+
 /**
  * Class WeixinPay
  */
@@ -10,13 +12,6 @@ class WeixinPay extends WxPayNotify
      */
     private $callback = '';
 
-    /**
-     * WeixinPay constructor.
-     */
-    public function __construct()
-    {
-        include_once PATH_THIRD_PARTY . 'WxpayAPI_php_v3' . DS . 'lib' . DS . 'WxPay.Api.php';
-    }
 
     /**
      * createOrder 创建WEB端提交微信支付
