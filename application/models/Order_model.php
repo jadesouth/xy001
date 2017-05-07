@@ -640,7 +640,8 @@ class Order_model extends MY_Model
         $this->db->trans_complete();
         $trans_status = $this->db->trans_status();
         if ($trans_status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
-            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name']);
+            $query_url = base_url('gift/info').'?id='.$order['id'].'&k='.md5($order['created_at'] . md5($order['id']));
+            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
             $this->setTable('order')
                  ->setUpdateData(['is_send_gift_email' => 1])
                  ->setAndCond(['id' => $order['id']])
@@ -728,7 +729,8 @@ class Order_model extends MY_Model
              ->create();
         $trans_status = $this->db->trans_status();
         if ($trans_status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
-            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name']);
+            $query_url = base_url('gift/info') . '?id=' . $order['id'] . '&k=' . md5($order['created_at'] . md5($order['id']));
+            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
             $this->setTable('order')
                  ->setUpdateData(['is_send_gift_email' => 1])
                  ->setAndCond(['id' => $order['id']])
@@ -917,7 +919,7 @@ class Order_model extends MY_Model
         $this->email->send(false);
     }
 
-    public function sendGiftEmail($email, $to_name, $sender_name)
+    public function sendGiftEmail($email, $to_name, $sender_name,$query_url)
     {
         $this->load->library('email');
         //以下设置Email参数
@@ -939,7 +941,7 @@ class Order_model extends MY_Model
     <span style=\"font-family: 'proxima_nova_rgregular', Helvetica; font-weight: normal;\">
 {$to_name},你好 :<br><br>
         &nbsp; &nbsp; &nbsp; &nbsp;您拥有一个爱您的家人和朋友{$sender_name}给你送了一份惊喜，我们很荣幸为您准备这份充满爱意的礼物，请您注意接收来自AmazingFun的快递。
-        <br><br>自收到本邮件7个工作日内未收到礼物,您可通过您的邮箱地址来<a href=\"http://www.amazingfun.cn\">此处</a>查询订单详情
+        <br><br>自收到本邮件7个工作日内未收到礼物,您可通过您的邮箱地址来<a href=\"{$query_url}\">此处</a>查询订单详情
 
         <br/><br/>
 AmazinFun 团队,

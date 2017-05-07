@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://101.200.226.188/';
+$config['base_url'] = 'http://www.mz.com/';
 
 /*
 |--------------------------------------------------------------------------
@@ -511,3 +511,5 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+date_default_timezone_set('Asia/ShangHai');
+$config['time_zone'] = date_default_timezone_get();

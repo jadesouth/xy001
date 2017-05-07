@@ -231,4 +231,12 @@ class Order extends Home_Controller
             echo 'success';
         }
     }
+
+    /**
+     * productPaymentWXNotify 购买盒子支付宝支付完成后,微信支付完成异步回调结果数据处理
+     */
+    public function productPaymentWXNotify()
+    {
+
+    }
 }

@@ -71,7 +71,7 @@
                 </li>
                 <?php if(!empty($tag_list)){?><?php foreach ($tag_list as $tag){?>
 
-                <li class="filter-item<?=($tag== $tag_type) ? ' active': '';?>">
+                <li class="filter-item<?=($tag == urldecode($tag_type)) ? ' active': '';?>">
                     <a href="/product/all/<?=$tag?>"><button  class="btn-link" id="btn-filter-limited"><?=$tag?></button></a>
                 </li>
                 <?php }}?>

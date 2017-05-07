@@ -105,6 +105,7 @@
             </div>
             <form class="simple_form card_form form-vertical form-validate" role="form" novalidate="novalidate"
                   id="new_checkout" data-token="ewr1-L5rk4DlD3XFPZUZOVdErvh" accept-charset="UTF-8" action="/product/nologin_pay" method="post">
+                <input type="hidden" name="code" value="<?= $form_code?>">
                 <input type="hidden" name="box_id" value="<?= $_GET['id'] ?>">
                 <input type="hidden" name="plan" id="plan" value="<?=$_GET['plan']?>">
                 <input type="hidden" name="tsize" id="option_type_shirt" value="<?=$_GET['tsize']?>">
@@ -269,7 +270,7 @@
                                                             <label for="pay1-btn">
                                                                 <img src="/resources/assets/images/alipay.png" alt=""/>
                                                             </label>
-                                                            <input type="radio" class="" id="pay2-btn" name="payway">
+                                                            <input type="radio" class="" id="pay2-btn" name="payway" value="wxpay">
                                                             <label for="pay2-btn">
                                                                 <img src="/resources/assets/images/wechatpay.png"
                                                                      alt=""/>

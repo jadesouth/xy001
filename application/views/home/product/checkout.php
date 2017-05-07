@@ -226,7 +226,7 @@
                                                         <label for="pay1-btn">
                                                             <img src="/resources/assets/images/alipay.png" alt=""/>
                                                         </label>
-                                                        <input type="radio" id="pay2-btn" name="payway">
+                                                        <input type="radio" id="pay2-btn" name="payway" value="wxpay">
                                                         <label for="pay2-btn">
                                                             <img src="/resources/assets/images/wechatpay.png" alt=""/>
                                                         </label>

@@ -3,7 +3,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <a class="btn btn-primary" href="<?=base_url('member/order')?>">&lt;&lt; 返回我的账户</a>
                     <div class="order-history-container panel panel-default">
                         <div class="hpanel">
                             <div class="panel-heading status-canceled">
@@ -55,12 +54,12 @@
                                     </thead>
                                     <tbody>
                                     <?php if (! empty($order_plans)): $i = 1; foreach ($order_plans as $order_plan):?>
-                                    <tr>
-                                        <td><?=$order_plan['plan_date']?></td>
-                                        <td><?=$i?></td>
-                                        <td<?='未完成' == $order_plan['status_msg'] ? ' class="red"' : ''?>><?=$order_plan['status_msg']?></td>
-                                    </tr>
-                                    <?php $i++; endforeach;endif;?>
+                                        <tr>
+                                            <td><?=$order_plan['plan_date']?></td>
+                                            <td><?=$i?></td>
+                                            <td<?='未完成' == $order_plan['status_msg'] ? ' class="red"' : ''?>><?=$order_plan['status_msg']?></td>
+                                        </tr>
+                                        <?php $i++; endforeach;endif;?>
                                     </tbody>
                                 </table>
                             </div>
