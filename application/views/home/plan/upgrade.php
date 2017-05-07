@@ -120,14 +120,14 @@
                                                 <div class="col-md-12 short-width">
                                                     <div class="form-group string optional checkout_shipping_pay">
                                                         <span>选择支付方式：</span>
-                                                        <input type="radio" checked name="payway" value="zfb">
+                                                        <input type="radio" checked name="pay_method" value="zfb">
                                                         <label for="pay1-btn">
                                                             <img src="<?=base_url()?>resources/assets/images/alipay.png" alt=""/>
                                                         </label>
-<!--                                                        <input type="radio" id="pay2-btn" name="payway" value="wx">-->
-<!--                                                        <label for="pay2-btn">-->
-<!--                                                            <img src="--><?//=base_url()?><!--resources/assets/images/wechatpay.png" alt=""/>-->
-<!--                                                        </label>-->
+                                                        <input type="radio" id="pay2-btn" name="pay_method" value="wx">
+                                                        <label for="pay2-btn">
+                                                            <img src="<?=base_url()?>resources/assets/images/wechatpay.png" alt=""/>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
