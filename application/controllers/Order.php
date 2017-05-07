@@ -15,10 +15,14 @@ class Order extends Home_Controller
         $this->checkLogin();
         $userId = $this->_loginUser['id'];
         if ('post' == $this->input->method()) {
+            $orderId = $this->input->post('order', true);
             $postName = $this->input->post('post_name', true);
             $postPhone = $this->input->post('post_phone', true);
             $postAddr = $this->input->post('post_addr', true);
-            $orderId = $this->input->post('order', true);
+            $payMethod = $this->input->post('pay_method', true);
+            if (! in_array($payMethod, ['zfb', 'wx'])) {
+                show_error('支付方式错误', 500, '支付错误');
+            }
 
             // 获取订单信息
             $this->load->model('order_model');
@@ -73,9 +77,29 @@ class Order extends Home_Controller
             $orderName = '升级计划'; // 订单名称
             $orderDesc = '升级计划'; // 商品描述
             $orderFee = $fee;
-            $this->load->library('Alipay');
-            $htmlText = $this->alipay->createWebSubmit($userId, $orderNumber, $orderName, $orderFee, $orderDesc);
-            echo $htmlText;
+            if ('zfb' == $payMethod) {
+                $this->load->library('Alipay');
+                $htmlText = $this->alipay->createWebSubmit($userId, $orderNumber, $orderName, $orderFee, $orderDesc);
+                echo $htmlText;
+            } elseif ('wx' == $payMethod) {
+                try {
+                    $this->load->library('WeixinPay');
+                    $orderCreateInfo = $this->weixinpay->createOrder($userId, $order['box_id'], $orderNumber, $orderName, $orderFee);
+                    if ('SUCCESS' == $orderCreateInfo['return_code'] && 'SUCCESS' == $orderCreateInfo['result_code'] && ! empty($orderCreateInfo['code_url'])) {
+                        $this->_viewVar['order_number'] = $order['order_number'];
+                        $this->_viewVar['order_name'] = '升级计划';
+                        $this->_viewVar['order_fee'] = $orderFee;
+                        $this->_viewVar['qrcode'] = urlencode($orderCreateInfo['code_url']);
+                        $this->load_view('order/wx');
+                    } else {
+                        show_error('微信支付错误', 500, '支付错误');
+                    }
+                } catch (Exception $e) {
+                    show_error($e->getMessage(), 500, '支付错误');
+                }
+            } else {
+                show_error('支付方式错误', 500, '支付错误');
+            }
         } else {
             show_404();
         }
