@@ -158,15 +158,6 @@
         </div>
     </section>
     <div class="limited-box"></div>
-    <!--<div id="footer-email-capture"><h4>WANT EPIC DEALS &amp; LOOTER INTEL?</h4>-->
-    <div id="footer-email-capture"><h4>想要获取AmazingFun吗？</h4>
-        <form  method="post" role="form" action="checkout.html" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate form-search newsletter" target="_blank">
-            <input type="email" required="" name="email" placeholder="Email" id="footer-mce-email">
-            <input type="hidden" value="footer" name="collection_source" class="" id="collection_source">
-            <input type="hidden" value="website footer" name="col-source" class="" id="mce-col-source">
-            <button type="submit" class="btn btn-primary" id="footer-mc-embedded-subscribe">加入</button>
-        </form>
-    </div>
 </div>
 <script src="/resources/assets/js/home/jquery.min.js"></script>
 <script src="/resources/assets/js/home/swiper-3.4.0.jquery.min.js"></script>
