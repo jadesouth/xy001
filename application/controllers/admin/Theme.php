@@ -36,24 +36,4 @@ class Theme extends Admin_Controller
         // 加载视图
         $this->load_view();
     }
-
-    /**
-     * ajax_disable 禁用账号
-     */
-    public function ajax_disable()
-    {
-        $this->load->helper('http');
-        $user_id = (int)$this->input->post('user_id', 0);
-        if (0 >= $user_id) {
-            http_ajax_response(1, '非法请求');
-            return;
-        }
-
-        $this->load->model('theme_model');
-        if (true == $this->theme_model->modify($user_id, ['status' => 1])) {
-            http_ajax_response(0, '关闭权限成功');
-        } else {
-            http_ajax_response(2, '关闭权限成功');
-        }
-    }
 }
