@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `pay_callback_result` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK',
   `user_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK: user id',
   `order_number` CHAR(19) NOT NULL DEFAULT '' COMMENT '支付的订单编号,商户网站唯一订单号(末位为0时是首次购买,末位为1是升级购买)',
-  `notify_type` TINYINT NOT NULL DEFAULT 0 COMMENT '通知类型[0:支付宝同步通知,1:支付宝异步通知]',
+  `notify_type` TINYINT NOT NULL DEFAULT 0 COMMENT '通知类型[0:支付宝同步通知,1:支付宝异步通知,2:微信同步通知,3:微信同步通知]',
   `pay_type` TINYINT NOT NULL DEFAULT 0 COMMENT '支付类型[0:支付宝电脑网站支付,1:支付宝手机网站支付]',
   `http_method` ENUM('UNKNOWN', 'GET', 'POST') NOT NULL DEFAULT 'UNKNOWN' COMMENT '回调请求的方法',
   `content` VARCHAR(8192) NOT NULL DEFAULT '' COMMENT '回调传回的内容,JSON格式',
