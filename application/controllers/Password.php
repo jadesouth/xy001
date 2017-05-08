@@ -39,15 +39,15 @@ class Password extends Home_Controller
                 //以下设置Email参数
                 $config['protocol'] = 'smtp';
                 $config['smtp_host'] = 'smtp.163.com';
-                $config['smtp_user'] = 'wangnanphp@163.com';
-                $config['smtp_pass'] = 'mail.php.wangnan';
+                $config['smtp_user'] = 'weloveyou@amazingfun.cn';
+                $config['smtp_pass'] = 'Amazing123';
                 $config['smtp_port'] = '25';
                 $config['charset'] = 'utf-8';
                 $config['wordwrap'] = true;
                 $config['mailtype'] = 'html';
                 $this->email->initialize($config);
 
-                $this->email->from('wangnanphp@163.com', 'WN');
+                $this->email->from('weloveyou@amazingfun.cn', 'AmazingFun');
                 $this->email->to($email);
 
                 $this->email->subject('AmazingFun-找回密码');
