@@ -225,7 +225,7 @@ class Order extends Home_Controller
     public function productPaymentZfbNotify()
     {
         $callbackData = $this->input->post();
-        log_message('info',json_encode($callbackData));
+        log_message('error',json_encode($callbackData));
         if (empty($callbackData)) {
             log_message('error','');
             echo 'fail';
