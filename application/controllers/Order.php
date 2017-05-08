@@ -246,7 +246,7 @@ class Order extends Home_Controller
             log_message('error','');
             echo 'fail';
         } else {
-            log_message('success','');
+            log_message('info','');
             echo 'success';
         }
     }

@@ -772,7 +772,7 @@ class Order_model extends MY_Model
                       ->setSelectFields('*')
                       ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId])
                       ->get();
-        log_message('error',json_decode($order));
+        log_message('error',json_encode($order));
         if (empty($order)) {
             log_message('error','没有订单');
             return false;
