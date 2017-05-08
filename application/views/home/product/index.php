@@ -241,7 +241,7 @@
         $('#btn-header-checkout').on('click', function () {
             var plan = $('#plan-select').val();//订阅计划
             var tSize = $('#size-select-1').val();
-            if(plan == 12 && tSize == ''){
+            if(tSize == ''){
                 layer.alert('请选择T恤衫号码', {icon: 2});
                 return false;
             }

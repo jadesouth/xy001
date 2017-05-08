@@ -323,10 +323,6 @@
                                         </div>
                                         <!--<div class="col-xs-5"></div>-->
                                     </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">2017年1月10日第一次续约</div>
-                                        <!--<div class="col-xs-3"></div>-->
-                                    </div>
 <!--                                    <div class="row subscription-coupon">-->
 <!--                                        <div class="col-xs-9 no-right-padding ">-->
 <!--                                            <div class="subscription-coupon-text" data-text="Coupon">优惠券</div>-->

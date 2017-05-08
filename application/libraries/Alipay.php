@@ -86,12 +86,9 @@ class Alipay
         $payResponse = new AlipayTradeService($config);
         if($isFirst){
             $html_text = $payResponse->wapPay($payRequestBuilder, $config['product_return_url'], $config['product_notify_url']);
-
         }else{
             $html_text = $payResponse->wapPay($payRequestBuilder, $config['return_url'], $config['notify_url']);
         }
         return $html_text;
-
-        //todo
     }
 }

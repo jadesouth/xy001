@@ -153,6 +153,13 @@ class Product extends Home_Controller
                     layer_fail_response('非法参数');
                 }
                 $shirt_size = $shirt_sex = '';
+                list($shirt_sex, $shirt_size) = explode('-', $tsize);
+                if (! in_array($shirt_sex, [1, 2])) {
+                    layer_fail_response('非法参数');
+                }
+                if (! in_array($shirt_size, ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'])) {
+                    layer_fail_response('非法参数');
+                }
                 if (1 == $plan) {
                     $order_value = $box_info['monthly_price'];
                 } elseif (3 == $plan) {
@@ -161,13 +168,6 @@ class Product extends Home_Controller
                     $order_value = $box_info['semiannually_price'];
                 } elseif (12 == $plan) {
                     $order_value = $box_info['annually_price'];
-                    list($shirt_sex, $shirt_size) = explode('-', $tsize);
-                    if (! in_array($shirt_sex, [1, 2])) {
-                        layer_fail_response('非法参数');
-                    }
-                    if (! in_array($shirt_size, ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'])) {
-                        layer_fail_response('非法参数');
-                    }
                 } else {
                     show_404();
                 }
@@ -270,6 +270,13 @@ class Product extends Home_Controller
                 $update_data['post_addr'] = $post_addr;
                 $return = $this->user_model->modify($user_id, $update_data);
                 $shirt_size = $shirt_sex = '';
+                list($shirt_sex, $shirt_size) = explode('-', $tsize);
+                if (! in_array($shirt_sex, [1, 2])) {
+                    layer_fail_response('非法参数');
+                }
+                if (! in_array($shirt_size, ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'])) {
+                    layer_fail_response('非法参数');
+                }
                 if (1 == $plan) {
                     $order_value = $box_info['monthly_price'];
                 } elseif (3 == $plan) {
@@ -278,13 +285,6 @@ class Product extends Home_Controller
                     $order_value = $box_info['semiannually_price'];
                 } elseif (12 == $plan) {
                     $order_value = $box_info['annually_price'];
-                    list($shirt_sex, $shirt_size) = explode('-', $tsize);
-                    if (! in_array($shirt_sex, [1, 2])) {
-                        layer_fail_response('非法参数');
-                    }
-                    if (! in_array($shirt_size, ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'])) {
-                        layer_fail_response('非法参数');
-                    }
                 } else {
                     show_404();
                 }
