@@ -79,7 +79,11 @@ class Order extends Home_Controller
             $orderFee = $fee;
             if ('zfb' == $payMethod) {
                 $this->load->library('Alipay');
-                $htmlText = $this->alipay->createWebSubmit($userId, $orderNumber, $orderName, $orderFee, $orderDesc);
+                if (is_mobile()) {
+                    $htmlText = $this->alipay->createWapSubmit($userId, $orderNumber, $orderName, $orderFee, $orderDesc);
+                } else {
+                    $htmlText = $this->alipay->createWebSubmit($userId, $orderNumber, $orderName, $orderFee, $orderDesc);
+                }
                 echo $htmlText;
             } elseif ('wx' == $payMethod) {
                 try {

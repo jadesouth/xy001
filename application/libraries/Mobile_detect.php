@@ -25,7 +25,7 @@
  * @version     2.8.25
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Mobile_Detect
+class Mobile_detect
 {
     /**
      * Mobile detection type.
