@@ -29,6 +29,8 @@ class AlipayTradeWapPayContentBuilder
     // 如果该字段为空，则默认为与支付宝签约的商户的PID，也就是appid对应的PID
     private $sellerId;
 
+    private $extraCommonParam;
+
     // 产品标示码，固定值：QUICK_WAP_PAY
     private $productCode;
 
@@ -52,6 +54,17 @@ class AlipayTradeWapPayContentBuilder
     public function AlipayTradeWapPayContentBuilder()
     {
         $this->__construct();
+    }
+
+    public function getExtraCommonParam()
+    {
+        return $this->extraCommonParam;
+    }
+
+    public function setExtraCommonParam($extraCommonParam)
+    {
+        $this->extraCommonParam = $extraCommonParam;
+        $this->bizContentarr['extraCommonParam'] = $extraCommonParam;
     }
 
     public function getBody()

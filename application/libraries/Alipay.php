@@ -82,6 +82,7 @@ class Alipay
         $payRequestBuilder->setOutTradeNo($orderNumber);
         $payRequestBuilder->setTotalAmount($orderFee);
         $payRequestBuilder->setTimeExpress('2m');
+        $payRequestBuilder->setExtraCommonParam($userID);
         $payResponse = new AlipayTradeService($config);
         if($isFirst){
             $html_text = $payResponse->wapPay($payRequestBuilder, $config['product_return_url'], $config['product_notify_url']);

@@ -666,26 +666,27 @@ class Order_model extends MY_Model
         return ['status' => $status, 'msg' => $msg];
     }
     /**
-     * productPaymentCompleted 购买盒子支付完成后的数据同步处理
+     * productPaymentZfbCompleted 购买盒子支付完成后的数据同步处理
      *
+     * @param $userId
      * @param $orderNumber
      * @param $callbackData
      *
      * @return bool
      */
-    public function productPaymentCompleted($orderNumber, $callbackData)
+    public function productPaymentZfbCompleted($userId, $orderNumber, $callbackData)
     {
-        $callback_result = $this->setTable('pay_callback_result')
+        $exists = $this->setTable('pay_callback_result')
                                 ->setSelectFields('user_id')
                                 ->setAndCond([
                                     'order_number' => $orderNumber,
                                     'notify_type'  => 0,
                                 ])
                                 ->get();
-        if (! empty($callback_result)) {
+        if ($exists) {
             return true;
         }
-        $userId = $callbackData['user_id'];
+
         // 获取当前订单信息
         $realOrderNumber = substr($orderNumber, 0 ,18) . 0;
         $order = $this->setTable('order')
@@ -743,26 +744,27 @@ class Order_model extends MY_Model
     }
 
     /**
-     * productPaymentSuccess 购买盒子支付完成后的数据异步处理
+     * productPaymentZfbSuccess 购买盒子支付完成后的数据异步处理
      *
+     * @param $userId
      * @param $orderNumber
      * @param $callbackData
      *
      * @return bool
      */
-    public function productPaymentSuccess($orderNumber, $callbackData)
+    public function productPaymentZfbSuccess($userId, $orderNumber, $callbackData)
     {
-        $callback_result = $this->setTable('pay_callback_result')
+        $exists = $this->setTable('pay_callback_result')
                                 ->setSelectFields('user_id')
                                 ->setAndCond([
+                                    'user_id' =>$userId,
                                     'order_number' => $orderNumber,
                                     'notify_type'  => 1,
                                 ])
-                                ->get();
-        if (! empty($callback_result)) {
+            ->count();
+        if ($exists) {
             return true;
         }
-        $userId = $callbackData['user_id'];
         // 获取当前订单信息
         $realOrderNumber = substr($orderNumber, 0, 18) . 0;
         $order = $this->setTable('order')
