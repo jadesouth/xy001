@@ -824,6 +824,7 @@ class Order_model extends MY_Model
         $this->setTable('pay_callback_result')
              ->setInsertData($insertCallbackData)
              ->create();
+        $this->db->trans_complete();
         $trans_status = $this->db->trans_status();
         if ($trans_status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
             $query_url = base_url('gift/info') . '?id=' . $order['id'] . '&k=' . md5($order['created_at'] . md5($order['id']));
