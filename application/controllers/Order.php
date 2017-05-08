@@ -225,7 +225,9 @@ class Order extends Home_Controller
     public function productPaymentZfbNotify()
     {
         $callbackData = $this->input->post();
+        log_message('info',json_encode($callbackData));
         if (empty($callbackData)) {
+            log_message('error','');
             echo 'fail';
             return;
         }
@@ -233,6 +235,7 @@ class Order extends Home_Controller
         $user_id = isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0;
         $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
         if (0 >= $user_id || empty($order_number)) {
+            log_message('error','');
             echo 'fail';
             return;
         }
@@ -240,8 +243,10 @@ class Order extends Home_Controller
         // 记录支付完成
         $res = $this->_model->productPaymentZfbSuccess($user_id, $order_number, $callbackData);
         if (!$res) {
+            log_message('error','');
             echo 'fail';
         } else {
+            log_message('success','');
             echo 'success';
         }
     }

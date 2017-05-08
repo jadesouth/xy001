@@ -763,6 +763,7 @@ class Order_model extends MY_Model
                                 ])
             ->count();
         if ($exists) {
+            log_message('error','已经写过了');
             return true;
         }
         // 获取当前订单信息
@@ -771,7 +772,9 @@ class Order_model extends MY_Model
                       ->setSelectFields('*')
                       ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId])
                       ->get();
+        log_message('error',json_decode($order));
         if (empty($order)) {
+            log_message('error','没有订单');
             return false;
         }
 
