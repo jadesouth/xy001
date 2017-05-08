@@ -53,11 +53,19 @@ aq860gauHxD/dPsmxjd4SiNNZMjHDFQuKoD4CuA+Akn1gXd8rsKrXgE=
 //支付宝的公钥，查看地址：https://b.alipay.com/order/pidAndKey.htm 
 $alipay_config['alipay_public_key']= 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB';
 
+// 升级订单
 // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 $alipay_config['notify_url'] = base_url('order/upgradePaymentZfbNotify');
 
 // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 $alipay_config['return_url'] = base_url('order/upgradePaymentZfbReturn');
+
+// 首次下订单
+// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+$alipay_config['product_notify_url'] = base_url('order/productPaymentZfbNotify');
+
+// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+$alipay_config['product_return_url'] = base_url('order/productPaymentZfbReturn');
 
 //签名方式
 $alipay_config['sign_type'] = strtoupper('RSA');

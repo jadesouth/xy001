@@ -8,15 +8,16 @@ class Alipay
     /**
      * createWebSubmit 创建WEB端提交支付宝支付
      *
-     * @param int    $userID      创建订单者ID
+     * @param int $userID         创建订单者ID
      * @param string $orderNumber 订单编号
      * @param string $orderName   订单名称,一般为商品名称
-     * @param float  $orderFee    订单费用
+     * @param float $orderFee     订单费用
      * @param string $orderDesc   订单描述,一般为商品描述
+     * @param bool $isFirst       是否首页下订单
      *
      * @return string 请求支付宝支付的表单html
      */
-    public function createWebSubmit($userID, $orderNumber, $orderName, $orderFee, $orderDesc)
+    public function createWebSubmit($userID, $orderNumber, $orderName, $orderFee, $orderDesc, $isFirst = false)
     {
         if (0 >= $userID || empty($orderNumber) || empty($orderName) || 0 >= $orderFee || empty($orderDesc)) {
             return false;
@@ -42,6 +43,10 @@ class Alipay
             '_input_charset'     => trim(strtolower($alipay_config['input_charset'])), // 参数编码字符集
             'extra_common_param' => $userID                                            // 公用回传参数,此处为发起订单的用户ID
         ];
+        if ($isFirst) {
+            $parameter['notify_url'] = $alipay_config['product_notify_url'];
+            $parameter['return_url'] = $alipay_config['product_return_url'];
+        }
 
         // 建立请求
         $alipaySubmit = new AlipaySubmit($alipay_config);
@@ -58,10 +63,11 @@ class Alipay
      * @param string $orderName   订单名称,一般为商品名称
      * @param float $orderFee     订单费用
      * @param string $orderDesc   订单描述,一般为商品描述
+     * @param bool $isFirst       是否首次下单
      *
      * @return string 请求支付宝支付的表单html
      */
-    public function createWapSubmit($userID, $orderNumber, $orderName, $orderFee, $orderDesc)
+    public function createWapSubmit($userID, $orderNumber, $orderName, $orderFee, $orderDesc, $isFirst = false)
     {
         if (0 >= $userID || empty($orderNumber) || empty($orderName) || 0 >= $orderFee || empty($orderDesc)) {
             return false;
@@ -77,7 +83,14 @@ class Alipay
         $payRequestBuilder->setTotalAmount($orderFee);
         $payRequestBuilder->setTimeExpress('2m');
         $payResponse = new AlipayTradeService($config);
-        $html_text = $payResponse->wapPay($payRequestBuilder, $config['return_url'], $config['notify_url']);
+        if($isFirst){
+            $html_text = $payResponse->wapPay($payRequestBuilder, $config['product_return_url'], $config['product_notify_url']);
+
+        }else{
+            $html_text = $payResponse->wapPay($payRequestBuilder, $config['return_url'], $config['notify_url']);
+        }
         return $html_text;
+
+        //todo
     }
 }
