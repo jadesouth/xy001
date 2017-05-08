@@ -224,7 +224,7 @@ class Order extends Home_Controller
      */
     public function productPaymentZfbNotify()
     {
-        $callbackData = $this->input->get();
+        $callbackData = $this->input->post();
         if (empty($callbackData)) {
             echo 'fail';
             return;

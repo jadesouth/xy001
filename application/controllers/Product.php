@@ -311,10 +311,10 @@ class Product extends Home_Controller
                 if ('alipay' == $payway) {
                     $this->load->library('Alipay');
                     if (is_mobile()) {
-                        $htmlText = $this->alipay->createWapSubmit($user_id, $order_number, $order_name, $order_fee, $order_desc);
+                        $htmlText = $this->alipay->createWapSubmit($user_id, $order_number, $order_name, $order_fee, $order_desc,true);
                         echo $htmlText;
                     } else {
-                        $htmlText = $this->alipay->createWebSubmit($user_id, $order_number, $order_name, $order_fee, $order_desc);
+                        $htmlText = $this->alipay->createWebSubmit($user_id, $order_number, $order_name, $order_fee, $order_desc,true);
                     }
                     echo $htmlText;
                 } else { //微信支付
