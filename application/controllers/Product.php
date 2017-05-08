@@ -43,7 +43,7 @@ class Product extends Home_Controller
 
     public function checkout()
     {
-        if (empty(intval($_GET['id'])) || empty(intval(intval($_GET['plan'])))) {
+        if (empty($_GET['id']) || empty($_GET['plan'])) {
             show_404();
         }
         $box_id = intval($_GET['id']);

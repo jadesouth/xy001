@@ -31,9 +31,11 @@ if (! function_exists('random_number')) {
         if (0 >= $length)
             return '';
 
+        $numbers = '0123456789';
+        $max = strlen($numbers) - 1;
         $number = '';
         for ($i = 0;$i < $length;$i++) {
-            $number .= random_int(0, 9);
+            $number .= $numbers[rand(0, $max)];
         }
 
         return $number;
