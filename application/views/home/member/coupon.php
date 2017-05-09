@@ -62,36 +62,21 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 align-center" id="upgrade-promotion">
-                                <section id="upgrade-promotion-content">
-                                    <div><i class="glyphicon glyphicon-heart glyphicon-2x"></i>
-
-                                        <h1>你的礼物!</h1>
-
-                                        <h2>1年计划</h2>
-
-                                        <p>如果你升级到1年订阅现在你收到 <span
-                                                class="hidden-lg hidden-md hidden-sm"></span>免费AmazingFunT恤
-                                        </p>
-
-                                        <p>你想升级计划吗？</p>
-                                        <select class="selectpicker" >
-                                            <option value="">选择一个你的订阅</option>
-                                            <option value="">AmazingFun 1 </option>
-                                            <option value="">AmazingFun 3 </option>
-                                            <option value="">AmazingFun 6 </option>
-                                            <option value="">AmazingFunDX 6 </option>
-                                        </select>
-
-                                        <!--<select name="upgradeable-subscriptions" id="upgradeable-subscriptions"-->
-                                        <!--class="select select2 select2-hidden-accessible valid" tabindex="-1"-->
-                                        <!--aria-hidden="true">-->
-                                        <!--<option value="">SELECT A SUBSCRIPTION</option>-->
-                                        <!--<option value="2549757">Loot Crate Subscription 1</option>-->
-                                        <!--</select>-->
-
-                                        <p><a href="loginpay.html" class="btn btn-primary" id="upgrade-link">升级</a>
-                                        </p></div>
-                                </section>
+                              <section id="upgrade-promotion-content">
+                                <div>
+                                  <i class="glyphicon glyphicon-heart glyphicon-2x"></i>
+                                  <h1>你的礼物!</h1><h2>1年计划</h2>
+                                  <p>如果你升级到1年订阅现在你收到 <span class="hidden-lg hidden-md hidden-sm"></span>免费AmazingFunT恤</p>
+                                  <p>你想升级计划吗？</p>
+                                  <select id="upgrade-order" class="selectpicker">
+                                    <option value="0">选择一个你的订阅</option>
+                                      <?php foreach($upgrade_orders as $order_v):?>
+                                        <option value="<?=$order_v['id']?>"><?=$order_v['box_name']?></option>
+                                      <?php endforeach;?>
+                                  </select>
+                                  <p><a href="javascript:;" class="btn btn-primary" id="upgrade-link">升级</a></p>
+                                </div>
+                              </section>
                             </div>
                         </div>
                     </div>

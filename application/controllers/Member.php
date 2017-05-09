@@ -103,6 +103,17 @@ class Member extends Home_Controller
             }
         }
 
+        // 查询需要升级的订单
+        $this->load->model('order_model');
+        $this->_viewVar['upgrade_orders'] = $this->order_model
+            ->setSelectFields('id,order_number,box_name')
+            ->setAndCond([
+                'user_id'        => $this->_loginUser['id'],
+                'plan_number !=' => 12,
+                'status []'      => [1, 2],
+            ])
+            ->read();
+
         $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
 
         $this->load_view();
