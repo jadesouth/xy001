@@ -30,7 +30,7 @@ class Order_model extends MY_Model
             ->where('plan_month', $nextMonth)
             ->group_end()
             ->group_end()
-            ->where('order.status', 1)
+            ->where_in('order.status', [1, 2])
             ->where('order_plan.status', 0)
             ->join('order', 'order_plan.order_id = order.id', 'left')
             ->count_all_results();
@@ -75,7 +75,7 @@ class Order_model extends MY_Model
             ->where('plan_month', $nextMonth)
             ->group_end()
             ->group_end()
-            ->where('order.status', 1)
+            ->where_in('order.status', [1, 2])
             ->where('order_plan.status', 0)
             ->join('order', 'order_plan.order_id = order.id', 'left')
             ->order_by('order.id', 'DESC')
