@@ -654,11 +654,13 @@ class Order_model extends MY_Model
         $status = intval(! $this->db->trans_status());
         if ($status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
             $query_url = base_url('gift/info') . '?id=' . $order['id'] . '&k=' . md5($order['created_at'] . md5($order['id']));
-            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
-            $this->setTable('order')
-                 ->setUpdateData(['is_send_gift_email' => 1])
-                 ->setAndCond(['id' => $order['id']])
-                 ->update();
+            $result = $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
+            if($result){
+                $this->setTable('order')
+                     ->setUpdateData(['is_send_gift_email' => 1])
+                     ->setAndCond(['id' => $order['id']])
+                     ->update();
+            }
         }
         // 优惠券
         if ($status && ! empty($order['coupon_id']) && ! empty($order['coupon_value'])) {
@@ -691,7 +693,7 @@ class Order_model extends MY_Model
                                     'order_number' => $orderNumber,
                                     'notify_type'  => 0,
                                 ])
-                                ->get();
+                                ->count();
         if ($exists) {
             return true;
         }
@@ -743,11 +745,13 @@ class Order_model extends MY_Model
         $trans_status = $this->db->trans_status();
         if ($trans_status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
             $query_url = base_url('gift/info').'?id='.$order['id'].'&k='.md5($order['created_at'] . md5($order['id']));
-            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
-            $this->setTable('order')
-                 ->setUpdateData(['is_send_gift_email' => 1])
-                 ->setAndCond(['id' => $order['id']])
-                 ->update();
+            $result = $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
+            if($result){
+                $this->setTable('order')
+                     ->setUpdateData(['is_send_gift_email' => 1])
+                     ->setAndCond(['id' => $order['id']])
+                     ->update();
+            }
         }
         // 优惠券
         if ($trans_status && ! empty($order['coupon_id']) && ! empty($order['coupon_value'])) {
@@ -846,11 +850,13 @@ class Order_model extends MY_Model
         $trans_status = $this->db->trans_status();
         if ($trans_status && $order['is_gift'] == 1 && $order['is_send_gift_email'] == 0) {
             $query_url = base_url('gift/info') . '?id=' . $order['id'] . '&k=' . md5($order['created_at'] . md5($order['id']));
-            $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
-            $this->setTable('order')
-                 ->setUpdateData(['is_send_gift_email' => 1])
-                 ->setAndCond(['id' => $order['id']])
-                 ->update();
+            $result = $this->sendGiftEmail($order['gift_email'], $order['post_name'], $order['gift_sender_name'], $query_url);
+            if($result){
+                $this->setTable('order')
+                     ->setUpdateData(['is_send_gift_email' => 1])
+                     ->setAndCond(['id' => $order['id']])
+                     ->update();
+            }
         }
         // 优惠券
         if ($trans_status && ! empty($order['coupon_id']) && ! empty($order['coupon_value'])) {
@@ -941,7 +947,18 @@ class Order_model extends MY_Model
 
     public function sendReceipt($email,$mz_email,$order_number,$user_name,$user_addr,$coupon,$total,$plan,$theme_name){
         $this->load->library('email');
-        $this->email->initialize((array)$this->config);
+        // 以下设置Email参数
+        $config['crlf']="\r\n";
+        $config['newline']="\r\n";
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'smtp.exmail.qq.com';
+        $config['smtp_user'] = 'weloveyou@amazingfun.cn';
+        $config['smtp_pass'] = 'Amazing123';
+        $config['smtp_port'] = '25';
+        $config['charset'] = 'utf-8';
+        $config['wordwrap'] = true;
+        $config['mailtype'] = 'html';
+        $this->email->initialize($config);
 
         $this->email->from('weloveyou@amazingfun.cn', 'AmazingFun');
         $this->email->to($email);
@@ -1026,13 +1043,24 @@ class Order_model extends MY_Model
 </div>";
         $this->email->message($message);
 
-        $this->email->send(false);
+        return $this->email->send(false);
     }
 
     public function sendGiftEmail($email, $to_name, $sender_name,$query_url)
     {
         $this->load->library('email');
-        $this->email->initialize((array)$this->config);
+        // 以下设置Email参数
+        $config['crlf']="\r\n";
+        $config['newline']="\r\n";
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'smtp.exmail.qq.com';
+        $config['smtp_user'] = 'weloveyou@amazingfun.cn';
+        $config['smtp_pass'] = 'Amazing123';
+        $config['smtp_port'] = '25';
+        $config['charset'] = 'utf-8';
+        $config['wordwrap'] = true;
+        $config['mailtype'] = 'html';
+        $this->email->initialize($config);
 
         $this->email->from('weloveyou@amazingfun.cn', 'AmazingFun');
         $this->email->to($email);
@@ -1051,6 +1079,6 @@ AmazinFun 团队,
 </div>";
         $this->email->message($message);
 
-        $this->email->send(false);
+        return $this->email->send(false);
     }
 }

@@ -513,15 +513,3 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 date_default_timezone_set('Asia/ShangHai');
 $config['time_zone'] = date_default_timezone_get();
-
-// 以下设置Email参数
-$config['crlf']="\r\n";
-$config['newline']="\r\n";
-$config['protocol'] = 'smtp';
-$config['smtp_host'] = 'smtp.exmail.qq.com';
-$config['smtp_user'] = 'weloveyou@amazingfun.cn';
-$config['smtp_pass'] = 'Amazing123';
-$config['smtp_port'] = '25';
-$config['charset'] = 'utf-8';
-$config['wordwrap'] = true;
-$config['mailtype'] = 'html';

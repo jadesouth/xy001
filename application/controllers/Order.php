@@ -176,7 +176,7 @@ class Order extends Home_Controller
 
         $res = $this->_model->productPaymentZfbCompleted($user_id,$order_number, $callbackData);
         if ($res) {
-            if ('TRADE_FINISHED' != strtoupper($callbackData['trade_status']) && 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
+            if (isset($callbackData['trade_status']) && 'TRADE_FINISHED' != strtoupper($callbackData['trade_status']) && 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
                 show_error('支付宝支付失败,请重试！');
             } else {
                 redirect('member/order');
