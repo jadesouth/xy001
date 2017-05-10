@@ -37,8 +37,10 @@ class Password extends Home_Controller
                 $this->load->library('email');
 
                 //以下设置Email参数
+                $config['crlf']="\r\n";
+                $config['newline']="\r\n";
                 $config['protocol'] = 'smtp';
-                $config['smtp_host'] = 'smtp.163.com';
+                $config['smtp_host'] = 'smtp.exmail.qq.com';
                 $config['smtp_user'] = 'weloveyou@amazingfun.cn';
                 $config['smtp_pass'] = 'Amazing123';
                 $config['smtp_port'] = '25';
@@ -68,9 +70,13 @@ AmazinFun 团队,
 </div>";
                 $this->email->message($message);
 
-                $this->email->send(false);
-                http_ajax_response(0, '邮件已经发送至您的邮箱！');
-                return;
+                $return = $this->email->send(false);
+                if($return){
+                    http_ajax_response(0, '邮件已经发送至您的邮箱！');
+                    return;
+                }
+                http_ajax_response(1,'邮件发送失败,请稍后再试');
+
             }
         }
         http_ajax_response(1, '非法请求', []);
