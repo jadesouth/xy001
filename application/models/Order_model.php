@@ -660,6 +660,15 @@ class Order_model extends MY_Model
                  ->setAndCond(['id' => $order['id']])
                  ->update();
         }
+        // 优惠券
+        if ($status && ! empty($order['coupon_id']) && ! empty($order['coupon_value'])) {
+            $coupon_update['use_time'] = date('Y-m-d H:i:s');
+            $coupon_update['status'] = 1;
+            $this->setTable('coupon')
+                 ->setUpdateData($coupon_update)
+                 ->setAndCond(['id' => $order['coupon_id'], 'status' => 0])
+                 ->update();
+        }
         $msg = 'OK';
         0 !== $status && $msg = '业务处理失败';
 
@@ -738,6 +747,15 @@ class Order_model extends MY_Model
             $this->setTable('order')
                  ->setUpdateData(['is_send_gift_email' => 1])
                  ->setAndCond(['id' => $order['id']])
+                 ->update();
+        }
+        // 优惠券
+        if ($trans_status && ! empty($order['coupon_id']) && ! empty($order['coupon_value'])) {
+            $coupon_update['use_time'] = date('Y-m-d H:i:s');
+            $coupon_update['status'] = 1;
+            $this->setTable('coupon')
+                 ->setUpdateData($coupon_update)
+                 ->setAndCond(['id' => $order['coupon_id'], 'status' => 0])
                  ->update();
         }
         return $trans_status;
@@ -834,6 +852,15 @@ class Order_model extends MY_Model
                  ->setAndCond(['id' => $order['id']])
                  ->update();
         }
+        // 优惠券
+        if ($trans_status && ! empty($order['coupon_id']) && ! empty($order['coupon_value'])) {
+            $coupon_update['use_time'] = date('Y-m-d H:i:s');
+            $coupon_update['status'] = 1;
+            $this->setTable('coupon')
+                 ->setUpdateData($coupon_update)
+                 ->setAndCond(['id' => $order['coupon_id'], 'status' => 0])
+                 ->update();
+        }
         return $trans_status;
     }
 
@@ -908,28 +935,13 @@ class Order_model extends MY_Model
         $this->setTable('order_plan')
              ->setInsertData($insert_order_plan)
              ->createBatch();
-        // 优惠券
-        if (! empty($coupon_info)) {
-            $coupon_update['use_time'] = date('Y-m-d H:i:s');
-            $coupon_update['status'] = 1;
-            $this->setTable('coupon')->setUpdateData($coupon_update)->modify($coupon_info['id']);
-        }
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
 
     public function sendReceipt($email,$mz_email,$order_number,$user_name,$user_addr,$coupon,$total,$plan,$theme_name){
         $this->load->library('email');
-        //以下设置Email参数
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'smtp.amazingfun.com';
-        $config['smtp_user'] = 'weloveyou@amazingfun.cn';
-        $config['smtp_pass'] = 'Amazing123';
-        $config['smtp_port'] = '25';
-        $config['charset'] = 'utf-8';
-        $config['wordwrap'] = true;
-        $config['mailtype'] = 'html';
-        $this->email->initialize($config);
+        $this->email->initialize((array)$this->config);
 
         $this->email->from('weloveyou@amazingfun.cn', 'AmazingFun');
         $this->email->to($email);
@@ -1020,16 +1032,7 @@ class Order_model extends MY_Model
     public function sendGiftEmail($email, $to_name, $sender_name,$query_url)
     {
         $this->load->library('email');
-        //以下设置Email参数
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'smtp.163.com';
-        $config['smtp_user'] = 'weloveyou@amazingfun.cn';
-        $config['smtp_pass'] = 'Amazing123';
-        $config['smtp_port'] = '25';
-        $config['charset'] = 'utf-8';
-        $config['wordwrap'] = true;
-        $config['mailtype'] = 'html';
-        $this->email->initialize($config);
+        $this->email->initialize((array)$this->config);
 
         $this->email->from('weloveyou@amazingfun.cn', 'AmazingFun');
         $this->email->to($email);

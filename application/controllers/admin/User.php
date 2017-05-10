@@ -9,17 +9,7 @@ class User extends Admin_Controller
     public function email()
     {
         $this->load->library('email');
-
-        //以下设置Email参数
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'smtp.163.com';
-        $config['smtp_user'] = 'weloveyou@amazingfun.cn';
-        $config['smtp_pass'] = 'Amazing123';
-        $config['smtp_port'] = '25';
-        $config['charset'] = 'utf-8';
-        $config['wordwrap'] = TRUE;
-        $config['mailtype'] = 'html';
-        $this->email->initialize($config);
+        $this->email->initialize((array)$this->config);
 
         $this->email->from('weloveyou@amazingfun.cn', 'AmazingFun');
         $this->email->to('hky1218@163.com');

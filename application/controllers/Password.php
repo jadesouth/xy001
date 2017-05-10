@@ -35,19 +35,7 @@ class Password extends Home_Controller
                 $token = md5(md5($email) . md5($user_info['password']) . $timestamp);
                 $find_pwd_url = base_url('password/find') . '?email=' . $email . '&token=' . $token . '&time=' . $timestamp;
                 $this->load->library('email');
-
-                //以下设置Email参数
-                $config['crlf']="\r\n";
-                $config['newline']="\r\n";
-                $config['protocol'] = 'smtp';
-                $config['smtp_host'] = 'smtp.exmail.qq.com';
-                $config['smtp_user'] = 'weloveyou@amazingfun.cn';
-                $config['smtp_pass'] = 'Amazing123';
-                $config['smtp_port'] = '25';
-                $config['charset'] = 'utf-8';
-                $config['wordwrap'] = true;
-                $config['mailtype'] = 'html';
-                $this->email->initialize($config);
+                $this->email->initialize((array)$this->config);
 
                 $this->email->from('weloveyou@amazingfun.cn', 'AmazingFun');
                 $this->email->to($email);
