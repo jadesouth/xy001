@@ -88,6 +88,7 @@
             </div>
         </div>
     </div>
+    <?php if(!empty($box_list)): ?>
     <div class="section section-monthly">
         <div class="wrapper">
             <div class="row header-1">
@@ -245,6 +246,7 @@
         </div>
 
     </div>
+    <?php endif;?>
     <section class="section section-fan-wall">
         <div class="wrapper">
             <div class="row header-1">
