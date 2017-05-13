@@ -28,7 +28,8 @@ class Upload extends MY_Controller
 
     public function image()
     {
-        if (empty($image_name = array_keys($_FILES)[0])) {
+        $image_name = array_keys($_FILES);
+        if (empty($image_name = $image_name[0])) {
             http_ajax_response(1, '上传图片非法');
             return;
         }
