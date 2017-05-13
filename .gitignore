@@ -1,4 +1,5 @@
 .idea/
+/application/cache/
 resources/uploads/*
 /application/libraries/alipay/alipay.wap/*
 /application/logs/*
