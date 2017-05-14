@@ -142,7 +142,7 @@ class Member extends Home_Controller
         $this->load->model('order_model');
         $order = $this->order_model
             ->setSelectFields('id,order_number,coupon_value,box_name,plan_number,post_name,post_phone,post_addr,created_at')
-            ->setAndCond(['id' => $order_id, 'status' => 1, 'user_id' => $this->_loginUser['id']])
+            ->setAndCond(['id' => $order_id, 'status []' => [1, 2], 'user_id' => $this->_loginUser['id']])
             ->get();
         $this->_viewVar['order'] = $order;
 
