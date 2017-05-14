@@ -59,7 +59,7 @@
                     </div>
                 </li>
                 <li class="nav-item  ">
-                    <a href="/past" class="nav-link">往期回顾</a>
+                    <a href="/past?theme_id=1" class="nav-link">往期回顾</a>
                 </li>
                 <li class="nav-item ">
                     <a href="/gift" id="header-gift-link" class="nav-link">订购礼物</a>
