@@ -123,7 +123,7 @@ class Member extends Home_Controller
     {
         $user_id = $this->_loginUser['id'];
         $this->load->model('user_model');
-        $user_info = $this->user_model->setSelectFields('id,login_email,post_name,created_at')->find($user_id);
+        $user_info = $this->user_model->setSelectFields('id,login_email,name,post_name,created_at')->find($user_id);
         $this->_viewVar['user_info'] = $user_info;
         $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
         $this->load_view();
