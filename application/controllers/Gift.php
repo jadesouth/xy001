@@ -9,8 +9,8 @@ class Gift extends Home_Controller
     public function index()
     {
         $this->load->model('box_model');
-        $year = date('Y', strtotime('-1 month'));
-        $month = date('n', strtotime('-1 month'));
+        $year = date('Y');
+        $month = date('n');
         $this->_viewVar['gift_list'] = $this->box_model->readBox(0, $year, $month);
         $this->_viewVar['coupons'] = [];
         $this->load->model('coupon_model');
