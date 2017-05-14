@@ -66,11 +66,7 @@
                 <li class="filter-item<?=('all'== $tag_type) ? ' active': '';?>">
                     <a href="/product/all"><button  class="btn-link" id="btn-filter-all" >所有盒子</button></a>
                 </li>
-                <li class="filter-item<?=('month'== $tag_type) ? ' active': '';?>">
-                    <a href="/product/all/month"><button  class="btn-link" id="btn-filter-monthly">月份盒子</button></a>
-                </li>
                 <?php if(!empty($tag_list)){?><?php foreach ($tag_list as $tag){?>
-
                 <li class="filter-item<?=($tag == urldecode($tag_type)) ? ' active': '';?>">
                     <a href="/product/all/<?=$tag?>"><button  class="btn-link" id="btn-filter-limited"><?=$tag?></button></a>
                 </li>
