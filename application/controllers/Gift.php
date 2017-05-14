@@ -20,6 +20,7 @@ class Gift extends Home_Controller
                 ->setAndCond(['user_id' => $this->_loginUser['id'], 'status' => 0, 'expiration_time>' => date('Y-m-d')])
                 ->read();
         }
+        $this->_viewVar['body_attr'] = ' class="all-crates" id="gifts-index"';
         $this->load_view();
     }
 
