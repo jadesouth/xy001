@@ -15,7 +15,7 @@
                 </div>
                 <div class="row account-row">
                     <div class="col-md-3 col-xs-12 item-title">姓名</div>
-                    <div class="col-md-7 col-xs-8 item-value"><?= $user_info['name'] ?></div>
+                    <div class="col-md-7 col-xs-8 item-value"><?= $user_info['post_name'] ?></div>
                     <div class="col-md-2 col-xs-4 item-edit">
                         <a data-target="#namechange_modal" data-toggle="modal"
                            data-miss="modal" id="edit-name-modal-open-lnk"
