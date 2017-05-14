@@ -30,6 +30,7 @@ class Order extends Admin_Controller
             // get page data
             $orders = $this->_model
                 ->setSelectFields('id,order_number,plan_number,post_name,post_phone,post_addr')
+                ->setAndCond(['status []' => [1, 2]])
                 ->getPage($page, ADMIN_PAGE_SIZE);
             if (! empty($orders)) {
                 $current_date = date('Y-m-d');
