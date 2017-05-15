@@ -173,7 +173,7 @@ class Order extends Home_Controller
         if (empty($out_trade_no)) {
             show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
         }
-        list($user_id, $order_number) = explode( '_',$out_trade_no);
+        list($order_number, $user_id) = explode( '_',$out_trade_no);
 
         $res = $this->_model->productPaymentZfbCompleted($user_id,$order_number, $callbackData);
         if ($res) {
@@ -240,7 +240,7 @@ class Order extends Home_Controller
             echo 'fail';
             return;
         }
-        list($user_id, $order_number) = explode( '_',$out_trade_no);
+        list($order_number, $user_id) = explode( '_',$out_trade_no);
         // 记录支付完成
         $res = $this->_model->productPaymentZfbSuccess($user_id, $order_number, $callbackData);
         if (!$res) {
