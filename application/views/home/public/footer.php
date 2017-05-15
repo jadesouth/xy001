@@ -76,5 +76,27 @@
 //        })
     })
 </script>
+<div class="qqserver" style="z-index:99999;">
+  <div class="qqserver_fold">
+    <div></div>
+  </div>
+  <div class="qqserver-body" style="display: block;">
+    <div class="qqserver-header">
+      <div></div>
+      <span class="qqserver_arrow"></span></div>
+    <ul>
+      <li>
+          <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=3356669466&amp;site=qq&amp;menu=yes" target="_blank">
+              <div>客服咨询</div><span>琳琳</span>
+          </a>
+      </li>
+      <li>
+        <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=3356669466&amp;site=qq&amp;menu=yes" target="_blank">
+          <div>客服咨询</div><span>云云</span></a>
+      </li>
+    </ul>
+  </div>
+</div>
+<script src="/resources/assets/libs/qq-chat/js/zzsc.js" type="text/javascript"></script>
 </body>
 </html>
