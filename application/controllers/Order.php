@@ -172,12 +172,16 @@ class Order extends Home_Controller
             show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
         }
 
-        $out_trade_no = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : '';
-        $out_trade_no = strpos($out_trade_no, '_') !== false ? $out_trade_no : '';
-        if (empty($out_trade_no)) {
+        $user_id = isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0;
+        $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (0 >= $user_id) {
+            $out_trade_no = $order_number;
+            $out_trade_no = strpos($out_trade_no, '_') !== false ? $out_trade_no : '';
+            list($order_number, $user_id) = explode('_', $out_trade_no);
+        }
+        if (0 >= $user_id || empty($order_number)) {
             show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
         }
-        list($order_number, $user_id) = explode( '_',$out_trade_no);
 
         $res = $this->_model->productPaymentZfbCompleted($user_id,$order_number, $callbackData);
         if ($res) {
@@ -240,15 +244,18 @@ class Order extends Home_Controller
             echo 'fail';
             return;
         }
-
-        $out_trade_no = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : '';
-        $out_trade_no = strpos($out_trade_no, '_') !== false ? $out_trade_no : '';
-        if (empty($out_trade_no)) {
-            log_message('error','');
+        $user_id = isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0;
+        $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (0 >= $user_id) {
+            $out_trade_no = $order_number;
+            $out_trade_no = strpos($out_trade_no, '_') !== false ? $out_trade_no : '';
+            list($order_number, $user_id) = explode('_', $out_trade_no);
+        }
+        if (0 >= $user_id || empty($order_number)) {
+            log_message('error', '');
             echo 'fail';
             return;
         }
-        list($order_number, $user_id) = explode( '_',$out_trade_no);
         // 记录支付完成
         $res = $this->_model->productPaymentZfbSuccess($user_id, $order_number, $callbackData);
         if (!$res) {
