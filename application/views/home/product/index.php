@@ -108,7 +108,7 @@
                 <p class="pricing">
                     <span class="hdr-3 price price-total">¥<?=$box_info['monthly_price']?></span>
                     <span class="sub-text currency"></span>
-                    <span class="sub-text">/ 月</span>
+                    <span class="sub-text monthly">/ 月</span>
                 </p>
 
                 <p class="shipping hdr-6" style="display: block;">
@@ -234,9 +234,10 @@
         $('.product-info h1').text(a.product);
 //        selectprice(a.product);
 //        $('.product-info .price').text("¥ "+a.price);
-    //        $('#plan-select').change(function(){
-    //            $('.product-info .price').text("¥ "+$(this).children('option:selected').attr("data-price"));
-    //        })
+        $('#plan-select').change(function () {
+            $('.product-info .price').text("¥ " + $(this).children('option:selected').attr("data-price"));
+            $('.product-info .monthly').text("/" + $(this).children('option:selected').val() + 月);
+        })
 
         $('#btn-header-checkout').on('click', function () {
             var plan = $('#plan-select').val();//订阅计划
