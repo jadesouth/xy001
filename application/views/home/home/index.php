@@ -99,6 +99,7 @@
                 </div>
             </div>
             <div class="row monthly-main">
+                <?php if (isset($box_list[1])) : ?>
                 <div class="col-sm-4 col-xs-12 ">
                     <div class="crate-one">
                         <div class="crate-hdr">
@@ -147,6 +148,8 @@
                     </div>
 
                 </div>
+                <?php endif;?>
+                <?php if (isset($box_list[2])) : ?>
                 <div class="col-sm-4 col-xs-12 ">
                     <div class="crate-two">
                         <div class="crate-hdr ">
@@ -195,6 +198,8 @@
                     </div>
 
                 </div>
+                <?php endif;?>
+                <?php if (isset($box_list[3])) : ?>
                 <div class="col-sm-4 col-xs-12 ">
                     <div class="crate-three">
                         <div class="crate-hdr">
@@ -242,6 +247,7 @@
                     </div>
 
                 </div>
+                <?php endif;?>
             </div>
         </div>
 
