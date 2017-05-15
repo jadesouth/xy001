@@ -148,7 +148,7 @@
                     </div>
 
                 </div>
-                <? endif;?>
+                <?php endif;?>
                 <?php if (isset($box_list[2])) : ?>
                 <div class="col-sm-4 col-xs-12 ">
                     <div class="crate-two">
@@ -198,7 +198,7 @@
                     </div>
 
                 </div>
-                <? endif;?>
+                <?php endif;?>
                 <?php if (isset($box_list[3])) : ?>
                 <div class="col-sm-4 col-xs-12 ">
                     <div class="crate-three">
@@ -247,7 +247,7 @@
                     </div>
 
                 </div>
-                <? endif;?>
+                <?php endif;?>
             </div>
         </div>
 
