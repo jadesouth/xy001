@@ -29,7 +29,7 @@ class Order extends Admin_Controller
             $this->_viewVar['page'] = $this->pagination->create_links();
             // get page data
             $orders = $this->_model
-                ->setSelectFields('id,order_number,plan_number,post_name,post_phone,post_addr')
+                ->setSelectFields('id,order_number,plan_number,post_name,post_phone,post_addr,created_at')
                 ->setAndCond(['status []' => [1, 2]])
                 ->getPage($page, ADMIN_PAGE_SIZE);
             if (! empty($orders)) {
