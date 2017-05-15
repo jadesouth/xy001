@@ -236,7 +236,7 @@
 //        $('.product-info .price').text("¥ "+a.price);
         $('#plan-select').change(function () {
             $('.product-info .price').text("¥ " + $(this).children('option:selected').attr("data-price"));
-            $('.product-info .monthly').text("/" + $(this).children('option:selected').val() + 月);
+            $('.product-info .monthly').text("/" + $(this).children('option:selected').val() + "月");
         })
 
         $('#btn-header-checkout').on('click', function () {
