@@ -137,6 +137,10 @@ class Order extends Home_Controller
 
         $user_id = isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0;
         $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (0 >= $user_id) {
+            list($order_number, $user_id) = explode('_', $order_number);
+            $user_id = (int)$user_id;
+        }
         if (0 >= $user_id || empty($order_number)) {
             show_error('支付宝处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
         }
@@ -205,6 +209,10 @@ class Order extends Home_Controller
 
         $user_id = isset($callbackData['extra_common_param']) ? $callbackData['extra_common_param'] : 0;
         $order_number = isset($callbackData['out_trade_no']) ? $callbackData['out_trade_no'] : 0;
+        if (0 >= $user_id) {
+            list($order_number, $user_id) = explode('_', $order_number);
+            $user_id = (int)$user_id;
+        }
         if (0 >= $user_id || empty($order_number)) {
             echo 'fail';
 
