@@ -76,13 +76,13 @@ class Alipay
         require_once PATH_LIBRARY . 'alipay' . DS . 'alipay.wap' . DS . 'config.php';
         require_once PATH_LIBRARY . 'alipay' . DS . 'alipay.wap' . DS . 'wappay/service/AlipayTradeService.php';
         require_once PATH_LIBRARY . 'alipay' . DS . 'alipay.wap' . DS . 'wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
+        $orderNumber = $orderNumber.'_'.$userID;
         $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
         $payRequestBuilder->setBody($orderDesc);
         $payRequestBuilder->setSubject($orderName);
         $payRequestBuilder->setOutTradeNo($orderNumber);
         $payRequestBuilder->setTotalAmount($orderFee);
         $payRequestBuilder->setTimeExpress('2m');
-        $payRequestBuilder->setExtraCommonParam($userID);
         $payResponse = new AlipayTradeService($config);
         if($isFirst){
             $html_text = $payResponse->wapPay($payRequestBuilder, $config['product_return_url'], $config['product_notify_url']);
