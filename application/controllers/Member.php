@@ -48,6 +48,7 @@ class Member extends Home_Controller
             array_walk($orders, function (&$item, $key) {
                 $item['next_plan_date'] = '订单完成';
                 $item['next_plan_status'] = '订单完成';
+                $item['next_month_active'] = -1;
             });
             foreach ($order_plans as $order_plan) {
                 if ($current_year == $order_plan['plan_year'] && $current_month == $order_plan['plan_month'] && $current_date <= $order_plan['plan_date']) {
@@ -68,6 +69,10 @@ class Member extends Home_Controller
                 if ($next_year == $order_plan['plan_year'] && $next_month == $order_plan['plan_month'] && '当月未发' != $orders[$order_plan['order_id']]['next_plan_status']) {
                     $orders[$order_plan['order_id']]['next_plan_date'] = $order_plan['plan_date'];
                     $orders[$order_plan['order_id']]['next_plan_status'] = '订单继续';
+                }
+                // 判断下月的寄送状态
+                if ($next_year == $order_plan['plan_year'] && $next_month == $order_plan['plan_month']) {
+                    $orders[$order_plan['order_id']]['next_month_active'] = $order_plan['status'];
                 }
             }
         }

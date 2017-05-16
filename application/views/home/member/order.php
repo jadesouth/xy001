@@ -64,11 +64,15 @@
                                                     </address>
                                                 </div>
                                             </div>
-                                            <?php if('订单完成' != $order['next_plan_status']):?>
+                                            <?php if('订单完成' != $order['next_plan_status'] && -1 != $orders['next_month_active']):?>
                                             <div class="row">
                                                 <div class="col-sm-4"></div>
                                                 <div class="col-xs-12 col-sm-8 pull-text-right next-month">
+                                                    <?php if (0 == $orders['next_month_active']) :?>
+                                                    <a class="btn btn-primary btn-sm suspend" data-order="<?=$order['id']?>">下月暂订</a>
+                                                    <?php else:?>
                                                     <a class="btn btn-primary btn-sm active-month" data-order="<?=$order['id']?>">激活</a>
+                                                    <?php endif;?>
                                                 </div>
                                             </div>
                                             <?php endif;?>
