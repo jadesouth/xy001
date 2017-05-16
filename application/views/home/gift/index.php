@@ -590,8 +590,8 @@
                         var quarterly_price = response.data.quarterly_price.split('.');
                         var semiannually_price = response.data.semiannually_price.split('.');
                         var annually_price = response.data.annually_price.split('.');
-                        var quarterly_save = response.data.monthly_price*12-response.data.quarterly_price;
-                        var semiannually_save = response.data.monthly_price*12-response.data.semiannually_price;
+                        var quarterly_save = response.data.monthly_price*3-response.data.quarterly_price;
+                        var semiannually_save = response.data.monthly_price*6-response.data.semiannually_price;
                         var annually_save = response.data.monthly_price*12-response.data.annually_price;
                         $(".save.plan-savings.quarterly").html('省 ¥'+quarterly_save.toFixed(2));
                         $(".save.plan-savings.semiannually").html('省 ¥'+semiannually_save.toFixed(2));
