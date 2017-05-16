@@ -148,13 +148,13 @@ class Order extends Home_Controller
         // 记录支付完成
         $res = $this->_model->upgradePaymentCompleted($user_id, $order_number, $callbackData);
         if ($res) {
-            if ('TRADE_FINISHED' != strtoupper($callbackData['trade_status']) && 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
+            if (isset($callbackData['trade_status']) && 'TRADE_FINISHED' != strtoupper($callbackData['trade_status']) && 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
                 show_error('支付宝支付失败,请重试！');
             } else {
                 redirect('member/order');
             }
         } else {
-            if ('TRADE_FINISHED' != strtoupper($callbackData['trade_status']) && 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
+            if (isset($callbackData['trade_status']) && 'TRADE_FINISHED' != strtoupper($callbackData['trade_status']) && 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
                 show_error('支付宝支付失败,请重试！');
             } else {
                 show_error('第三方处理支付延迟，支付结果大概5分钟到，请您稍后在个人订单中心查看订单升级详情。');
