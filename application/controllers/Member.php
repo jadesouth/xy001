@@ -53,12 +53,11 @@ class Member extends Home_Controller
                 if ($current_year == $order_plan['plan_year'] && $current_month == $order_plan['plan_month'] && $current_date <= $order_plan['plan_date']) {
                     $orders[$order_plan['order_id']]['next_plan_date'] = $order_plan['plan_date'];
                     $orders[$order_plan['order_id']]['next_plan_status'] = '当月未发';
-                    break;
-                }
-                if ($next_year == $order_plan['plan_year'] && $next_month == $order_plan['plan_month']) {
-                    $orders[$order_plan['order_id']]['next_plan_date'] = $order_plan['plan_date'];
+                } elseif ($current_year == $order_plan['plan_year'] && $current_month == $order_plan['plan_month'] && $current_date > $order_plan['plan_date']) {
                     $orders[$order_plan['order_id']]['next_plan_status'] = '当月已发';
-                    break;
+                }
+                if ($next_year == $order_plan['plan_year'] && $next_month == $order_plan['plan_month'] && '当月未发' != $orders[$order_plan['order_id']]['next_plan_status']) {
+                    $orders[$order_plan['order_id']]['next_plan_date'] = $order_plan['plan_date'];
                 }
             }
         }
