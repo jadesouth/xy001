@@ -38,6 +38,12 @@
                                                     <a id="order-tracking-lnk-2549757" href="<?=base_url('member/orderdetail?order=') . $order['id']?>">订单详情</a>
                                                 </div>
                                             </div>
+                                          <div class="row">
+                                            <div>
+                                              <div class="col-xs-4"><strong>订单编号</strong></div>
+                                              <div class="col-xs-8"><?=$order['order_number']?></div>
+                                            </div>
+                                          </div>
                                             <looter_info id="looter-info2549757" class="no-margin-bottom">
                                                 <div class="row">
                                                     <div class="field-label col-xs-4"><strong>衬衫号码</strong></div>
