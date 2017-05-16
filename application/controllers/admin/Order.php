@@ -19,7 +19,9 @@ class Order extends Admin_Controller
         $this->_headerViewVar['method_name'] = __FUNCTION__;
 
         // 获取记录总条数
-        $count = $this->_model->count();
+        $count = $this->_model
+            ->setAndCond(['status []' => [1, 2]])
+            ->count();
         if(! empty($count)) {
             // Page configure
             $this->load->library('pagination');
