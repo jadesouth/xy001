@@ -42,13 +42,9 @@ class Member extends Home_Controller
             $current_date = date('Y-m-d');
             $current_year = date('Y');
             $current_month = date('m');
-            if (12 <= $current_month) {
-                $next_year = $current_year + 1;
-                $next_month = 1;
-            } else {
-                $next_year = $current_year;
-                $next_month = $current_month + 1;
-            }
+            $next_month_timestamp = strtotime(date('Y-m-d') . ' +1 month');
+            $next_year = (int)date('Y', $next_month_timestamp);
+            $next_month = (int)date('m', $next_month_timestamp);
             array_walk($orders, function (&$item, $key) {
                 $item['next_plan_date'] = '订单完成';
                 $item['next_plan_status'] = '订单完成';
