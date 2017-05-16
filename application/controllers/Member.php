@@ -51,10 +51,19 @@ class Member extends Home_Controller
             });
             foreach ($order_plans as $order_plan) {
                 if ($current_year == $order_plan['plan_year'] && $current_month == $order_plan['plan_month'] && $current_date <= $order_plan['plan_date']) {
-                    $orders[$order_plan['order_id']]['next_plan_date'] = $order_plan['plan_date'];
-                    $orders[$order_plan['order_id']]['next_plan_status'] = '当月未发';
+                    if (0 == $order_plan['status']) {
+                        $orders[$order_plan['order_id']]['next_plan_date'] = $order_plan['plan_date'];
+                        $orders[$order_plan['order_id']]['next_plan_status'] = '当月未发';
+                    } else {
+                        $orders[$order_plan['order_id']]['next_plan_status'] = '当月暂停';
+                    }
                 } elseif ($current_year == $order_plan['plan_year'] && $current_month == $order_plan['plan_month'] && $current_date > $order_plan['plan_date']) {
-                    $orders[$order_plan['order_id']]['next_plan_status'] = '当月已发';
+                    if (0 == $order_plan['status']) {
+                        $orders[$order_plan['order_id']]['next_plan_status'] = '当月已发';
+                    } else {
+                        $orders[$order_plan['order_id']]['next_plan_status'] = '当月暂停';
+                    }
+
                 }
                 if ($next_year == $order_plan['plan_year'] && $next_month == $order_plan['plan_month'] && '当月未发' != $orders[$order_plan['order_id']]['next_plan_status']) {
                     $orders[$order_plan['order_id']]['next_plan_date'] = $order_plan['plan_date'];
