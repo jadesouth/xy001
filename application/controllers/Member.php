@@ -88,7 +88,7 @@ class Member extends Home_Controller
             ->read();
 
         $this->_viewVar['orders'] = $orders;
-        $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
+        $this->_viewVar['body_attr'] = ' id="subscriptions-order_history" class="user_accounts subscriptions is-mobile"';
         $this->_viewVar['sex'] = [1 => '男', 2 => '女'];
         $this->load_view();
     }
@@ -125,7 +125,6 @@ class Member extends Home_Controller
             ->read();
 
         $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
-
         $this->load_view();
     }
 
@@ -135,7 +134,7 @@ class Member extends Home_Controller
         $this->load->model('user_model');
         $user_info = $this->user_model->setSelectFields('id,login_email,name,post_name,created_at')->find($user_id);
         $this->_viewVar['user_info'] = $user_info;
-        $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
+        $this->_viewVar['body_attr'] = ' id="user_accounts-index" class="user_accounts subscriptions is-mobile"';
         $this->load_view();
     }
 
@@ -197,7 +196,7 @@ class Member extends Home_Controller
         $this->_viewVar['order_plans'] = $order_plans;
         $this->_viewVar['body_attr'] = ' id="subscriptions-order_history" class="user_accounts subscriptions is-mobile"';
         $this->_viewVar['order_status_msg'] = empty($order_status_msg) ? '未完成' : $order_status_msg;
-
+        $this->_viewVar['body_attr'] = ' id="subscriptions-order_history" class="user_accounts subscriptions is-mobile"';
         $this->load_view();
     }
 

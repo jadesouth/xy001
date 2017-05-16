@@ -17,6 +17,7 @@ class Product extends Home_Controller
         $this->box_model->setSelectFields('*');
         $box_info = $this->box_model->find($box_id);
         $this->_viewVar['box_info'] = $box_info;
+        $this->_viewVar['body_attr'] = ' class="product"';
         $this->load_view();
     }
 
