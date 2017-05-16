@@ -603,15 +603,9 @@ class Order_model extends MY_Model
         if ($exists) {
             return ['status' => 0, 'msg' => '回调业务已处理'];
         }
-        // 获取当前订单信息
-        $fields = 'id,box_id,upgrade_before_order_value,upgrade_order_value,'
-            . 'upgrade_before_pay_value,upgrade_pay_value,'
-            . 'upgrade_before_plan_number,upgrade_plan_number,'
-            . 'post_name,post_phone,post_addr,upgrade_post_name,'
-            . 'upgrade_post_phone,upgrade_post_addr,upgrade_status';
         $realOrderNumber = substr($orderNumber, 0, 18) . 0;
         $order = $this->setTable('order')
-                      ->setSelectFields($fields)
+                      ->setSelectFields('*')
                       ->setAndCond(['order_number' => $realOrderNumber, 'user_id' => $userId, 'status' => 0])
                       ->get();
         if (empty($order)) {
@@ -670,6 +664,22 @@ class Order_model extends MY_Model
                  ->setUpdateData($coupon_update)
                  ->setAndCond(['id' => $order['coupon_id'], 'status' => 0])
                  ->update();
+        }
+        // 发送电子凭据
+        if ($status && $order['is_send_email'] == 0) {
+            $this->load->model('user_model');
+            $this->load->model('box_model');
+            $user_info = $this->user_model->setSelectFields('*')->find($userId);
+            $box_info = $this->box_model->setSelectFields('theme_name,logistics_image')->find($order['box_id']);
+            if (! empty($user_info) && ! empty($box_info)) {
+                $send_result = $this->sendReceipt($user_info['login_email'], $user_info['login_email'], $order['order_number'], $user_info['post_name'], $user_info['post_addr'], $order['coupon_value'], $order['order_value'], $order['pay_value'], $order['plan_number'], $box_info['theme_name'], $box_info['logistics_image']);
+                if ($send_result) {
+                    $this->setTable('order')
+                         ->setUpdateData(['is_send_email' => 1])
+                         ->setAndCond(['id' => $order['id']])
+                         ->update();
+                }
+            }
         }
         $msg = 'OK';
         0 !== $status && $msg = '业务处理失败';
@@ -761,6 +771,22 @@ class Order_model extends MY_Model
                  ->setUpdateData($coupon_update)
                  ->setAndCond(['id' => $order['coupon_id'], 'status' => 0])
                  ->update();
+        }
+        // 发送电子凭据
+        if ($trans_status && $order['is_send_email'] == 0) {
+            $this->load->model('user_model');
+            $this->load->model('box_model');
+            $user_info = $this->user_model->setSelectFields('*')->find($userId);
+            $box_info = $this->box_model->setSelectFields('theme_name,logistics_image')->find($order['box_id']);
+            if (! empty($user_info) && ! empty($box_info)) {
+                $send_result = $this->sendReceipt($user_info['login_email'], $user_info['login_email'], $order['order_number'], $user_info['post_name'], $user_info['post_addr'], $order['coupon_value'], $order['order_value'], $order['pay_value'], $order['plan_number'], $box_info['theme_name'], $box_info['logistics_image']);
+                if ($send_result) {
+                    $this->setTable('order')
+                         ->setUpdateData(['is_send_email' => 1])
+                         ->setAndCond(['id' => $order['id']])
+                         ->update();
+                }
+            }
         }
         return $trans_status;
     }
@@ -867,6 +893,22 @@ class Order_model extends MY_Model
                  ->setAndCond(['id' => $order['coupon_id'], 'status' => 0])
                  ->update();
         }
+        // 发送电子凭据
+        if ($trans_status && $order['is_send_email'] == 0) {
+            $this->load->model('user_model');
+            $this->load->model('box_model');
+            $user_info = $this->user_model->setSelectFields('*')->find($userId);
+            $box_info = $this->box_model->setSelectFields('theme_name,logistics_image')->find($order['box_id']);
+            if (! empty($user_info) && ! empty($box_info)) {
+                $send_result = $this->sendReceipt($user_info['login_email'], $user_info['login_email'], $order['order_number'], $user_info['post_name'], $user_info['post_addr'], $order['coupon_value'], $order['order_value'], $order['pay_value'], $order['plan_number'], $box_info['theme_name'], $box_info['logistics_image']);
+                if ($send_result) {
+                    $this->setTable('order')
+                         ->setUpdateData(['is_send_email' => 1])
+                         ->setAndCond(['id' => $order['id']])
+                         ->update();
+                }
+            }
+        }
         return $trans_status;
     }
 
@@ -945,11 +987,12 @@ class Order_model extends MY_Model
         return $this->db->trans_status();
     }
 
-    public function sendReceipt($email,$mz_email,$order_number,$user_name,$user_addr,$coupon,$total,$plan,$theme_name){
+    public function sendReceipt($email, $mz_email, $order_number, $user_name, $user_addr, $coupon, $order_value, $pay_value, $plan, $theme_name, $logistics_image)
+    {
         $this->load->library('email');
         // 以下设置Email参数
-        $config['crlf']="\r\n";
-        $config['newline']="\r\n";
+        $config['crlf'] = "\r\n";
+        $config['newline'] = "\r\n";
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'smtp.exmail.qq.com';
         $config['smtp_user'] = 'weloveyou@amazingfun.cn';
@@ -985,7 +1028,7 @@ class Order_model extends MY_Model
                                         <span style=\"color:rgb(153,153,153);font-size:10px;\">付款信息</span><br>
                                                    {$user_name}<br>
                                         {$user_addr}                                                       </td>
-                                    <td width=\"120\" rowspan=\"3\" align=\"right\" style=\"padding-right: 20px;border-style:solid;border-color:white; border-left-width:1px;border-right-width:0px;border-bottom-width:0px;border-top-width:0px;\"><span style=\"color:rgb(153,153,153);font-size:10px;\">总计</span><br><span style=\"font-size:16px;font-weight:bold;\">¥{$total}</span></td>
+                                    <td width=\"120\" rowspan=\"3\" align=\"right\" style=\"padding-right: 20px;border-style:solid;border-color:white; border-left-width:1px;border-right-width:0px;border-bottom-width:0px;border-top-width:0px;\"><span style=\"color:rgb(153,153,153);font-size:10px;\">总计</span><br><span style=\"font-size:16px;font-weight:bold;\">¥{$pay_value}</span></td>
                                 </tr>
                                 <tr height=\"46\">
                                     <td colspan=\"2\" style=\"padding-left:20px;border-style:solid; border-color:white;border-left-width:0px;border-right-width:1px;border-bottom-width:1px;border-top-width:0px;\"><span style=\"color:rgb(153,153,153);font-size:10px;\">日期</span><br>{$date}</td>
@@ -1010,14 +1053,14 @@ class Order_model extends MY_Model
 
                                 <tr height=\"90\">
                                     <td width=\"60\" class=\"\" align=\"center\" style=\"padding:0 0 0 20px;margin:0;height:60px;width:60px;\">
-                                        <img src=\"http://www.amazingfun.cn/img/box.png\" width=\"100\" height=\"60\" border=\"0\" alt=\"AmazingFunDx\" style=\"padding:0;margin:0;-ms-interpolation-mode: bicubic;border-radius:14px;border:1px solid rgba(128,128,128,0.2);\">
+                                        <img src=\"{$logistics_image}\" width=\"100\" height=\"60\" border=\"0\" alt=\"AmazingFunDx\" style=\"padding:0;margin:0;-ms-interpolation-mode: bicubic;border-radius:14px;border:1px solid rgba(128,128,128,0.2);\">
                                     </td>
                                     <td width=\"260\" style=\"padding:0 0 0 20px;width:260px;line-height:15px;\" class=\"\">
                                         <span class=\"\" style=\"font-weight:600;\">{$theme_name}</span><br>
                                     </td>
                                     <td width=\"100\" class=\"\" style=\"padding:0 0 0 20px;width:100px;\"><span style=\"color:rgb(153,153,153)\">{$plan}个月</span></td>
                                     <td width=\"120\" class=\"\" style=\"padding:0 0 0 20px;width:120px;\"><span style=\"color:rgb(153,153,153);\">¥{$coupon}</span></td>
-                                    <td width=\"90\" class=\"\" align=\"right\" style=\"padding:0 20px 0 0;width:100px;\"><span style=\"font-weight:600;white-space:nowrap;\">¥{$total}</span></td>
+                                    <td width=\"90\" class=\"\" align=\"right\" style=\"padding:0 20px 0 0;width:100px;\"><span style=\"font-weight:600;white-space:nowrap;\">¥{$order_value}</span></td>
                                 </tr>
 
                                 </tbody></table>
@@ -1030,7 +1073,7 @@ class Order_model extends MY_Model
                                 <tr height=\"48\">
                                     <td align=\"right\" style=\"color:rgb(153,153,153);font-size:10px;font-weight:600;padding:0 30px 0 0;border-width:1px;border-color:rgb(238,238,238);\">总计</td>
                                     <td width=\"1\" style=\"background-color:rgb(238,238,238);width:1px;\"></td>
-                                    <td width=\"90\" align=\"right\" style=\"width:120px;padding:0 20px 0 0;font-size:16px;font-weight:600;white-space:nowrap;\">¥{$total}</td>
+                                    <td width=\"90\" align=\"right\" style=\"width:120px;padding:0 20px 0 0;font-size:16px;font-weight:600;white-space:nowrap;\">¥{$pay_value}</td>
                                 </tr>
                                 <tr height=\"1\"><td height=\"1\" colspan=\"3\" style=\"padding:0 10px 0 10px;\"><div style=\"line-height:1px;height:1px;background-color:rgb(238,238,238);\"></div></td></tr>
                                 </tbody></table>
