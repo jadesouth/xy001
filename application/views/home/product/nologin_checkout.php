@@ -298,7 +298,7 @@
 
                         <div class="summary-receipt">
                             <div class="center-block coSumImage higher-z">
-                                <img class="img-responsive" src="/resources/assets/images/box.png"
+                                <img class="img-responsive" src="<?= $box_info['logistics_image'] ?>"
                                      alt="Checkout summary">
                             </div>
                             <div id="cosummaryright" class="coSumBox">

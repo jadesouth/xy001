@@ -204,6 +204,15 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="image4" class="col-sm-2 control-label">物流图片</label>
+        <div class="col-sm-9">
+            <input type="file" class="form-control" name="logistics_image" id="logistics_image" placeholder="">
+            <input type="hidden" name="logistics_image_url" value="<?=$data['logistics_image']?>">
+            <img class="img-thumbnail" style="display: block" src="<?=$data['logistics_image']?>">
+            <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过4.0M</p>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="characteristic" class="col-sm-2 control-label">特征</label>
         <div class="col-sm-9">
             <textarea class="form-control" rows="12" placeholder="特征" name="characteristic"><?=$data['characteristic']?></textarea>
@@ -278,6 +287,7 @@
         box_upload_image("image2");
         box_upload_image("image3");
         box_upload_image("image4");
+        box_upload_image("logistics_image");
     });
     $('#main-submit').click(function(){
         $.ajax({
