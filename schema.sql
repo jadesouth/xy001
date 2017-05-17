@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `box` (
   `image2` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '物品图2(主页)',
   `image3` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '物品图3(主页)',
   `image4` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '物品图4(主页)',
+  `logistics_image` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '送货图片',
   `characteristic` TEXT NOT NULL DEFAULT '' COMMENT '特征',
   `logistics` TEXT NOT NULL DEFAULT '' COMMENT '送货',
   `about` TEXT NOT NULL DEFAULT '' COMMENT '关于主题',

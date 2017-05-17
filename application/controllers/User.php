@@ -11,8 +11,37 @@ class User extends Home_Controller
     public function __construct()
     {
         parent::__construct();
-        if (! in_array($this->router->method, ['ajax_register', 'ajax_login', 'ajax_check_user']) && empty($this->_loginUser)) {
+        if (! in_array($this->router->method, ['register', 'ajax_register', 'ajax_login', 'ajax_check_user']) && empty($this->_loginUser)) {
             redirect('/');
+        }
+    }
+
+    public function register()
+    {
+        if ('post' == $this->input->method()) {
+            $this->load->helper('http');
+            $this->load->library('form_validation');
+            if (false === $this->form_validation->run()) {
+                http_ajax_response(1, $this->form_validation->error_string());
+            } else {
+                $user_info['login_email'] = $this->input->post('email', true);
+                $user_info['password'] = $this->input->post('password', true);
+                $user_id = $this->_model->add_user($user_info);
+                if (! empty($user_id)) {
+                    $this->load->model('coupon_model');
+                    $this->coupon_model->create(['user_id' => $user_id, 'value' => 5, 'expiration_time' => date('Y-m-d', strtotime('+ 6 months'))]);
+                    http_ajax_response(0, '注册成功');
+                    $this->set_user_login($user_id, $user_info['login_email']);
+                    return;
+                }
+                http_ajax_response(1, '注册失败');
+            }
+        } else {
+            if (empty($this->_loginUser)) {
+                $this->load->view('home/user/register.php');
+            } else {
+                redirect('/member/coupon');
+            }
         }
     }
 

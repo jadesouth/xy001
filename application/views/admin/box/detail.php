@@ -154,6 +154,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="image4" class="col-sm-2 control-label">物流图片</label>
+        <div class="col-sm-9">
+            <img src="<?=$data['logistics_image']?>" alt="">
+        </div>
+    </div>
+    <div class="form-group">
         <label for="characteristic" class="col-sm-2 control-label">特征</label>
         <div class="col-sm-9">
             <textarea class="form-control" rows="12" placeholder="文章内容" disabled><?=$data['characteristic']?></textarea>

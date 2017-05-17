@@ -108,6 +108,10 @@ $config = [
         ['field' => 'about', 'label' => '关于主题', 'rules' => 'trim|required'],
     ],
     // 前台用户相关
+    'user/register' => [ // 用户注册
+        ['field' => 'email', 'label' => '邮箱', 'rules'=> 'trim|required|valid_email|is_unique[user.login_email]'],
+        ['field' => 'password', 'label' => '密码', 'rules'=> 'trim|required'],
+    ],
     'user/ajax_register' => [ // 用户注册
         ['field' => 'email', 'label' => '邮箱', 'rules'=> 'trim|required|valid_email|is_unique[user.login_email]'],
         ['field' => 'password', 'label' => '密码', 'rules'=> 'trim|required'],

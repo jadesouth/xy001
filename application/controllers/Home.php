@@ -24,6 +24,7 @@ class Home extends Home_Controller
         }
         $this->_viewVar['videosWall'] = $videosWall;
         $this->_viewVar['imagesWall'] = $imagesWall;
+        $this->_viewVar['body_attr'] = ' id="homepage-index" class="homepage homepage is-mobile"';
         $this->load_view();
     }
 }

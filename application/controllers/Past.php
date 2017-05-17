@@ -21,6 +21,7 @@ class Past extends Home_Controller
         $select_fields = 'id,theme_id,theme_name,year,month,cover_title,cover_subtitle,cover_image';
         $box_list = $this->box_model->readBox($theme_id, $year, $month, $select_fields, 0, 21);
         $this->_viewVar['box_list'] = $box_list;
+        $this->_viewVar['body_attr'] = ' class="past"';
         $this->load_view();
     }
 

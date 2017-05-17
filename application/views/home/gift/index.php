@@ -367,7 +367,8 @@
                                     <div class="row create-login">
                                         <div class="col-xs-4"><h4>登录</h4></div>
                                         <div class="col-xs-8 right-selection"><!-- react-text: 195 -->没有账号 ?
-                                            <!-- /react-text --><a class="login-register-link" data-target="#loginmodal" data-toggle="modal">创建帐号</a></div>
+                                          <button class="login-register-link" data-target="#loginmodal" data-toggle="modal">创建帐号</button>
+</div>
                                     </div>
                                 </div>
                                 <div id="create-login-container" class="row ">

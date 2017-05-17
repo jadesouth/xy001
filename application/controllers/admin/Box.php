@@ -69,6 +69,7 @@ class Box extends Admin_Controller
             'image2' => $this->input->post('image2_url'),
             'image3' => $this->input->post('image3_url'),
             'image4' => $this->input->post('image4_url'),
+            'logistics_image' => $this->input->post('logistics_image_url'),
             'characteristic' => $this->input->post('characteristic'),
             'logistics' => $this->input->post('logistics'),
             'about' => $this->input->post('about'),
