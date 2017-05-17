@@ -1,5 +1,5 @@
 <div class="main-content">
-    <div class="section banner">
+    <div class=" banner">
         <img src="/resources/assets/images/banner.png" alt="banner"/>
     </div>
     <div class="section introduce">
@@ -299,34 +299,79 @@
         </div>
     </section>
     <div class="limited-box"></div>
+    <!--视频播放窗口-->
+    <div class="modal fade" id="vedio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content " >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                   <video  controls style="width:100%;" id="modalvedio">
+                       <source src="video/1.mp4">
+                   </video>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 <script src="/resources/assets/js/home/jquery.min.js"></script>
+<script src="/resources/assets/js/home/isotope.pkgd.min.js"></script>
 <script src="/resources/assets/js/home/swiper-3.4.0.jquery.min.js"></script>
 <script src="/resources/assets/js/home/bootstrap.min.js"></script>
 <script src="/resources/assets/js/home/main.js"></script>
 <script>
-    var mySwiperone = new Swiper('.swiper-one', {
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-//        pagination: '.swiper-pagination'
+$(function(){
+       $('#isotope').isotope({
+                // options
+                itemSelector : '.element-item',
+                layoutMode : 'fitRows'
+            });
+        var mySwiperone = new Swiper('.swiper-one', {
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+        //        pagination: '.swiper-pagination'
 
-    });
-    var mySwipertwo1 = new Swiper('.swiper-two-1', {
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-//        pagination: '.swiper-pagination'
+            });
+            var mySwipertwo1 = new Swiper('.swiper-two-1', {
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+        //        pagination: '.swiper-pagination'
 
-    });
-    var mySwipertwo2 = new Swiper('.swiper-two-2', {
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-//        pagination: '.swiper-pagination'
+            });
+            var mySwipertwo2 = new Swiper('.swiper-two-2', {
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+        //        pagination: '.swiper-pagination'
 
-    });
-    var mySwipertwo3 = new Swiper('.swiper-two-3', {
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-//        pagination: '.swiper-pagination'
+            });
+            var mySwipertwo3 = new Swiper('.swiper-two-3', {
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+        //        pagination: '.swiper-pagination'
 
-    });
+            });
+            var mySwiperfree = new Swiper('.swiper-free', {
+            //
+                        freeMode : true,
+                        freeModeMomentumBounce : false,
+                        freeModeSticky : true,
+                        spaceBetween: 7,
+                        width:230,
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev'
+
+                    });
+})
+// 视频弹窗
+$('.swiper-vedio').click(function(){
+    $('#vedio').modal('show');
+    $('#modalvedio source').attr('scr',$(this).attr('data-vedio'));
+
+});
+    $('#vedio').on('hide.bs.modal', function () {
+        $('#modalvedio').get(0).pause();
+    })
 </script>

@@ -121,7 +121,9 @@
                                     href="#collapseTwo"
                                     aria-expanded="false" aria-controls="collapseTwo" class="collapsed">选择礼物计划</a></h4>
 
-                        <div class="edit-box"></div>
+                         <div class="edit-box">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="collapsed">编辑</a>
+                         </div>
                     </div>
                     <div class="quick-summary"><!-- react-text: 48 --> <!-- /react-text --><!-- react-text: 49 -->
                         <!-- /react-text --></div>
@@ -219,7 +221,9 @@
                                                        aria-controls="collapseThree" class="collapsed">添加收件人</a>
                         </h4>
 
-                        <div class="edit-box"></div>
+                        <div class="edit-box">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class="collapsed">编辑</a>
+                        </div>
                     </div>
                     <div id="after-filled" class="quick-summary hide">
 
@@ -618,7 +622,10 @@
             $("input[name=shirt_size]").val($(this).data('size'));
             $('#collapseTwo').collapse('toggle');
             $('#collapseThree').collapse('show');
+            var str=$('.subscription-plan-node.active .plan-name').text()+$('.subscription-plan-node.active .btn-reset').text()+$('.btn-reset.active').text()+$('.show-variants li.active').text();
+                        $('#headingTwo').siblings('.quick-summary').text(str);
         });
+
         $('#legal-checkbox').on('click',function(){
             var value = $(this).val();
             if(value == 'false'){
@@ -665,9 +672,11 @@
         }
         $('.btn-next').on('click', function () {
 
-            $('#collapseThree').collapse('toggle');
-            $('#collapseFour').collapse('show');
-        });
+                    $('#collapseThree').collapse('toggle');
+                    $('#collapseFour').collapse('toggle');
+                    var str=$('#checkout_shipping_address_name').val()+" "+$('#checkout_shipping_tel').val()+" "+$('#checkout_shipping_address_line').val()+" "+$('#checkout_gift_email_confirm').val();
+                    $('#headingThree').siblings('.quick-summary').text(str);
+                });
         if($('#legal-checkbox').is(':checked')){
             $("#gift-submit").attr("disabled", false);
         }else{

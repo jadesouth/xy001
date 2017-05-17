@@ -88,7 +88,7 @@ class Member extends Home_Controller
             ->read();
 
         $this->_viewVar['orders'] = $orders;
-        $this->_viewVar['body_attr'] = ' id="subscriptions-order_history" class="user_accounts subscriptions is-mobile"';
+        $this->_viewVar['body_attr'] = ' id="user_accounts-subscriptions" class="user_accounts subscriptions is-mobile"';
         $this->_viewVar['sex'] = [1 => '男', 2 => '女'];
         $this->load_view();
     }

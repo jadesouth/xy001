@@ -1825,6 +1825,10 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
         margin: 15px auto;
         width: 100%;
     }
+    #collapseFour .row .col-sm-4{
+        display: none;
+    }
+
 }
 
 /*checkout*/
@@ -2169,7 +2173,7 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
 }
 
 #namechange_modal .modal-dialog, #emailchange_modal .modal-dialog, #passwordchange_modal .modal-dialog {
-    width: 100%;
+    /*width: 100%;*/
 }
 
 #namechange_modal .modal-dialog .modal-content .modal-body, #emailchange_modal .modal-dialog .modal-content .modal-body, #passwordchange_modal .modal-dialog .modal-content .modal-body {
