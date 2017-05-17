@@ -253,18 +253,44 @@
 
     </div>
     <?php endif;?>
-    <section class="section section-fan-wall">
-        <div class="wrapper">
-            <div class="row header-1">
-                <div class="col-xs-12">
-                    <!--<h2 class="hdr-2">Looter Fan Wall</h2>-->
-                    <h2 class="hdr-2">展示墙</h2>
-
-                    <p class="desc">炫耀你的战利品在你的微博，朋友圈</p>
-
-                </div>
-            </div>
+    <section class="section section-youtubers">
+      <header class="header-1">
+        <div class="wrapper"><h2 class="hdr-2">视频拍摄</h2>
+          <p>看看我们盒子的拥有者在youku上展示他们的盒子</p>
         </div>
+      </header>
+      <div class="swiper-container swiper-container-horizontal mt10 swiper-free">
+        <div class="swiper-wrapper">
+          <?php if (! empty($videosWall)): foreach ($videosWall as $videoWall):?>
+          <div class="swiper-slide swiper-slide-duplicate " >
+            <img src="<?=base_url('/resources/uploads/') . $videoWall['image']?>" alt="" class="btn-vedio " />
+            <span class="swiper-vedio" data-vedio="<?=$videoWall['url']?>"></span>
+          </div>
+          <?php endforeach;endif;?>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </section>
+    <section class="section section-fan-wall">
+      <div class="wrapper">
+        <div class=" header-1">
+          <div class="">
+            <h2 class="hdr-2">展示墙</h2>
+            <p class="desc">炫耀你的战利品在你的微博，朋友圈</p>
+          </div>
+        </div>
+        <!--图片墙地址请安标签写-->
+        <?php if (! empty($imagesWall)):?>
+        <div id="isotope">
+          <?php foreach ($imagesWall as $imageWall):?>
+          <div class="element-item">
+            <div class="element" style="background-image: url('<?=base_url('/resources/uploads/') . $imageWall['image']?>');"></div>
+          </div>
+          <?php endforeach;?>
+        </div>
+        <?php endif;?>
+      </div>
     </section>
     <section class="section section-cta-module">
         <div class="wrapper"><h2 class="hdr-2">你还在等什么? 快加入我们！</h2>
