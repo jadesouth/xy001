@@ -39,7 +39,7 @@
             </div>
             <ul id="navbar-collapse" class="nav collapse">
                 <li class="nav-item nav-account">
-                    <button class="nav-link my-account-lnk hidden" data-toggle="collapse" id="header-my-account-link" data-target="#dropdown-account" data-parent="#navbar-collapse" aria-controls="dropdown-account" role="button" aria-expanded="true">我的账户<i class="fa fa-caret-down fa-lg"></i><i class="fa fa-caret-up fa-lg"></i><i class="fa fa-caret-right fa-lg"></i></button>
+                    <button class="nav-link my-account-lnk" data-toggle="collapse" id="header-my-account-link" data-target="#dropdown-account" data-parent="#navbar-collapse" aria-controls="dropdown-account" role="button" aria-expanded="true">我的账户<i class="fa fa-caret-down fa-lg"></i><i class="fa fa-caret-up fa-lg"></i><i class="fa fa-caret-right fa-lg"></i></button>
                     <ul class="dropdown-account collapse" id="dropdown-account" aria-expanded="false">
                         <li class="dropdown-item">
                             <a href="＃" id="header-manage-account-link" class="dropdown-link">帐户管理</a>
