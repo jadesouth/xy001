@@ -39,6 +39,7 @@
             </div>
             <ul id="navbar-collapse" class="nav collapse">
                 <li class="nav-item nav-account">
+                    <?php if(!empty($_SESSION['home_login_user'])){?>
                     <button class="nav-link my-account-lnk hidden" data-toggle="collapse" id="header-my-account-link" data-target="#dropdown-account" data-parent="#navbar-collapse" aria-controls="dropdown-account" role="button" aria-expanded="true">我的账户<i class="fa fa-caret-down fa-lg"></i><i class="fa fa-caret-up fa-lg"></i><i class="fa fa-caret-right fa-lg"></i></button>
                     <ul class="dropdown-account collapse" id="dropdown-account" aria-expanded="false">
                         <li class="dropdown-item">
@@ -48,7 +49,9 @@
                             <a href="javascript:;" id="logout" class="dropdown-link">退出登录</a>
                         </li>
                     </ul>
+                    <?php }else{?>
                     <a class="nav-link login-lnk loginbtn" id="header-log-in-modal-link" data-toggle="modal" data-target="#loginmodal" href="#">登录</a>
+                    <?php }?>
                 </li>
                 <li class="nav-item">
                     <button class="nav-link collapsed" data-toggle="collapse" id="header-pick-a-crate-link"
