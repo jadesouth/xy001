@@ -2323,9 +2323,9 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
         min-height: 550px;
     }
 
-    #user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div, #user_accounts-free_crates .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div {
-        padding-left: 35%;
-    }
+    /*#user_accounts-subscriptions .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div, #user_accounts-free_crates .account-summary #upgrade-promotion.col-lg-6 #upgrade-promotion-content div {*/
+        /*padding-left: 35%;*/
+    /*}*/
 }
 
 /*******************************订单详情*/
@@ -2519,7 +2519,16 @@ input[type=checkbox].pay, input[type=radio].pay {
 
         height: 100px;
 
-
     }
-
+}
+.swiper-vedio{
+    position: absolute;
+    top:8%;
+    left:6%;
+    width:200px;
+    height:200px;
+    background: url('../../img/vediob.png') no-repeat center;
+    background-size: 30% 30%,100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 }

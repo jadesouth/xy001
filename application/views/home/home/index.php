@@ -1,6 +1,20 @@
 <div class="main-content">
-    <div class=" banner">
-        <img src="/resources/assets/images/banner.png" alt="banner"/>
+
+ <div class="swiper-container bannerSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide banner">
+                <img src="/resources/assets/images/banner.png" alt="banner"/>
+            </div>
+            <div class="swiper-slide banner">
+                <img src="/resources/assets/images/banner.png" alt="banner"/>
+            </div>
+            <div class="swiper-slide banner">
+                <img src="/resources/assets/images/banner.png" alt="banner"/>
+            </div>
+        </div>
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
     <div class="section introduce">
         <div class="wrapper">
@@ -329,6 +343,12 @@ $(function(){
                 itemSelector : '.element-item',
                 layoutMode : 'fitRows'
             });
+        var bannerSwiper = new Swiper('.bannerSwiper', {
+
+                    autoplay: 5000,//可选选项，自动滑动
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev'
+                });
         var mySwiperone = new Swiper('.swiper-one', {
                 nextButton: '.swiper-button-next',
                 prevButton: '.swiper-button-prev',
