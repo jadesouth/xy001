@@ -21,4 +21,21 @@ class Vote_model extends MY_Model
         $this->_insertData = $vote;
         return $this->create();
     }
+
+    /**
+     * plus1 投票+1
+     *
+     * @param $vote_id
+     * @return bool
+     */
+    public function plus1($vote_id)
+    {
+        $vote_id = (int)$vote_id;
+        if (0 >= $vote_id) {
+            return false;
+        }
+        $this->db->set('count', 'count+1', false);
+        $this->db->where('id', $vote_id);
+        return $this->db->update('vote');
+    }
 }
