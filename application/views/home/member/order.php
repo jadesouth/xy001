@@ -110,6 +110,32 @@
         </div>
     </div>
 </div>
+<?php if($show_vote && !empty($vote_list)):?>
+<div class="modal fade" id="vote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content " >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="text-center">请给你的妹子投票吧</h4>
+            </div>
+            <div class="modal-body">
+                <div class="girllist row">
+                    <?php foreach ($vote_list as $vote):?>
+                    <div class="col-xs-4 text-center">
+                        <img src="<?=base_url('/resources/uploads/') . $vote['image']?>" alt="" class="girlimg"/>
+                        <p> <?=$vote['content']?><input type="radio" name="girl" class="girlchoose" value="<?=$vote['id']?>"/></p>
+                    </div>
+                    <?php endforeach;?>
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center">
+                <button type="button" class="btn btn-primary girlbtn"style="width:150px;" >投票</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif;?>
 <script src="/resources/assets/js/home/jquery.min.js"></script>
 <script src="/resources/assets/js/home/swiper-3.4.0.jquery.min.js"></script>
 <script src="/resources/assets/js/home/bootstrap.min.js"></script>
@@ -117,6 +143,28 @@
 <script src="/resources/assets/js/home/main.js"></script>
 <script>
     $(function() {
+        <?php if($show_vote && !empty($vote_list)):?>
+        $('#vote').modal('show');
+        $('.girlbtn').click(function(){
+            var vote = $("input[name=girl]:checked").val();
+            console.log(vote);
+            $.ajax({
+                type: "POST",
+                url: "<?=base_url("/vote/partake")?>",
+                data: {"vote": vote},
+                dataType: "json",
+                success: function(response){
+                    if(0 == response.status) {
+                        layer.alert(response.msg, {icon: 1}, function() {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.alert(response.msg, {icon: 2});
+                    }
+                }
+            });
+        });
+        <?php endif;?>
         $(".next-month").delegate(".active-month", "click", function(){
             var that = $(this);
             var order = that.attr('data-order');
