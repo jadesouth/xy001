@@ -25,6 +25,11 @@ $config = [
     'admin/theme/add' => [ // 添加主题
         ['field' => 'name', 'label' => '主题名称', 'rules' => 'trim|required|min_length[4]|max_length[18]|is_unique[theme.name]'],
     ],
+    // 投票相关
+    'admin/vote/add' => [ // 添加投票
+        ['field' => 'content', 'label' => '投票内容', 'rules' => 'trim|required|is_unique[vote.content]'],
+        ['field' => 'image', 'label' => '投票图片', 'rules' => 'trim|required'],
+    ],
     // 菜单相关
     'admin/menu/add' => [ // 添加菜单
         ['field' => 'name', 'label' => '菜单名称', 'rules' => 'trim|required|min_length[1]|max_length[18]|is_unique[menu.name]'],

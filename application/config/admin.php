@@ -22,6 +22,15 @@ $config = [
         'table_header' => ['#', '主题名称', '添加时间'],
         'index_field'  => 'id,name,created_at',
     ],
+    // 投票管理
+    'vote' => [
+        'name'         => '投票',
+        'index'        => '投票项列表',
+        'add'          => '添加投票',
+        'edit'         => '修改投票',
+        'table_header' => ['#', '图片', '投票内容', '票数', '操作'],
+        'index_field'  => 'id,image,content,count,status',
+    ],
     // 用户管理
     'user' => [
         'name'         => '用户',

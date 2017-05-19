@@ -72,6 +72,28 @@ class Upload extends MY_Controller
         }
     }
 
+    /**
+     * voteImage 上传投票图片
+     */
+    public function voteImage()
+    {
+        $folder_data = date('Ymd', time());
+        $this->_config['upload_path'] = FCPATH . 'resources/uploads/vote/' . $folder_data;
+        $this->_config['allowed_types'] = 'gif|jpg|jpeg|png|bmp';
+        $this->_config['max_size'] = 10240;
+        // init upload
+        $this->upload->initialize($this->_config);
+        // upload
+        if (true === $this->upload->do_upload('vote-image')) { // success
+            // 获取上传图片的信息
+            $upload_file = $this->upload->data();
+            $file_path = 'vote/' . $folder_data . '/' . $upload_file['orig_name'];
+            http_ajax_response(0, '投票图片上传成功', ['vote' => $file_path]);
+        } else { // failed
+            $this->send_failure_msg();
+        }
+    }
+
     private function send_failure_msg()
     {
         $failure_msg = $this->upload->display_errors('', '');

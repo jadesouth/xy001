@@ -323,7 +323,7 @@
                 </div>
                 <div class="modal-body">
                    <video  controls style="width:100%;" id="modalvedio">
-                       <source src="video/1.mp4">
+                       <source>
                    </video>
                 </div>
 

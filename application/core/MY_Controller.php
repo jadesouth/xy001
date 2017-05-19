@@ -19,6 +19,7 @@
  * @property Show_wall_model               $show_wall_model
  * @property Theme_model                   $theme_model
  * @property User_model                    $user_model
+ * @property Vote_model                    $vote_model
  * @property WeixinPay                     $weixinpay
  */
 class MY_Controller extends CI_Controller
