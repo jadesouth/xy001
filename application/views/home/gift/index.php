@@ -472,9 +472,8 @@
                                                 <div class="row">
                                                     <div class="col-xs-2 text-center">
                                                         <input type="checkbox" id="legal-checkbox" value="false" placeholder="" class="populated"></div>
-                                                    <div class="col-xs-10 legal-text"><!-- react-text: 591 --> 我已经阅读并同意AmazingFun协议 <!-- /react-text --><a
-                                                                target="_blank"
-                                                                href="">服务条款</a><!-- react-text: 593 -->.<!-- /react-text -->
+                                                    <div class="col-xs-10 legal-text"><!-- react-text: 591 --> 我已经阅读并同意AmazingFun协议 <!-- /react-text -->
+                                                      <a target="_blank" href="<?=base_url('home/q')?>">服务条款</a><!-- react-text: 593 -->.<!-- /react-text -->
                                                     </div>
                                                 </div>
                                                 <div class="row">

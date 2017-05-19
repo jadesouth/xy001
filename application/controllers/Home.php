@@ -12,7 +12,9 @@ class Home extends Home_Controller
         $this->_viewVar['box_list'] = $box_list;
         // 获取图片墙
         $this->load->model('show_wall_model');
-        $showWalls = $this->show_wall_model->setSelectFields('id,image,url,type')
+        $showWalls = $this->show_wall_model
+            ->setSelectFields('id,image,url,type')
+            ->setAndCond(['deleted_at' => '0000-00-00 00:00:00'])
             ->read();
         $videosWall = null;
         $imagesWall = null;
@@ -25,6 +27,15 @@ class Home extends Home_Controller
         $this->_viewVar['videosWall'] = $videosWall;
         $this->_viewVar['imagesWall'] = $imagesWall;
         $this->_viewVar['body_attr'] = ' id="homepage-index" class="homepage homepage is-mobile"';
+        $this->load_view();
+    }
+
+    /**
+     * termsOfService 服务条款
+     */
+    public function termsOfService()
+    {
+        $this->_viewVar['body_attr'] = ' id="service"';
         $this->load_view();
     }
 }
