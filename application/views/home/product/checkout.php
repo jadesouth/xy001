@@ -12,7 +12,7 @@
 
     .coupon-item {
         float: none;
-        width: 100px;
+        width: 150px;
     }
 
     .coupon-price {
@@ -28,6 +28,14 @@
         display: inline-block;
         width: 50px;
     }
+     #checkouts-steps .short-width .checkout_shipping_pay label{
+        display:inline-block;
+        width:40px;
+    }
+    #checkouts-steps .short-width label.coupon {
+      display:inline-block;
+      width:150px;
+  }
 
     /*@media (min-width: 768px) {*/
     /*.all-crates .section-header {*/
@@ -196,7 +204,7 @@
                                                 <div class="col-md-12 short-width">
                                                     <span>选择优惠券：</span>
                                                     <?php foreach($coupons as $coupon) :?>
-                                                    <div class="form-group string optional checkout_shipping_pay coupon_list radio">
+                                                    <div class="form-group string optional checkout_shipping_pay coupon_list">
 
                                                         <input type="radio" class="" name="coupon" value="<?=$coupon['id']?>" id="coupon-<?=$coupon['id']?>">
                                                         <label for="coupon-<?=$coupon['id']?>" class="coupon coupon-<?=$coupon['id']?>">
