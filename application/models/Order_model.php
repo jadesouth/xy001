@@ -1127,7 +1127,7 @@ AmazinFun 团队,
 
     public function show_vote_status($order_number)
     {
-        $order = $this->setSelectFields('box_id')->setAndCond(['order_number' => $order_number])->get();
+        $order = $this->setSelectFields('box_id')->setTable('order')->setAndCond(['order_number' => $order_number])->get();
         if (! empty($order['box_id'])) {
             $this->load->model('box_model');
             $box_info = $this->box_model->setSelectFields('theme_id')->find($order['box_id']);
