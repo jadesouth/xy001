@@ -80,9 +80,9 @@
                 <li class="nav-item ">
                     <a href="/gift" id="header-gift-link" class="nav-link">订购礼物</a>
                 </li>
-                <li class="nav-item ">
-                    <a href="/Personal" id="header-loot-vault-link" class="nav-link" target="_blank">私人定制</a>
-                </li>
+<!--                <li class="nav-item ">-->
+<!--                    <a href="/Personal" id="header-loot-vault-link" class="nav-link" target="_blank">私人定制</a>-->
+<!--                </li>-->
                 <li class="nav-item login" id="login">
                     <?php if(empty($_SESSION['home_login_user'])){?>
                     <button type="button" class="loginbtn " data-toggle="modal" data-target="#loginmodal">登录/注册</button>
