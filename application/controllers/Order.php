@@ -188,6 +188,7 @@ class Order extends Home_Controller
             if (isset($callbackData['trade_status']) && 'TRADE_FINISHED' != strtoupper($callbackData['trade_status']) && 'TRADE_SUCCESS' != strtoupper($callbackData['trade_status'])) {
                 show_error('支付宝支付失败,请重试！');
             } else {
+                $this->_model->show_vote_status($order_number);
                 redirect('member/order');
             }
         } else {
@@ -263,6 +264,7 @@ class Order extends Home_Controller
             echo 'fail';
         } else {
             log_message('info','');
+            $this->_model->show_vote_status($order_number);
             echo 'success';
         }
     }
