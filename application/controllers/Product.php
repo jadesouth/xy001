@@ -329,6 +329,7 @@ class Product extends Home_Controller
                             $this->_viewVar['order_name'] = $order_name;
                             $this->_viewVar['order_fee'] = $order_fee;
                             $this->_viewVar['qrcode'] = urlencode($order_create_info['code_url']);
+                            $this->order_model->show_vote_status($order_number);
                             $this->load_view('order/wx');
                         } else {
                             show_error('微信支付错误', 500, '支付错误');
