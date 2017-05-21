@@ -118,7 +118,6 @@ class Gift extends Home_Controller
                     layer_fail_response('创建订单失败');
                 }
                 $order_fee = $extra_data['pay_value'];
-                $order_fee = '0.01';//deleteme
                 $order_number = $extra_data['order_number'];
                 $order_name = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 订单名称
                 $order_desc = $box_info['theme_name'] . ' ' . $plan . '个月订阅'; // 商品描述
