@@ -50,7 +50,7 @@
                         </li>
                     </ul>
                     <?php }else{?>
-                    <a class="nav-link login-lnk loginbtn" id="header-log-in-modal-link" data-toggle="modal" data-target="#loginmodal" href="#">登录</a>
+                    <a class="nav-link login-lnk loginbtn" id="header-log-in-modal-link" data-toggle="modal" data-target="#loginmodal" href="#">登录/注册</a>
                     <?php }?>
                 </li>
                 <li class="nav-item">
