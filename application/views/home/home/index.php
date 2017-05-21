@@ -255,7 +255,7 @@
                             <div class="crate-info">
                                 <p>¥<?=$box_list[3]['monthly_price']?>/月 包含运费</p>
                                 <a href="/product?theme_id=<?=$box_list[3]['theme_id']?>&id=<?=$box_list[3]['id']?>" class="btn btn-primary"
-                                   data-product="AmazingFunMIN">Get AmazingFunMIN</a>
+                                   data-product="AmazingFunMIN">Get AmazingFunGirl</a>
                             </div>
                         </div>
                     </div>
