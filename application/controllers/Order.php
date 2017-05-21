@@ -71,7 +71,6 @@ class Order extends Home_Controller
                 show_404();
             }
 
-            $fee = 0.01; // TODO del.
             // 构造请求支付宝支付参数
             $orderNumber = substr($order['order_number'], 0, 18) . '1';
             $orderName = '升级计划'; // 订单名称
