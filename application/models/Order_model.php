@@ -1132,7 +1132,7 @@ AmazinFun 团队,
             $this->load->model('box_model');
             $box_info = $this->box_model->setSelectFields('theme_id')->find($order['box_id']);
             if (! empty($box_info['theme_id'])) {
-                if ($box_info['theme_id'] == 4) {
+                if ($box_info['theme_id'] == 3) {
                     $this->session->set_userdata('show_vote_status', 1);
                 }
             }
