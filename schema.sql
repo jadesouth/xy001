@@ -112,6 +112,7 @@ CREATE TABLE IF NOT EXISTS `order` (
   `gift_email` VARCHAR(30) NOT NULL DEFAULT '' COMMENT '礼物收件人邮箱',
   `gift_sender_name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT '礼物发件人姓名',
   `is_send_gift_email` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '是否已经发送赠送邮件[0:未发送,1:已发送]',
+  `leave_word` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '用户留言',
   `upgrade_post_name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT '升级邮寄姓名',
   `upgrade_post_phone` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '升级邮寄电话',
   `upgrade_post_addr` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '升级邮寄地址',

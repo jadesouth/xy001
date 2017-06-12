@@ -49,6 +49,14 @@
                 </table>
             </div>
         </div>
+        <div class="col-sm-12">
+            <table class="table">
+                <tr>
+                    <td>用户留言</td>
+                    <td><?=$order['leave_word']?></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 <div class="panel panel-default">
