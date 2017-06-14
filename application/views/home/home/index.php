@@ -3,13 +3,13 @@
  <div class="swiper-container bannerSwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide banner">
-                <img src="/resources/assets/images/banner.png" alt="banner"/>
+                <img src="/resources/assets/images/bannernew1.png" alt="banner"/>
             </div>
             <div class="swiper-slide banner">
-                <img src="/resources/assets/images/banner.png" alt="banner"/>
+                <img src="/resources/assets/images/bannernew2.png" alt="banner"/>
             </div>
             <div class="swiper-slide banner">
-                <img src="/resources/assets/images/banner.png" alt="banner"/>
+                <img src="/resources/assets/images/bannernew4.png" alt="banner"/>
             </div>
         </div>
         <!-- 如果需要导航按钮 -->
@@ -345,7 +345,7 @@ $(function(){
             });
         var bannerSwiper = new Swiper('.bannerSwiper', {
 
-                    autoplay: 5000,//可选选项，自动滑动
+                    autoplay: 4000,//可选选项，自动滑动
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev'
                 });
