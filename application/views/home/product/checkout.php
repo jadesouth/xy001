@@ -204,7 +204,7 @@
                                                     <div class="form-group string optional checkout_shipping_answer">
                                                         <label class="string optional control-label" for="checkout_shipping_answer" style="opacity: 0;">留言</label>
                                                         <div class="controls">
-                                                            <input class="string optional"placeholder="您可以提任何问题我们为你解答" type="text" name="leave_word" id="checkout_shipping_answer">
+                                                            <input class="string optional"placeholder="网络解忧杂货店键入您遇到的烦恼和问题" type="text" name="leave_word" id="checkout_shipping_answer">
                                                         </div>
                                                     </div>
                                                 </div>

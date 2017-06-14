@@ -291,7 +291,7 @@
                                                        style="opacity: 0;">留言</label>
 
                                                 <div class="controls">
-                                                    <input type="text" class="string required" placeholder="您可以提任何问题我们为你解答"
+                                                    <input type="text" class="string required" placeholder="网络解忧杂货店键入您遇到的烦恼和问题"
                                                            name="leave_word"
                                                            id="checkout_shipping_answer"
                                                            style="width: 100%;" required>
