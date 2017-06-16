@@ -18,29 +18,12 @@
             margin: 0 auto;
             color:#333;
         }
-        .section-listing .product-item.gaming-crate .img-container {
-            background-image: url("/resources/assets/images/all-crates-lootcrate3.jpg");
-        }
+       
     }
     .all-crates .section-listing .product-item .info-container .price{
         font-size: 24px;
     }
-    @media (min-width: 768px) {
-        .section-listing .product-item.core-crate .img-container {
-            background-image: url("/resources/assets/images/all-crates-lootcrate1.jpg");
-        }
-    }
 
-    @media (max-width: 767px) {
-        .section-listing .product-item.core-crate .img-container {
-            background-image: url("//images.contentful.com/rzwi86gxgpgo/J1r7nP8BKSuyEW0C6uMg8/78b6b45c81d3143f497ba59197af81e7/all-crates-lootcrate-mobile.jpg");
-        }
-    }
-    @media (min-width: 768px) {
-        .section-listing .product-item.anime-crate .img-container {
-            background-image: url("/resources/assets/images/all-crates-lootcrate2.jpg");
-        }
-    }
 
     /*@media (max-width: 767px) {*/
     /*.section-listing .product-item.anime-crate .img-container {*/
