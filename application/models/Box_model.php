@@ -92,7 +92,6 @@ class Box_model extends MY_Model
             $return[$box['theme_id']] = $box;
         }
         return $return;
-;
     }
 
     /**

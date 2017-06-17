@@ -140,6 +140,7 @@ class Product extends Home_Controller
                 $post_name = $this->input->post('post_name', true);
                 $post_phone = $this->input->post('post_phone', true);
                 $post_addr = $this->input->post('post_addr', true);
+                $leave_word = $this->input->post('leave_word', true);
                 $user_info['login_email'] = $this->input->post('post_email',true);
                 $user_info['password'] = $this->input->post('password',true);
                 $user_info['post_name'] = $post_name;
@@ -182,6 +183,7 @@ class Product extends Home_Controller
                     'pay_value'    => empty($coupon_info) ? $order_value : $order_value - $coupon_info['value'],
                     'shirt_sex'    => $shirt_sex,
                     'shirt_size'   => $shirt_size,
+                    'leave_word'   => $leave_word,
                 ];
                 $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
                 if (! $create_return) {
@@ -258,6 +260,7 @@ class Product extends Home_Controller
                 $post_name = $this->input->post('post_name',true);
                 $post_phone = $this->input->post('post_phone',true);
                 $post_addr = $this->input->post('post_addr',true);
+                $leave_word = $this->input->post('leave_word',true);
                 $user_info = $this->user_model->setSelectFields('*')->find($user_id);
                 $box_info = $this->box_model->setSelectFields('*')->find($box_id);
                 $coupon_info = $this->coupon_model->setSelectFields('*')
@@ -299,6 +302,7 @@ class Product extends Home_Controller
                     'pay_value'    => empty($coupon_info) ? $order_value : $order_value - $coupon_info['value'],
                     'shirt_sex'    => $shirt_sex,
                     'shirt_size'   => $shirt_size,
+                    'leave_word'   => $leave_word,
                 ];
                 $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
                 if (! $create_return) {

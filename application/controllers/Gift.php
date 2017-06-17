@@ -44,6 +44,7 @@ class Gift extends Home_Controller
                 $post_phone = $this->input->post('post_phone', true);
                 $post_addr = $this->input->post('post_addr', true);
                 $gift_email = $this->input->post('gift_email', true);
+                $leave_word = $this->input->post('leave_word', true);
                 $sender_name = $this->input->post('sender_name', true);
                 $payway = $this->input->post('pay', true);
                 $box_info = $this->box_model->setSelectFields('*')->find($box_id);
@@ -112,6 +113,7 @@ class Gift extends Home_Controller
                     'is_gift'          => 1,
                     'gift_email'       => $gift_email,
                     'gift_sender_name' => $sender_name,
+                    'leave_word'       => $leave_word,
                 ];
                 $create_return = $this->order_model->createOrder($user_info, $box_info, $coupon_info, $extra_data);
                 if (! $create_return) {

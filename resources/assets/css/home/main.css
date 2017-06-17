@@ -1340,7 +1340,7 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     display: none;
     margin: 4px 0 0 4px;
     width: calc(100% - 4px);
-    background-position: 65% center;
+    background-position: 100% center;
 }
 
 .section-past-crates .past-slides .slide .slide-container, .section-past-content .past-slides .slide .slide-container {

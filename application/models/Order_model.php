@@ -958,6 +958,7 @@ class Order_model extends MY_Model
         $insert_order['post_name'] = $extra_data['post_name'];
         $insert_order['post_phone'] = $extra_data['post_phone'];
         $insert_order['post_addr'] = $extra_data['post_addr'];
+        $insert_order['leave_word'] = $extra_data['leave_word'];
         if(!empty($extra_data['is_gift'])){
             $insert_order['is_gift'] = 1;
             $insert_order['gift_email'] = $extra_data['gift_email'];

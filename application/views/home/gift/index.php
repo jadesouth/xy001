@@ -283,6 +283,22 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-12 full-width">
+                                            <div class="form-group string  checkout_shipping_answer">
+                                                <label class="string required control-label"
+                                                       for="checkout_shipping_answer"
+                                                       style="opacity: 0;">留言</label>
+
+                                                <div class="controls">
+                                                    <input type="text" class="string required" placeholder="网络解忧杂货店键入您遇到的烦恼和问题"
+                                                           name="leave_word"
+                                                           id="checkout_shipping_answer"
+                                                           style="width: 100%;" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
