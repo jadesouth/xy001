@@ -18,7 +18,7 @@
             margin: 0 auto;
             color:#333;
         }
-       
+
     }
     .all-crates .section-listing .product-item .info-container .price{
         font-size: 24px;

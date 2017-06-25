@@ -71,20 +71,20 @@
 
                                     <p class="hdr-5">海贼王手办</p></div>
                                 <div class="swiper-slide"><img
-                                        src="/resources/assets/images/homepage-whats-item-02-opt.png"
+                                        src="/resources/assets/images/homepage-whats-item-02-opt-new.png"
                                         alt="T-Shirt">
 
-                                    <p class="hdr-5">T恤衫</p></div>
+                                    <p class="hdr-5">服装</p></div>
                                 <div class="swiper-slide ">
-                                    <img src="/resources/assets/images/homepage-whats-item-03-opt.png"
+                                    <img src="/resources/assets/images/homepage-whats-item-03-opt-new.png"
                                          alt="游戏装备">
 
                                     <p class="hdr-5">游戏装备</p></div>
                                 <div class="swiper-slide ">
-                                    <img src="/resources/assets/images/homepage-whats-item-04-opt.png"
+                                    <img src="/resources/assets/images/homepage-whats-item-04-opt-new.png"
                                          alt="Shredder Sunglasses">
 
-                                    <p class="hdr-5">游戏装备</p></div>
+                                    <p class="hdr-5">精美礼品</p></div>
                             </div>
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-button-next"></div>
