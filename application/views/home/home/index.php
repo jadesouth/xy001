@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="col-sm-8 col-md-9 img-container">
-                    <img src="/resources/assets/images/showimg.png" alt="" class="whatsinacrate-img"/>
+                    <img src="/resources/assets/images/showimgnew.png" alt="" class="whatsinacrate-img"/>
 
                     <div class="copy mobile">
                         <p class="desc">我们会按照主题选择好玩 有趣的单品放入盒子，每月为你送上门。当然你也可以定制哦。</p>
