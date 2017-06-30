@@ -56,7 +56,7 @@
                 <li class="nav-item">
                     <button class="nav-link collapsed" data-toggle="collapse" id="header-pick-a-crate-link"
                             data-target="#dropdown-pick-crate" data-parent="#navbar-collapse"
-                            aria-controls="dropdown-pick-crate" role="button" aria-expanded="false">订阅妹子
+                            aria-controls="dropdown-pick-crate" role="button" aria-expanded="false">当期订阅
                         <i class="glyphicon glyphicon-triangle-bottom"></i>
                         <i class="glyphicon glyphicon-triangle-top"></i>
                         <i class="glyphicon glyphicon-triangle-right"></i>
@@ -78,7 +78,7 @@
                     <a href="/past?theme_id=1" class="nav-link">往期回顾</a>
                 </li>
                 <li class="nav-item ">
-                    <a href="/gift" id="header-gift-link" class="nav-link">订购礼物</a>
+                    <a href="/gift" id="header-gift-link" class="nav-link">礼物计划</a>
                 </li>
 <!--                <li class="nav-item ">-->
 <!--                    <a href="/Personal" id="header-loot-vault-link" class="nav-link" target="_blank">私人定制</a>-->
