@@ -85,13 +85,10 @@
             <div></div>
             <span class="qqserver_arrow"></span> </div>
         <ul>
-            <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=416415676&amp;site=qq&amp;menu=yes" target="_blank">
+            <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=772100892&amp;site=qq&amp;menu=yes" target="_blank">
                 <div>客服咨询</div>
                 <span>琳琳</span> </a> </li>
-            <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=123456789&amp;site=qq&amp;menu=yes" target="_blank">
-                <div>客服咨询</div>
-                <span>云云</span> </a> </li>
-
+        
         </ul>
     </div>
 </div>
