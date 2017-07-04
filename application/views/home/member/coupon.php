@@ -93,3 +93,14 @@
 <script src="/resources/assets/js/home/swiper-3.4.0.jquery.min.js"></script>
 <script src="/resources/assets/js/home/bootstrap.min.js"></script>
 <script src="/resources/assets/js/home/main.js"></script>
+<script>
+    $(function() {
+        $("#upgrade-order").change(function() {
+            var value = $(this).val();
+            if (undefined == value || 0 == value || null == value) {
+                return false;
+            }
+            $('#upgrade-link').attr('href', '/plan/upgrade?order=' + value);
+        })
+    });
+</script>

@@ -6,7 +6,7 @@
                 <img src="/resources/assets/images/bannernew1.png" alt="banner"/>
             </div>
             <div class="swiper-slide banner">
-                <img src="/resources/assets/images/bannernew2.png" alt="banner"/>
+                <img src="/resources/assets/images/indexbanner2.png" alt="banner"/>
             </div>
             <div class="swiper-slide banner">
                 <img src="/resources/assets/images/bannernew3.png" alt="banner"/>
@@ -33,7 +33,7 @@
                     <img src="/resources/assets/images/value-icon-01.png" alt="" class="value-icon"/>
                     <h4>很酷的收藏品</h4>
 
-                    <p class="desc">最好和最独家的礼品，T恤衫，家居用品，以及更多！</p>
+                    <p class="desc">最好和最独家的礼品，T恤衫，生活用品，以及更多！</p>
                 </li>
                 <li class="value">
                     <img src="/resources/assets/images/value-icon-02.png" alt="" class="value-icon"/>
@@ -58,7 +58,7 @@
                         <h2 class="hdr-2">盒子里有什么？</h2>
 
                         <p class="desc">
-                            我们会按照主题选择好玩 有趣的单品放入盒子，每月为你送上门。当然你也可以定制哦。
+                            我们会按照主题选择好玩 有趣的单品放入盒子，每月为你送上门。
                         </p>
                     </div>
                     <div class="carousel"><h4 class="hdr-4"></h4>
@@ -71,20 +71,20 @@
 
                                     <p class="hdr-5">海贼王手办</p></div>
                                 <div class="swiper-slide"><img
-                                        src="/resources/assets/images/homepage-whats-item-02-opt.png"
+                                        src="/resources/assets/images/homepage-whats-item-02-opt-new.png"
                                         alt="T-Shirt">
 
-                                    <p class="hdr-5">T恤衫</p></div>
+                                    <p class="hdr-5">服装</p></div>
                                 <div class="swiper-slide ">
-                                    <img src="/resources/assets/images/homepage-whats-item-03-opt.png"
+                                    <img src="/resources/assets/images/homepage-whats-item-03-opt-new.png"
                                          alt="游戏装备">
 
                                     <p class="hdr-5">游戏装备</p></div>
                                 <div class="swiper-slide ">
-                                    <img src="/resources/assets/images/homepage-whats-item-04-opt.png"
+                                    <img src="/resources/assets/images/homepage-whats-item-04-opt-new.png"
                                          alt="Shredder Sunglasses">
 
-                                    <p class="hdr-5">游戏装备</p></div>
+                                    <p class="hdr-5">精美礼品</p></div>
                             </div>
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-button-next"></div>
@@ -92,10 +92,10 @@
                     </div>
                 </div>
                 <div class="col-sm-8 col-md-9 img-container">
-                    <img src="/resources/assets/images/showimg.png" alt="" class="whatsinacrate-img"/>
+                    <img src="/resources/assets/images/showimgnew.png" alt="" class="whatsinacrate-img"/>
 
                     <div class="copy mobile">
-                        <p class="desc">我们会按照主题选择好玩 有趣的单品放入盒子，每月为你送上门。当然你也可以定制哦。</p>
+                        <p class="desc">我们会按照主题选择好玩 有趣的单品放入盒子，每月为你送上门。</p>
                     </div>
                 </div>
 
@@ -270,7 +270,7 @@
     <section class="section section-youtubers">
       <header class="header-1">
         <div class="wrapper"><h2 class="hdr-2">视频拍摄</h2>
-          <p>看看我们盒子的拥有者在youku上展示他们的盒子</p>
+          <p>看看我们盒子的用户的视频反馈</p>
         </div>
       </header>
       <div class="swiper-container swiper-container-horizontal mt10 swiper-free">

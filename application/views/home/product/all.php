@@ -18,7 +18,7 @@
             margin: 0 auto;
             color:#333;
         }
-       
+
     }
     .all-crates .section-listing .product-item .info-container .price{
         font-size: 24px;
@@ -38,7 +38,7 @@
             <div class="copy">
                 <h1 class="hdr-1">选择你的盒子</h1>
 
-                <p class="desc">AmazingFun是极客装备，玩家装备和流行文化的用品。我们提供一流的（往往是独家！）如收藏品、T恤、家居用品，每月直接送上门</p>
+                <p class="desc">Amazingfun是个每月一期的神秘盒子，里面提供酷炫的游戏、电影、动漫周边和流行文化商品.如手办、收藏品、T恤、生活用品等.每月送货上门.</p>
             </div>
         </div>
     </div>
@@ -66,7 +66,7 @@
                 <div class="desc-container">
                     <p class="desc"><?=$box_info['introduction_title']?></p>
                     <h6 class="hdr-6">
-                        <span class="text">特许经营权</span>
+                        <span class="text">合作</span>
                     </h6>
                     <!--<img src="//images.contentful.com/rzwi86gxgpgo/3uaBt3XC9isoG8SUc2wgWG/d864e799e3962874c73c6329be8c3fba/LC-origins-Web_theme-module-franchise-logos.png"-->
                     <!--alt="crate.franchises.description" class="img-franchises">-->
