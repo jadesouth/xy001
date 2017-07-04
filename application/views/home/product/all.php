@@ -66,7 +66,7 @@
                 <div class="desc-container">
                     <p class="desc"><?=$box_info['introduction_title']?></p>
                     <h6 class="hdr-6">
-                        <span class="text">合作</span>
+                        <span class="text">特许经营权</span>
                     </h6>
                     <!--<img src="//images.contentful.com/rzwi86gxgpgo/3uaBt3XC9isoG8SUc2wgWG/d864e799e3962874c73c6329be8c3fba/LC-origins-Web_theme-module-franchise-logos.png"-->
                     <!--alt="crate.franchises.description" class="img-franchises">-->
