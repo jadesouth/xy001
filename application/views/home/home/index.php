@@ -386,7 +386,7 @@ $(function(){
 // 视频弹窗
 $('.swiper-vedio').click(function(){
     $('#vedio').modal('show');
-    $('#vedio .modal-body').attr('scr',$(this).attr('data-vedio'));
+    $('#vedio .modal-body').html($(this).attr('data-vedio'));
 
 });
     $('#vedio').on('hide.bs.modal', function () {
