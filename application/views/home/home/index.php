@@ -322,9 +322,7 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                   <video  controls style="width:100%;" id="modalvedio">
-                       <source>
-                   </video>
+
                 </div>
 
             </div>
@@ -388,10 +386,10 @@ $(function(){
 // 视频弹窗
 $('.swiper-vedio').click(function(){
     $('#vedio').modal('show');
-    $('#modalvedio source').attr('scr',$(this).attr('data-vedio'));
+    $('#vedio .modal-body').attr('scr',$(this).attr('data-vedio'));
 
 });
     $('#vedio').on('hide.bs.modal', function () {
-        $('#modalvedio').get(0).pause();
+          $('#vedio .modal-body iframe').remove();
     })
 </script>
