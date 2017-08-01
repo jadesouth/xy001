@@ -11,10 +11,10 @@ $(function(){
 		$qqserverFold.show();
 	});
 	//窗体宽度小鱼1024像素时不显示客服QQ
-	function resizeQQserver(){
-		$qqServer[document.documentElement.clientWidth < 1024 ? 'hide':'show']();
-	}
-	$(window).bind("load resize",function(){
-		resizeQQserver();
-	});
+	//function resizeQQserver(){
+	//	$qqServer[document.documentElement.clientWidth < 1024 ? 'hide':'show']();
+	//}
+	//$(window).bind("load resize",function(){
+	//	resizeQQserver();
+	//});
 });
