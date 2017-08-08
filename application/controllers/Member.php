@@ -86,14 +86,15 @@ class Member extends Home_Controller
                 'status []'      => [1, 2],
             ])
             ->read();
+        $show_vote = false; //屏蔽投票
         $vote_list = [];
-        $show_vote = $this->session->userdata('show_vote_status');
-        if ($show_vote) {
-            $this->load->model('vote_model');
-            $vote_list = $this->vote_model->setSelectFields('id,content,image')
-                                          ->setAndCond(['status' => 0, 'type' => 0])
-                                          ->read();
-        }
+//        $show_vote = $this->session->userdata('show_vote_status');
+//        if ($show_vote) {
+//            $this->load->model('vote_model');
+//            $vote_list = $this->vote_model->setSelectFields('id,content,image')
+//                                          ->setAndCond(['status' => 0, 'type' => 0])
+//                                          ->read();
+//        }
         $this->_viewVar['show_vote'] = $show_vote;
         $this->_viewVar['vote_list'] = $vote_list;
         $this->_viewVar['orders'] = $orders;
