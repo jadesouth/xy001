@@ -3,6 +3,7 @@
         <div class="pull-left"><p>Copyright © 北京阿妹子文化传播有限公司 amazingfun.cn 版权所有</p></div>
     </div>
 </div>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1263527253'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1263527253%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 <script src="/resources/assets/libs/layui/layui.js" type="application/javascript"></script>
 <script>
     // 加载layer
@@ -10,6 +11,7 @@
         var layer = layui.layer;
     });
     $(function () {
+        $('#cnzz_stat_icon_1263527253').css({'position':'relative','bottom':'20px'})
         $('#userregister ').on('click', function () {
             var user = $('#recipient-user').val();
             var pwd = $('#recipient-pwd').val();
