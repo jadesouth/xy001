@@ -3,10 +3,13 @@
  <div class="swiper-container bannerSwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide banner">
-                <img src="/resources/assets/images/bannernew1.png" alt="banner"/>
+                <img src="/resources/assets/images/bannernew5.png" alt="HIPHOP"/>
             </div>
             <div class="swiper-slide banner">
-                <img src="/resources/assets/images/indexbanner2.png" alt="banner"/>
+                <img src="/resources/assets/images/bannernew1.png" alt="AmazingFun"/>
+            </div>
+            <div class="swiper-slide banner">
+                <img src="/resources/assets/images/indexbanner2.png" alt="Girl"/>
             </div>
             <div class="swiper-slide banner">
                 <img src="/resources/assets/images/bannernew3.png" alt="banner"/>
