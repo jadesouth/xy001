@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>AmazingFun</title>
+    <meta name="description"content="我们会按照主题选择好玩 有趣的单品放入盒子，每月为你送上门。生活中应该有惊喜我们为你制造惊喜">
+    <meta name="keywords" content="amazingfun,box,惊喜,礼物,盒子,HipHop,Girl">
     <link href="/resources/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" href="/resources/assets/css/home/bootstrap.min.css"/>
     <link rel="stylesheet" href="/resources/assets/css/home/swiper-3.4.0.min.css"/>
