@@ -1404,7 +1404,7 @@ select, textarea, textarea.form-control, input[type='text'], input[type='passwor
     .section-past-content .filters {
         background: #1e1e1e;
         margin-top: 0;
-        max-height: 100vh;
+        max-height: 190px;
         overflow-y: auto;
         right: -50%;
         position: absolute;
